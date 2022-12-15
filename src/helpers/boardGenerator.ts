@@ -1,10 +1,9 @@
+import { getRandomElem } from "./utils";
 import {
-  // getColRestricted,
-  getRandomElem,
-  // getRowRestricted,
-  // getSquareRestricted,
-  // removeFromArray,
-} from "./utils";
+  numbers,
+  rotation,
+  gridIndexes,
+} from "../constants/boardGeneratorConstants";
 
 export class BoardGenerator {
   private board: string[][] = [];
@@ -12,9 +11,6 @@ export class BoardGenerator {
   _secret: string = "";
   _squares: string[] = [];
   _key: string = "";
-
-  numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  rotation: number[] = [0, 90, 180, 270];
 
   constructor() {
     this.board = [];
@@ -37,7 +33,7 @@ export class BoardGenerator {
   }
 
   generateSecret(): void {
-    let tempNumbers: number[] = this.numbers.slice();
+    let tempNumbers: number[] = numbers.slice();
     for (let j = 0; j < 9; j++) {
       const tempNum = getRandomElem(tempNumbers);
       this._secret = `${this._secret}${tempNum}`;
@@ -47,10 +43,8 @@ export class BoardGenerator {
 
   generateBoardPreset(secret: string): void {
     let result: string = "";
-    // let a = [];
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
-        // console.log(i, j);
         const addPart = `${secret.slice(i + j * 3, 9)}${secret.slice(
           0,
           i + j * 3
@@ -58,25 +52,22 @@ export class BoardGenerator {
         result = `${result}${addPart}`;
       }
     }
-    // for (let bbb = 9; bbb > 0; bbb--) {
-    //   a[bbb - 1] = `${result.slice(9 * (bbb - 1), 9 * bbb)}`;
-    // }
-    // console.log(a);
-    // console.log(result.length);
+
     this._secret = result.slice();
   }
 
   rotateBoard(board: string): string {
     let result: string[] = [];
-    const roationAngle: number = getRandomElem(this.rotation);
-    // const roationAngle: number = 270;
+    const roationAngle: number = getRandomElem(rotation);
+    const getCurrentInd = (currentCol: number, currentRow: number): number =>
+      currentCol + 9 * currentRow;
 
     switch (roationAngle) {
       case 90:
         for (let currentRow = 0; currentRow < 9; currentRow++) {
           for (let currentCol = 0; currentCol < 9; currentCol++) {
             const newIndex: number = 9 * (currentCol + 1) - currentRow - 1;
-            const currentInd: number = currentCol + 9 * currentRow;
+            const currentInd: number = getCurrentInd(currentCol, currentRow);
             result[newIndex] = board[currentInd];
           }
         }
@@ -85,7 +76,7 @@ export class BoardGenerator {
         for (let currentRow = 0; currentRow < 9; currentRow++) {
           for (let currentCol = 0; currentCol < 9; currentCol++) {
             const newIndex: number = 9 * (9 - currentRow) - currentCol - 1;
-            const currentInd: number = currentCol + 9 * currentRow;
+            const currentInd: number = getCurrentInd(currentCol, currentRow);
             result[newIndex] = board[currentInd];
           }
         }
@@ -94,7 +85,7 @@ export class BoardGenerator {
         for (let currentRow = 0; currentRow < 9; currentRow++) {
           for (let currentCol = 0; currentCol < 9; currentCol++) {
             const newIndex: number = 9 * (9 - currentCol) - (9 - currentRow);
-            const currentInd: number = currentCol + 9 * currentRow;
+            const currentInd: number = getCurrentInd(currentCol, currentRow);
             result[newIndex] = board[currentInd];
           }
         }
@@ -107,160 +98,135 @@ export class BoardGenerator {
   }
 
   swapSmallColumns(board: string): string {
-    let result: string = board.slice();
-    return result;
+    let result: string[] = board.slice().split("");
+    let indexes: number[] = gridIndexes.slice();
+    const selectedAreaIndex: number = getRandomElem(indexes);
+    const selectedPrimaryCol: number = getRandomElem(indexes);
+    indexes = indexes.filter(
+      (num: number): boolean => num !== selectedPrimaryCol
+    );
+    const selectedSecondaryCol: number = getRandomElem(indexes);
+    for (let currentRow = 0; currentRow < 9; currentRow++) {
+      const base: number = 3 * selectedAreaIndex + 9 * currentRow;
+      const prevInd: number = selectedPrimaryCol + base;
+      const secInd: number = selectedSecondaryCol + base;
+      const temp: string = result[prevInd];
+      result[prevInd] = result[secInd];
+      result[secInd] = temp;
+    }
+
+    return result.join("");
   }
 
   swapSmallRows(board: string): string {
-    let result: string = board.slice();
-    return result;
+    let indexes: number[] = gridIndexes.slice();
+    const base: number = 27 * getRandomElem(indexes);
+    const selectedPrimaryRow: number = getRandomElem(indexes);
+    indexes = indexes.filter(
+      (num: number): boolean => num !== selectedPrimaryRow
+    );
+    const selectedSecondaryRow: number = getRandomElem(indexes);
+    const prevInd: number = base + 9 * selectedPrimaryRow;
+    const secInd: number = base + 9 * selectedSecondaryRow;
+    const firstPart: string = board.slice(prevInd, prevInd + 9);
+    const secondPart: string = board.slice(secInd, secInd + 9);
+
+    return selectedPrimaryRow < selectedSecondaryRow
+      ? `${board.slice(0, prevInd)}${secondPart}${board.slice(
+          prevInd + 9,
+          secInd
+        )}${firstPart}${board.slice(secInd + 9)}`
+      : `${board.slice(0, secInd)}${firstPart}${board.slice(
+          secInd + 9,
+          prevInd
+        )}${secondPart}${board.slice(prevInd + 9)}`;
   }
 
   swapAreaColumns(board: string): string {
-    let result: string = board.slice();
-    return result;
+    let result: string[] = [];
+    let indexes: number[] = gridIndexes.slice();
+    const selectedPrimaryCol: number = getRandomElem(indexes);
+    indexes = indexes.filter(
+      (num: number): boolean => num !== selectedPrimaryCol
+    );
+    const selectedSecondaryCol: number = getRandomElem(indexes);
+    for (let currentRow = 0; currentRow < 9; currentRow++) {
+      const base: number = currentRow * 9;
+      const prevInd: number = base + selectedPrimaryCol * 3;
+      const secInd: number = base + selectedSecondaryCol * 3;
+      const firstPartEndInd: number = prevInd + 3;
+      const secondPartEndInd: number = secInd + 3;
+      const endInd: number = base + 9;
+      const firstPart: string = board.slice(prevInd, firstPartEndInd);
+      const secondPart: string = board.slice(secInd, secondPartEndInd);
+      if (selectedPrimaryCol < selectedSecondaryCol) {
+        const start: string = board.slice(base, prevInd);
+        const mid: string = board.slice(firstPartEndInd, secInd);
+        const end: string = board.slice(secondPartEndInd, endInd);
+        result.push(`${start}${secondPart}${mid}${firstPart}${end}`);
+      } else {
+        const start: string = board.slice(base, secInd);
+        const mid: string = board.slice(secondPartEndInd, prevInd);
+        const end: string = board.slice(firstPartEndInd, endInd);
+        result.push(`${start}${firstPart}${mid}${secondPart}${end}`);
+      }
+    }
+
+    return result.join("");
   }
 
   swapAreaRows(board: string): string {
-    let result: string = board.slice();
-    return result;
+    let indexes: number[] = gridIndexes.slice();
+    const firstReplacableArea: number = getRandomElem(indexes);
+    indexes = indexes.filter(
+      (num: number): boolean => num !== firstReplacableArea
+    );
+    const secondReplacableArea: number = getRandomElem(indexes);
+    const firstPartStartInd: number = firstReplacableArea * 27;
+    indexes = indexes.filter(
+      (num: number): boolean => num !== firstPartStartInd
+    );
+    const secondPartStartInd: number = secondReplacableArea * 27;
+    const firstPartEndInd: number = firstPartStartInd + 27;
+
+    const firstPart = board.slice(firstPartStartInd, firstPartEndInd);
+    const secondPartEndInd: number = secondPartStartInd + 27;
+
+    const secondPart = board.slice(secondPartStartInd, secondPartEndInd);
+
+    if (firstPartStartInd < secondPartStartInd) {
+      const start: string = board.slice(0, firstPartStartInd);
+      const mid: string = board.slice(firstPartEndInd, secondPartStartInd);
+      const end: string = board.slice(secondPartEndInd);
+      return `${start}${firstPart}${mid}${secondPart}${end}`;
+    } else {
+      const start: string = board.slice(0, secondPartStartInd);
+      const mid: string = board.slice(secondPartEndInd, firstPartStartInd);
+      const end: string = board.slice(firstPartEndInd);
+      return `${start}${firstPart}${mid}${secondPart}${end}`;
+    }
   }
 
   randomizeBoard(board: string): string {
     let result: string = board.slice();
-    result = this.rotateBoard(board);
-    // const randomizeFunctions: ((board: string) => string)[] = [
-    //   this.rotateBoard,
-    //   this.swapSmallColumns,
-    //   this.swapSmallRows,
-    //   this.swapAreaColumns,
-    //   this.swapAreaRows,
-    // ];
 
-    // for (let i = 0; i < 10; i++) {
-    //   const func: (board: string) => void = getRandomElem(randomizeFunctions);
-    //   func(this._secret);
-    // }
+    const randomizeFunctions: ((board: string) => string)[] = [
+      this.rotateBoard,
+      this.swapSmallColumns,
+      this.swapSmallRows,
+      this.swapAreaColumns,
+      this.swapAreaRows,
+    ];
+
+    for (let i = 0; i < 10; i++) {
+      console.log();
+      const aaa = getRandomElem(randomizeFunctions)(result);
+      console.log(aaa, aaa === result);
+      result = aaa;
+    }
 
     return result;
   }
-  // private generateSecret(): void {
-  //   // for (let i = 0; i < 9; i++) {
-  //   //   let tempNumbers: number[] = this.numbers.slice();
-  //   //   for (let j = 0; j < 9; j++) {
-  //   //     if (!i) {
-  //   //       const tempNum = getRandomElem(tempNumbers);
-  //   //       this._secret = `${this._secret}${tempNum}`;
-  //   //       tempNumbers = tempNumbers.filter((n: number) => n !== tempNum);
-  //   //     } else {
-  //   //       // get numbers form square
-  //   //       // get numbers from row
-  //   //       // get number from square
-  //   //     }
-  //   //   }
-  //   // }
-
-  //   for (let row = 0; row < 9; row++) {
-  //     let tempNumbers: number[] = this.numbers.slice();
-
-  //     // for (let col = 0; col < 9; col++) {
-  //     //   const rowUsed = this.matrix[row].filter((n: number) => n !== null);
-  //     //   const colUsed = [
-  //     //     this.matrix[0][col],
-  //     //     this.matrix[1][col],
-  //     //     this.matrix[2][col],
-  //     //     this.matrix[3][col],
-  //     //     this.matrix[4][col],
-  //     //     this.matrix[5][col],
-  //     //     this.matrix[6][col],
-  //     //     this.matrix[7][col],
-  //     //     this.matrix[8][col],
-  //     //   ];
-  //     //   const usedNumbers = [...rowUsed, ...colUsed];
-  //     //   let difference = tempNumbers.filter((x) => !usedNumbers.includes(x));
-  //     //   const tempNum = getRandomElem(difference);
-  //     //   this.matrix[row][col] = tempNum;
-  //     //   tempNumbers = tempNumbers.filter((n: number) => n !== tempNum);
-  //     // }
-  //   }
-  // }
-
-  // generateSquare(rowRestrictions: any[] = [], colRestrictions: any[] = []) {
-  //   for (let i = 0; i < 9; i++) {
-  //     let tempNumbers: number[] = this.numbers.slice();
-  //     for (let j = 0; j < 9; j++) {
-  //       if (!i) {
-  //         const tempNum = getRandomElem(tempNumbers);
-  //         this._secret = `${this._secret}${tempNum}`;
-  //         tempNumbers = tempNumbers.filter((n: number) => n !== tempNum);
-  //       } else {
-  //         // get numbers form square
-  //         // get numbers from row
-  //         // get number from square
-  //       }
-  //     }
-  //   }
-  // }
-
-  // generateKey() {
-  //   let tempNumbers: number[] = this.numbers.slice();
-  //   for (let j = 0; j < 9; j++) {
-  //     const tempNum = getRandomElem(tempNumbers);
-  //     this._key = `${this._key}${tempNum}`;
-  //     tempNumbers = tempNumbers.filter((n: number) => n !== tempNum);
-  //   }
-  // }
-
-  // generateBoard() {
-  //   let rowRestircted: number[] = [];
-  //   let colRestircted: number[] = [];
-  //   let squareRestricted: number[] = [];
-  //   for (let row = 0; row < 9; row++) {
-  //     for (let col = 0; col < 9; col++) {
-  //       let availableRowNums: number[] = this.numbers.slice();
-
-  //       // if (row === 1 && col === 7) {
-  //       //   debugger;
-  //       // }
-  //       rowRestircted = getRowRestricted(row, this._secret);
-  //       colRestircted = getColRestricted(col, this._secret);
-  //       squareRestricted = getSquareRestricted(row, col, this._secret);
-  //       const restrictedNums: number[] = [
-  //         ...rowRestircted,
-  //         ...colRestircted,
-  //         ...squareRestricted,
-  //       ].reduce(
-  //         (acc: number[], num: number) =>
-  //           acc.includes(num) ? acc : [...acc, num],
-  //         []
-  //       );
-  //       availableRowNums = removeFromArray(availableRowNums, restrictedNums);
-  //       const tempNum = getRandomElem(availableRowNums);
-  //       if (!tempNum?.toString) {
-  //         debugger;
-  //       }
-  //       this._secret = `${this._secret.slice(
-  //         0,
-  //         9 * row + col
-  //       )}${tempNum.toString()}${this._secret.slice(9 * row + col + 1)}`;
-  //       console.log(this._secret, this._secret.length);
-  //       // availableRowNums = availableRowNums.filter(
-  //       //   (n: number) => n !== tempNum
-  //       // );
-  //       console.log(`col ${col} row ${row}`);
-  //     }
-  //     rowRestircted = [];
-  //     colRestircted = [];
-  //     squareRestricted = [];
-  //     // availableRowNums = this.numbers.slice();
-  //     console.log(`row ${row}`);
-  //   }
-  //   for (let i = 0; i < 9; i++) {
-  //     const a: string[] = this._secret.slice(i * 9, i * 9 + 9).split("");
-  //     this.board.push(a);
-  //   }
-  //   console.log(this.board);
-  // }
 
   checkBoard() {
     console.log("checkBoard");
