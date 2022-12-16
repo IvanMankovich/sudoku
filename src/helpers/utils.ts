@@ -64,3 +64,28 @@ export const removeFromArray = (
 ): number[] => {
   return original.filter((num: number): boolean => !removable.includes(num));
 };
+
+export function getRandomInt(min: number, max: number): number {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function getRange(min: number, max: number): number[] {
+  let result: number[] = [];
+  let startNum: number = min;
+
+  while (startNum <= max) {
+    result.push(startNum);
+    ++startNum;
+  }
+  return result;
+}
+
+export function getGrid(): string[] {
+  let result: string[] = [];
+  for (let i = 0; i < 81; i++) {
+    result.push("-");
+  }
+  return result;
+}

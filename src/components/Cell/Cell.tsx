@@ -1,5 +1,9 @@
-import React from "react";
+import "./Cell.scss";
 
-export const Cell = () => {
-  return <div>Cell</div>;
+export interface ICell {
+  content: string;
+}
+
+export const Cell = ({ content }: ICell) => {
+  return <div className="cell">{content}</div>;
 };

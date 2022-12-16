@@ -1,0 +1,10 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  &:nth-child(3n):not(:last-child) {
+    border-bottom: 0.1em solid #000;
+  }
+}
