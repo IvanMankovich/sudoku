@@ -1,4 +1,4 @@
-import { getRandomElem } from "./utils";
+import { getRandomElem, getRandomInt, getRange, getGrid } from "./utils";
 import {
   numbers,
   rotation,
@@ -6,42 +6,55 @@ import {
 } from "../constants/boardGeneratorConstants";
 
 export class BoardGenerator {
-  private board: string[][] = [];
-  private _boardSecret: [][] = [];
+  board: string[][] = [];
+  boardSecret: string[][] = [];
+  private boardPreset: string = "";
   _secret: string = "";
   _squares: string[] = [];
   _key: string = "";
 
   constructor() {
-    this.board = [];
-    this._boardSecret = [];
-    this.generateSecret();
-    this.generateBoardPreset(this._secret);
+    this._secret = this.generateSecret();
+    this.boardPreset = this.generateBoardPreset(this._secret);
+    this.boardPreset = this.randomizeBoardPreset(this.boardPreset);
+    this.boardSecret = this.getBoardSecret(this.boardPreset);
+    this.board = this.generateBoard(this.boardPreset);
 
-    let a = [];
-    for (let bbb = 9; bbb > 0; bbb--) {
-      a[bbb - 1] = `${this._secret.slice(9 * (bbb - 1), 9 * bbb)}`;
-    }
-    console.log("before", a);
+    // let a = [];
+    // for (let bbb = 9; bbb > 0; bbb--) {
+    //   a[bbb - 1] = `${this._secret.slice(9 * (bbb - 1), 9 * bbb)}`;
+    // }
+    // console.log("before", a);
 
-    let b = [];
-    this._secret = this.randomizeBoard(this._secret);
-    for (let bbb = 9; bbb > 0; bbb--) {
-      b[bbb - 1] = `${this._secret.slice(9 * (bbb - 1), 9 * bbb)}`;
-    }
-    console.log("after", b);
+    // let b = [];
+    // this._secret = this.randomizeBoard(this._secret);
+    // for (let bbb = 9; bbb > 0; bbb--) {
+    //   b[bbb - 1] = `${this._secret.slice(9 * (bbb - 1), 9 * bbb)}`;
+    // }
+    // console.log("after", b);
+
+    // let b = [];
+    // for (let bbb = 9; bbb > 0; bbb--) {
+    //   b[bbb - 1] = `${this.board.slice(9 * (bbb - 1), 9 * bbb)}`;
+    // }
+    // console.log("after", b);
+
+    // this._secret = this.randomizeBoard(this._secret);
   }
 
-  generateSecret(): void {
+  generateSecret(): string {
+    let result: string = "";
     let tempNumbers: number[] = numbers.slice();
     for (let j = 0; j < 9; j++) {
       const tempNum = getRandomElem(tempNumbers);
-      this._secret = `${this._secret}${tempNum}`;
+      result = `${result}${tempNum}`;
       tempNumbers = tempNumbers.filter((n: number) => n !== tempNum);
     }
+
+    return result;
   }
 
-  generateBoardPreset(secret: string): void {
+  generateBoardPreset(secret: string): string {
     let result: string = "";
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
@@ -53,7 +66,7 @@ export class BoardGenerator {
       }
     }
 
-    this._secret = result.slice();
+    return result.slice();
   }
 
   rotateBoard(board: string): string {
@@ -207,7 +220,7 @@ export class BoardGenerator {
     }
   }
 
-  randomizeBoard(board: string): string {
+  randomizeBoardPreset(board: string): string {
     let result: string = board.slice();
 
     const randomizeFunctions: ((board: string) => string)[] = [
@@ -219,13 +232,39 @@ export class BoardGenerator {
     ];
 
     for (let i = 0; i < 10; i++) {
-      console.log();
-      const aaa = getRandomElem(randomizeFunctions)(result);
-      console.log(aaa, aaa === result);
-      result = aaa;
+      const temp: string = getRandomElem(randomizeFunctions)(result);
+      result = temp;
     }
 
     return result;
+  }
+
+  generateBoard(board: string): string[][] {
+    const result: string[] = getGrid();
+    const visibleCells: number = getRandomInt(20, 35);
+    let availableIndexes: number[] = getRange(0, 80);
+
+    for (let i = 0; i < visibleCells; i++) {
+      const randomCellInd: number = getRandomElem(availableIndexes);
+      result[randomCellInd] = board[randomCellInd];
+      availableIndexes = availableIndexes.filter(
+        (num: number): boolean => num !== randomCellInd
+      );
+    }
+
+    let splittedBoard: string[][] = [];
+    for (let row = 0; row < 9; row++) {
+      splittedBoard[row] = result.slice(9 * row, 9 * (row + 1));
+    }
+    return splittedBoard;
+  }
+
+  getBoardSecret(board: string): string[][] {
+    let splittedBoard: string[][] = [];
+    for (let row = 0; row < 9; row++) {
+      splittedBoard[row] = [...board.slice(9 * row, 9 * (row + 1)).split("")];
+    }
+    return splittedBoard;
   }
 
   checkBoard() {
