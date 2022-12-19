@@ -1,6 +1,16 @@
-.board {
+.board-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  width: 20em;
+  height: 20em;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  height: 100%;
+  width: 100%;
 }
