@@ -33,10 +33,6 @@ export const getSquareRestricted = (
 
   const result: number[] = [];
 
-  if (row === 1 && col === 7) {
-    debugger;
-  }
-
   for (let i = 0; i < 3; i++) {
     result.push(
       ...secret
@@ -89,3 +85,17 @@ export function getGrid(): string[] {
   }
   return result;
 }
+
+export const getSquareIndexes = (currInd: number): number => {
+  return getSquareIndex(currInd, Math.floor(currInd / 27));
+
+  function getSquareIndex(currInd: number, rowAreaInd: number): number {
+    if (currInd >= 54) {
+      return Math.floor(Math.floor((currInd - 54) / 3) / 3) + 3 * rowAreaInd;
+    } else if (currInd >= 27) {
+      return Math.floor(Math.floor((currInd - 27) / 3) / 3) + 3 * rowAreaInd;
+    } else {
+      return Math.floor(Math.floor(currInd / 3) / 3) + 3 * rowAreaInd;
+    }
+  }
+};

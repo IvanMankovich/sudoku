@@ -6,8 +6,11 @@ import {
 } from "../constants/boardGeneratorConstants";
 
 export class BoardGenerator {
-  board: string[][] = [];
-  boardSecret: string[][] = [];
+  // board: string[][] = [];
+  board: string[] = [];
+  // boardSecret: string[][] = [];
+  boardSecret: string[] = [];
+
   private boardPreset: string = "";
   _secret: string = "";
   _squares: string[] = [];
@@ -19,27 +22,6 @@ export class BoardGenerator {
     this.boardPreset = this.randomizeBoardPreset(this.boardPreset);
     this.boardSecret = this.getBoardSecret(this.boardPreset);
     this.board = this.generateBoard(this.boardPreset);
-
-    // let a = [];
-    // for (let bbb = 9; bbb > 0; bbb--) {
-    //   a[bbb - 1] = `${this._secret.slice(9 * (bbb - 1), 9 * bbb)}`;
-    // }
-    // console.log("before", a);
-
-    // let b = [];
-    // this._secret = this.randomizeBoard(this._secret);
-    // for (let bbb = 9; bbb > 0; bbb--) {
-    //   b[bbb - 1] = `${this._secret.slice(9 * (bbb - 1), 9 * bbb)}`;
-    // }
-    // console.log("after", b);
-
-    // let b = [];
-    // for (let bbb = 9; bbb > 0; bbb--) {
-    //   b[bbb - 1] = `${this.board.slice(9 * (bbb - 1), 9 * bbb)}`;
-    // }
-    // console.log("after", b);
-
-    // this._secret = this.randomizeBoard(this._secret);
   }
 
   generateSecret(): string {
@@ -239,7 +221,27 @@ export class BoardGenerator {
     return result;
   }
 
-  generateBoard(board: string): string[][] {
+  // generateBoard(board: string): string[][] {
+  //   const result: string[] = getGrid();
+  //   const visibleCells: number = getRandomInt(20, 35);
+  //   let availableIndexes: number[] = getRange(0, 80);
+
+  //   for (let i = 0; i < visibleCells; i++) {
+  //     const randomCellInd: number = getRandomElem(availableIndexes);
+  //     result[randomCellInd] = board[randomCellInd];
+  //     availableIndexes = availableIndexes.filter(
+  //       (num: number): boolean => num !== randomCellInd
+  //     );
+  //   }
+
+  //   let splittedBoard: string[][] = [];
+  //   for (let row = 0; row < 9; row++) {
+  //     splittedBoard[row] = result.slice(9 * row, 9 * (row + 1));
+  //   }
+  //   return splittedBoard;
+  // }
+
+  generateBoard(board: string): string[] {
     const result: string[] = getGrid();
     const visibleCells: number = getRandomInt(20, 35);
     let availableIndexes: number[] = getRange(0, 80);
@@ -252,19 +254,19 @@ export class BoardGenerator {
       );
     }
 
-    let splittedBoard: string[][] = [];
-    for (let row = 0; row < 9; row++) {
-      splittedBoard[row] = result.slice(9 * row, 9 * (row + 1));
-    }
-    return splittedBoard;
+    return result;
   }
 
-  getBoardSecret(board: string): string[][] {
-    let splittedBoard: string[][] = [];
-    for (let row = 0; row < 9; row++) {
-      splittedBoard[row] = [...board.slice(9 * row, 9 * (row + 1)).split("")];
-    }
-    return splittedBoard;
+  // getBoardSecret(board: string): string[][] {
+  //   let splittedBoard: string[][] = [];
+  //   for (let row = 0; row < 9; row++) {
+  //     splittedBoard[row] = [...board.slice(9 * row, 9 * (row + 1)).split("")];
+  //   }
+  //   return splittedBoard;
+  // }
+
+  getBoardSecret(board: string): string[] {
+    return board.split("");
   }
 
   checkBoard() {

@@ -8,9 +8,9 @@ export interface IRow {
 export const Row = ({ cells }: IRow) => {
   return (
     <div className="row">
-      {cells.map((cell) => (
+      {/* {cells.map((cell) => (
         <Cell key={Math.random()} content={cell} />
-      ))}
+      ))} */}
     </div>
   );
 };
