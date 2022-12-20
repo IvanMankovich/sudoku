@@ -29,10 +29,9 @@ export const Board = ({ board }: IBoard) => {
 
   const onCellClick = (ind: number): void => {
     console.log(ind);
-    let a = getSquareIndexes(ind);
-    console.log("getSquareIndexes", a);
+    const squareIndexes: number[] = getSquareIndexes(ind);
     setSelectedCellInd(3);
-    setSelectedSquareInd([3, 4, 5, 12, 13, 14, 21, 22, 23]);
+    setSelectedSquareInd(squareIndexes);
     setSelectedRowInd([0, 1, 2, 3, 4, 5, 6, 7, 8]);
     setSelectedColInd([3, 12, 21, 30, 39, 48, 57, 66, 75]);
   };
