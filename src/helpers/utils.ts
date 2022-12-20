@@ -112,3 +112,25 @@ export const getSquareIndexes = (currInd: number): number[] => {
     return Math.floor(inInRowArea / 3);
   }
 };
+
+export const getRowIndexes = (currInd: number): number[] => {
+  const result: number[] = [];
+  const row: number = Math.floor(currInd / 9) * 9;
+
+  for (let i = 0; i < 9; i++) {
+    result.push(row + i);
+  }
+
+  return result;
+};
+
+export const getColIndexes = (currInd: number): number[] => {
+  const result: number[] = [];
+  const col: number = currInd - Math.floor(currInd / 9) * 9;
+
+  for (let i = 0; i < 9; i++) {
+    result.push(9 * i + col);
+  }
+
+  return result;
+};
