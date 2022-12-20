@@ -7,6 +7,7 @@ export interface ICell {
   activeSquare: boolean;
   activeAxis: boolean;
   onCellClick(id: number): void;
+  onBlur(id: number, value: string): void;
 }
 
 export const Cell = ({
@@ -15,6 +16,7 @@ export const Cell = ({
   activeSquare,
   activeAxis,
   onCellClick,
+  onBlur,
 }: ICell) => {
   const [value, setValue] = useState<string>(content);
   const className: string = "cell";
@@ -33,16 +35,17 @@ export const Cell = ({
       ].join(" ")}
       value={value}
       disabled={content !== "-"}
-      onClick={(
-        event: React.MouseEvent<HTMLInputElement, MouseEvent>
-      ): void => {
+      onClick={(): void => {
         onCellClick(id);
       }}
-      onFocus={(event: React.FocusEvent<HTMLInputElement, Element>): void => {
+      onFocus={(): void => {
         onCellClick(id);
       }}
       onChange={(event: React.ChangeEvent<HTMLInputElement>): void => {
         setValue(event.currentTarget.value);
+      }}
+      onBlur={(): void => {
+        onBlur(id, value);
       }}
     />
   );

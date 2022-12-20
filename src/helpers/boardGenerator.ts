@@ -269,8 +269,7 @@ export class BoardGenerator {
     return board.split("");
   }
 
-  checkBoard() {
-    console.log("checkBoard");
-    return null;
+  checkBoard(ind: number, value: string): boolean {
+    return this.boardSecret[ind] === value;
   }
 }
