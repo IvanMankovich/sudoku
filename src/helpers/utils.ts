@@ -1,3 +1,5 @@
+import { gridIndexes } from "../constants/boardGeneratorConstants";
+
 export function getRandomElem<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -86,16 +88,27 @@ export function getGrid(): string[] {
   return result;
 }
 
-export const getSquareIndexes = (currInd: number): number => {
-  return getSquareIndex(currInd, Math.floor(currInd / 27));
+export const getSquareIndexes = (currInd: number): number[] => {
+  const result: number[] = [];
+  const areaRowInd: number = Math.floor(currInd / 27);
+  const squareIndex: number = getSquareIndex(currInd, areaRowInd);
+  const base: number = areaRowInd * 27 + squareIndex * 3;
+
+  for (let i = 0; i < 3; i++) {
+    result.push(
+      ...gridIndexes.map((num: number): number => base + num + i * 9)
+    );
+  }
+
+  return result;
 
   function getSquareIndex(currInd: number, rowAreaInd: number): number {
-    if (currInd >= 54) {
-      return Math.floor(Math.floor((currInd - 54) / 3) / 3) + 3 * rowAreaInd;
-    } else if (currInd >= 27) {
-      return Math.floor(Math.floor((currInd - 27) / 3) / 3) + 3 * rowAreaInd;
-    } else {
-      return Math.floor(Math.floor(currInd / 3) / 3) + 3 * rowAreaInd;
+    let inInRowArea: number = currInd - rowAreaInd * 27;
+
+    while (inInRowArea >= 9) {
+      inInRowArea = inInRowArea - 9;
     }
+
+    return Math.floor(inInRowArea / 3);
   }
 };
