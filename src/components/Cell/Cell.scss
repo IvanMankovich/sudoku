@@ -67,9 +67,17 @@
 
   &__active-axis {
     background-color: #bbffe8;
+
+    &:disabled {
+      background-color: #9ed7c4;
+    }
   }
 
   &__active-square {
     background-color: #99d1be;
+
+    &:disabled {
+      background-color: #76a294;
+    }
   }
 }

@@ -6,7 +6,7 @@ function App() {
 
   return (
     <div className="App">
-      <Board board={board.board} />
+      <Board board={board.board} checkBoard={board.checkBoard.bind(board)} />
       <p>Secret</p>
       <Board board={board.boardSecret} />
     </div>
