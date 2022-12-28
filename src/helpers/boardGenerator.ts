@@ -1,9 +1,10 @@
 import { getRandomElem, getRandomInt, getRange, getGrid } from "./utils";
 import {
   numbers,
-  rotation,
   gridIndexes,
+  difficulity,
 } from "../constants/boardGeneratorConstants";
+import { DifficulityLevel, RotationLevel } from "../types/types";
 
 export class BoardGenerator {
   // board: string[][] = [];
@@ -15,13 +16,22 @@ export class BoardGenerator {
   _secret: string = "";
   _squares: string[] = [];
   _key: string = "";
+  difficulity = DifficulityLevel.insane;
 
   constructor() {
     this._secret = this.generateSecret();
     this.boardPreset = this.generateBoardPreset(this._secret);
     this.boardPreset = this.randomizeBoardPreset(this.boardPreset);
     this.boardSecret = this.getBoardSecret(this.boardPreset);
-    this.board = this.generateBoard(this.boardPreset);
+    this.board = this.generateBoard(this.boardPreset, this.difficulity);
+
+    // let aaa: string[][] = [];
+
+    // for (let bbb = 9; bbb > 0; bbb--) {
+    //   aaa[bbb - 1] = this.board.slice(9 * (bbb - 1), 9 * bbb);
+    // }
+    // console.log("after", aaa);
+    // console.log(sodokoSolver(aaa));
   }
 
   generateSecret(): string {
@@ -53,12 +63,17 @@ export class BoardGenerator {
 
   rotateBoard(board: string): string {
     let result: string[] = [];
-    const roationAngle: number = getRandomElem(rotation);
+    const roationAngle: number = getRandomElem([
+      RotationLevel.quarter,
+      RotationLevel.half,
+      RotationLevel.halfAndQuarter,
+      RotationLevel.zero,
+    ]);
     const getCurrentInd = (currentCol: number, currentRow: number): number =>
       currentCol + 9 * currentRow;
 
     switch (roationAngle) {
-      case 90:
+      case RotationLevel.quarter:
         for (let currentRow = 0; currentRow < 9; currentRow++) {
           for (let currentCol = 0; currentCol < 9; currentCol++) {
             const newIndex: number = 9 * (currentCol + 1) - currentRow - 1;
@@ -67,7 +82,7 @@ export class BoardGenerator {
           }
         }
         break;
-      case 180:
+      case RotationLevel.half:
         for (let currentRow = 0; currentRow < 9; currentRow++) {
           for (let currentCol = 0; currentCol < 9; currentCol++) {
             const newIndex: number = 9 * (9 - currentRow) - currentCol - 1;
@@ -76,7 +91,7 @@ export class BoardGenerator {
           }
         }
         break;
-      case 270:
+      case RotationLevel.halfAndQuarter:
         for (let currentRow = 0; currentRow < 9; currentRow++) {
           for (let currentCol = 0; currentCol < 9; currentCol++) {
             const newIndex: number = 9 * (9 - currentCol) - (9 - currentRow);
@@ -85,6 +100,7 @@ export class BoardGenerator {
           }
         }
         break;
+      case RotationLevel.zero:
       default:
         return board;
     }
@@ -241,13 +257,20 @@ export class BoardGenerator {
   //   return splittedBoard;
   // }
 
-  generateBoard(board: string): string[] {
+  generateBoard(board: string, difficulityLevel: DifficulityLevel): string[] {
     const result: string[] = getGrid();
-    const visibleCells: number = getRandomInt(20, 35);
+    const visibleCells: number = getRandomInt(...difficulity[difficulityLevel]);
+    // console.log("visibleCells", visibleCells);
+    // const visibleCells: number = 20;
+
     let availableIndexes: number[] = getRange(0, 80);
+    const unusedNumbers: number[] = numbers.slice();
 
     for (let i = 0; i < visibleCells; i++) {
-      const randomCellInd: number = getRandomElem(availableIndexes);
+      const randomCellInd: number =
+        i < 9
+          ? getRandomCellInd(availableIndexes, unusedNumbers[i], board)
+          : getRandomElem(availableIndexes);
       result[randomCellInd] = board[randomCellInd];
       availableIndexes = availableIndexes.filter(
         (num: number): boolean => num !== randomCellInd
@@ -273,3 +296,20 @@ export class BoardGenerator {
     return this.boardSecret[ind] === value;
   }
 }
+
+export const getRandomCellInd = (
+  availableIndexes: number[],
+  unusedNumber: number,
+  board: string
+): number => {
+  let tempAvailableIndexes: number[] = availableIndexes.slice();
+  let guessInd: number = getRandomElem(availableIndexes);
+  while (+board[guessInd] !== unusedNumber) {
+    tempAvailableIndexes = tempAvailableIndexes.filter(
+      (num: number): boolean => num !== guessInd
+    );
+    guessInd = getRandomElem(tempAvailableIndexes);
+  }
+
+  return guessInd;
+};

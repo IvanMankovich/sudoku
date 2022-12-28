@@ -18,7 +18,7 @@ export const Cell = ({
   onCellClick,
   onBlur,
 }: ICell) => {
-  const [value, setValue] = useState<string>(content);
+  const [value, setValue] = useState<string>(content !== "-" ? content : "");
   const className: string = "cell";
 
   return (

@@ -1,11 +1,10 @@
-import { memo, useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 import {
   getColIndexes,
   getRowIndexes,
   getSquareIndexes,
 } from "../../helpers/utils";
 import { Cell } from "../Cell/Cell";
-import { Row } from "../Row/Row";
 import "./Board.scss";
 
 export interface IBoard {
