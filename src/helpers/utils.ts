@@ -134,3 +134,56 @@ export const getColIndexes = (currInd: number): number[] => {
 
   return result;
 };
+
+export function isValid(
+  board: string[][],
+  row: number,
+  col: number,
+  k: string
+) {
+  for (let i = 0; i < 9; i++) {
+    const m = 3 * Math.floor(row / 3) + Math.floor(i / 3);
+    const n = 3 * Math.floor(col / 3) + (i % 3);
+    if (board[row][i] === k || board[i][col] === k || board[m][n] === k) {
+      return false;
+    }
+  }
+  return true;
+}
+
+export function sudokuSolver(data: string[][], resolved: any[] = []) {
+  console.log(data.map((d: string[]) => d.join("")).join(""));
+  const tempData: string[][] = data.slice();
+  const resolvedBoards: any[] = resolved;
+  for (let row = 0; row < 9; row++) {
+    for (let col = 0; col < 9; col++) {
+      if (tempData[row][col] === "-") {
+        for (let k = 1; k <= 9; k++) {
+          if (isValid(tempData, row, col, k.toString())) {
+            tempData[row][col] = `${k}`;
+            const { solved } = sudokuSolver(tempData, resolvedBoards);
+            if (solved) {
+              resolvedBoards.push([
+                tempData.map((d: string[]) => d.join("")).join(""),
+              ]);
+              return {
+                solved: true,
+                solutions: resolvedBoards,
+              };
+            } else {
+              tempData[row][col] = "-";
+            }
+          }
+        }
+        return {
+          solved: false,
+        };
+      }
+    }
+  }
+
+  return {
+    solved: true,
+    solutions: tempData.map((d: string[]) => d.join("")).join(""),
+  };
+}
