@@ -303,7 +303,7 @@ export const getRandomCellInd = (
   board: string
 ): number => {
   let tempAvailableIndexes: number[] = availableIndexes.slice();
-  let guessInd: number = getRandomElem(availableIndexes);
+  let guessInd: number = getRandomElem(tempAvailableIndexes);
   while (+board[guessInd] !== unusedNumber) {
     tempAvailableIndexes = tempAvailableIndexes.filter(
       (num: number): boolean => num !== guessInd
