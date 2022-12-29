@@ -88,9 +88,13 @@ export function getGrid(): string[] {
   return result;
 }
 
+export const getAreaRowInd = (currInd: number): number => {
+  return Math.floor(currInd / 27);
+};
+
 export const getSquareIndexes = (currInd: number): number[] => {
   const result: number[] = [];
-  const areaRowInd: number = Math.floor(currInd / 27);
+  const areaRowInd: number = getAreaRowInd(currInd);
   const squareIndex: number = getSquareIndex(currInd, areaRowInd);
   const base: number = areaRowInd * 27 + squareIndex * 3;
 
@@ -101,16 +105,16 @@ export const getSquareIndexes = (currInd: number): number[] => {
   }
 
   return result;
+};
 
-  function getSquareIndex(currInd: number, rowAreaInd: number): number {
-    let inInRowArea: number = currInd - rowAreaInd * 27;
+export const getSquareIndex = (currInd: number, rowAreaInd: number): number => {
+  let inInRowArea: number = currInd - rowAreaInd * 27;
 
-    while (inInRowArea >= 9) {
-      inInRowArea = inInRowArea - 9;
-    }
-
-    return Math.floor(inInRowArea / 3);
+  while (inInRowArea >= 9) {
+    inInRowArea = inInRowArea - 9;
   }
+
+  return Math.floor(inInRowArea / 3);
 };
 
 export const getRowIndexes = (currInd: number): number[] => {
@@ -140,7 +144,7 @@ export function isValid(
   row: number,
   col: number,
   k: string
-) {
+): boolean {
   for (let i = 0; i < 9; i++) {
     const m = 3 * Math.floor(row / 3) + Math.floor(i / 3);
     const n = 3 * Math.floor(col / 3) + (i % 3);
@@ -151,7 +155,13 @@ export function isValid(
   return true;
 }
 
-export function sudokuSolver(data: string[][], resolved: any[] = []) {
+export function sudokuSolver(
+  data: string[][],
+  resolved: any[] = []
+): {
+  solved: boolean;
+  solutions?: any[];
+} {
   console.log(data.map((d: string[]) => d.join("")).join(""));
   const tempData: string[][] = data.slice();
   const resolvedBoards: any[] = resolved;
@@ -184,6 +194,20 @@ export function sudokuSolver(data: string[][], resolved: any[] = []) {
 
   return {
     solved: true,
-    solutions: tempData.map((d: string[]) => d.join("")).join(""),
+    solutions: tempData,
   };
 }
+
+export const indexToRowCol = (index: number): { row: number; col: number } => {
+  return { row: Math.floor(index / 9), col: index % 9 };
+};
+
+export const rowColToIndex = (row: number, col: number): number => {
+  return row * 9 + col;
+};
+
+export const isOddSquare = (cellIndex: number): boolean => {
+  const areaRowInd: number = getAreaRowInd(cellIndex);
+  const squareIndex: number = getSquareIndex(cellIndex, areaRowInd);
+  return (areaRowInd * 3 + squareIndex) % 2 === 0;
+};

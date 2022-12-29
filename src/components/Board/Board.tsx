@@ -3,12 +3,12 @@ import {
   getColIndexes,
   getRowIndexes,
   getSquareIndexes,
+  isOddSquare,
 } from "../../helpers/utils";
 import { Cell } from "../Cell/Cell";
 import "./Board.scss";
 
 export interface IBoard {
-  // board: string[][];
   board: string[];
   checkBoard?(id: number, value: string): void;
 }
@@ -17,14 +17,6 @@ export const Board = ({ board, checkBoard }: IBoard) => {
   const [selectedRowInd, setSelectedRowInd] = useState<number[]>([]);
   const [selectedColInd, setSelectedColInd] = useState<number[]>([]);
   const [boardState, setBoardState] = useState<string[]>([...board]);
-
-  // const rows = (board: string[]): string[][] => {
-  //   let splittedBoard: string[][] = [];
-  //   for (let row = 0; row < 9; row++) {
-  //     splittedBoard[row] = [...board.slice(9 * row, 9 * (row + 1))];
-  //   }
-  //   return splittedBoard;
-  // };
 
   const onCellClick = (ind: number): void => {
     const squareIndexes: number[] = getSquareIndexes(ind);
@@ -50,9 +42,6 @@ export const Board = ({ board, checkBoard }: IBoard) => {
   return (
     <div className="board-wrapper">
       <div className="board">
-        {/* {rows(board).map((row, ind) => (
-        <Row key={ind} cells={row} />
-      ))} */}
         {boardState.map((content: string, ind: number) => (
           <Cell
             key={ind}
@@ -62,6 +51,7 @@ export const Board = ({ board, checkBoard }: IBoard) => {
             onCellClick={onCellClick}
             onBlur={onBlur}
             id={ind}
+            oddSquare={isOddSquare(ind)}
           />
         ))}
       </div>

@@ -8,6 +8,7 @@ export interface ICell {
   activeAxis: boolean;
   onCellClick(id: number): void;
   onBlur(id: number, value: string): void;
+  oddSquare: boolean;
 }
 
 export const Cell = ({
@@ -17,6 +18,7 @@ export const Cell = ({
   activeAxis,
   onCellClick,
   onBlur,
+  oddSquare,
 }: ICell) => {
   const [value, setValue] = useState<string>(content !== "-" ? content : "");
   const className: string = "cell";
@@ -32,6 +34,7 @@ export const Cell = ({
         className,
         activeAxis ? "cell__active-axis" : "",
         activeSquare ? "cell__active-square" : "",
+        oddSquare ? "cell__odd-square" : "",
       ].join(" ")}
       value={value}
       disabled={content !== "-"}
