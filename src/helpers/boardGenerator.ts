@@ -2,29 +2,28 @@ import { getRandomElem, getRandomInt, getRange, getGrid } from "./utils";
 import {
   numbers,
   gridIndexes,
-  difficulity,
+  difficultyParams,
 } from "../constants/boardGeneratorConstants";
-import { DifficulityLevel, RotationLevel } from "../types/types";
+import { DifficulityLevel, RotationLevel, ICell } from "../types/types";
 
 export class BoardGenerator {
-  // board: string[][] = [];
-  board: string[] = [];
-  // boardSecret: string[][] = [];
-  boardSecret: string[] = [];
+  board: ICell[] = [];
+  #boardSecret: string[] = [];
+  boardAnswer: ICell[] = [];
+  boardCheckAttempts: number = 0;
+  #boardPreset: string = "";
+  #secret: string = "";
+  difficultyLevel = DifficulityLevel.insane;
 
-  private boardPreset: string = "";
-  _secret: string = "";
-  _squares: string[] = [];
-  _key: string = "";
-  difficulity = DifficulityLevel.insane;
-
-  constructor() {
-    this._secret = this.generateSecret();
-    this.boardPreset = this.generateBoardPreset(this._secret);
-    this.boardPreset = this.randomizeBoardPreset(this.boardPreset);
-    this.boardSecret = this.getBoardSecret(this.boardPreset);
-    this.board = this.generateBoard(this.boardPreset, this.difficulity);
-
+  constructor(difficultyLevel: DifficulityLevel) {
+    this.difficultyLevel = difficultyLevel;
+    this.#secret = this.generateSecret();
+    this.#boardPreset = this.generateBoardPreset(this.#secret);
+    this.#boardPreset = this.randomizeBoardPreset(this.#boardPreset);
+    this.#boardSecret = this.getBoardSecret(this.#boardPreset);
+    this.board = this.generateBoard(this.#boardPreset, difficultyLevel);
+    this.boardAnswer = this.board.slice();
+    this.boardCheckAttempts = 0;
     // let aaa: string[][] = [];
 
     // for (let bbb = 9; bbb > 0; bbb--) {
@@ -257,9 +256,11 @@ export class BoardGenerator {
   //   return splittedBoard;
   // }
 
-  generateBoard(board: string, difficulityLevel: DifficulityLevel): string[] {
+  generateBoard(board: string, difficulityLevel: DifficulityLevel): ICell[] {
     const result: string[] = getGrid();
-    const visibleCells: number = getRandomInt(...difficulity[difficulityLevel]);
+    const visibleCells: number = getRandomInt(
+      ...difficultyParams[difficulityLevel]
+    );
     // console.log("visibleCells", visibleCells);
     // const visibleCells: number = 20;
 
@@ -277,7 +278,20 @@ export class BoardGenerator {
       );
     }
 
-    return result;
+    return result.map((num: string, ind: number) => {
+      const content: number = +num;
+      if (!content) {
+        return {
+          id: ind,
+        };
+      } else {
+        return {
+          id: ind,
+          content: content,
+          disabled: true,
+        };
+      }
+    });
   }
 
   // getBoardSecret(board: string): string[][] {
@@ -293,7 +307,36 @@ export class BoardGenerator {
   }
 
   checkBoard(ind: number, value: string): boolean {
-    return this.boardSecret[ind] === value;
+    return this.#boardSecret[ind] === value;
+  }
+
+  generateNewBoard(difficultyLevel: DifficulityLevel): void {
+    this.difficultyLevel = difficultyLevel;
+    this.#secret = this.generateSecret();
+    this.#boardPreset = this.generateBoardPreset(this.#secret);
+    this.#boardPreset = this.randomizeBoardPreset(this.#boardPreset);
+    this.#boardSecret = this.getBoardSecret(this.#boardPreset);
+    this.board = this.generateBoard(this.#boardPreset, difficultyLevel);
+    this.boardAnswer = this.board.slice();
+  }
+
+  clearBoard(): ICell[] {
+    this.boardAnswer = this.board.slice();
+    return this.board.slice();
+  }
+
+  acceptAttempt(ind: number, value: number): void {
+    if (value) {
+      this.boardAnswer[ind] = {
+        ...this.boardAnswer[ind],
+        content: value,
+      };
+      console.log(this.boardAnswer);
+    }
+  }
+
+  getCurrentState(): ICell[] {
+    return this.boardAnswer;
   }
 }
 

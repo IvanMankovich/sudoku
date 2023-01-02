@@ -14,11 +14,23 @@ export enum RotationLevel {
   halfAndQuarter = 270,
 }
 
-export interface Difficulity {
+export interface DifficultyParameters {
   [DifficulityLevel.veryEasy]: [number, number];
   [DifficulityLevel.easy]: [number, number];
   [DifficulityLevel.medium]: [number, number];
   [DifficulityLevel.hard]: [number, number];
   [DifficulityLevel.extraHard]: [number, number];
   [DifficulityLevel.insane]: [number, number];
+}
+
+export enum GameState {
+  initial = "initial",
+  inProgress = "inProgress",
+  ended = "ended",
+}
+
+export interface ICell {
+  id: number;
+  content?: number;
+  disabled?: boolean;
 }

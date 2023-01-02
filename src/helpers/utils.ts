@@ -83,7 +83,7 @@ export function getRange(min: number, max: number): number[] {
 export function getGrid(): string[] {
   let result: string[] = [];
   for (let i = 0; i < 81; i++) {
-    result.push("-");
+    result.push("0");
   }
   return result;
 }

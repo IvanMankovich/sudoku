@@ -3,12 +3,13 @@ import "./Cell.scss";
 
 export interface ICell {
   id: number;
-  content: string;
+  content?: number;
   activeSquare: boolean;
   activeAxis: boolean;
   onCellClick(id: number): void;
   onBlur(id: number, value: string): void;
   oddSquare: boolean;
+  disabled?: boolean;
 }
 
 export const Cell = ({
@@ -19,8 +20,9 @@ export const Cell = ({
   onCellClick,
   onBlur,
   oddSquare,
+  disabled,
 }: ICell) => {
-  const [value, setValue] = useState<string>(content !== "-" ? content : "");
+  const [value, setValue] = useState<string>(content?.toString?.() ?? "");
   const className: string = "cell";
 
   return (
@@ -37,7 +39,7 @@ export const Cell = ({
         oddSquare ? "cell__odd-square" : "",
       ].join(" ")}
       value={value}
-      disabled={content !== "-"}
+      disabled={disabled}
       onClick={(): void => {
         onCellClick(id);
       }}
@@ -48,7 +50,7 @@ export const Cell = ({
         setValue(event.currentTarget.value);
       }}
       onBlur={(): void => {
-        onBlur(id, value);
+        onBlur(id, value ?? "");
       }}
     />
   );

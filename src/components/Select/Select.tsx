@@ -1,10 +1,11 @@
-import React from "react";
+import "./Select.scss";
 
 export interface ISelect {
   label?: string;
   value?: string;
   options: ISelectOption[];
   onChange?(...args: any[]): void;
+  id?: string;
 }
 
 export interface ISelectOption {
@@ -12,15 +13,23 @@ export interface ISelectOption {
   value: string;
 }
 
-export const Select = ({ label, value, options, onChange }: ISelect) => {
+export const Select = ({
+  label,
+  value,
+  options,
+  onChange,
+  id = Math.random().toString(),
+}: ISelect) => {
   return (
-    <label>
-      {label}
-      <select value={value} onChange={onChange}>
+    <div className="select-wrapper">
+      {label ? <label htmlFor={id}>{label}</label> : null}
+      <select value={value} onChange={onChange} id={id}>
         {options.map((option) => (
-          <option value={option.value}>{option.label}</option>
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
         ))}
       </select>
-    </label>
+    </div>
   );
 };
