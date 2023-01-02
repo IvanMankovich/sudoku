@@ -1,6 +1,6 @@
 import { ISelectOption } from "../components/Select/Select";
 
-export const difficulties: ISelectOption[] = [
+export const difficulttOptions: ISelectOption[] = [
   { value: "veryEasy", label: "Very easy" },
   { value: "easy", label: "Easy" },
   { value: "medium", label: "Medium" },

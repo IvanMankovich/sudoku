@@ -3,6 +3,12 @@
   width: 100%;
   text-align: center;
   background-color: #9dd6c3;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
 
   & p {
     margin: 0;

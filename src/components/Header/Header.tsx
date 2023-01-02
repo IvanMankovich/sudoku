@@ -1,9 +1,24 @@
+import { GameState } from "../../types/types";
 import "./Header.scss";
 
-export const Header = () => {
+export interface IHeader {
+  gameState: GameState;
+}
+
+export const Header = ({ gameState }: IHeader) => {
   return (
     <header className="header">
-      <p>Sudoku</p>
+      <div>
+        <p>Menu</p>
+      </div>
+      {gameState !== GameState.initial ? (
+        <div>
+          <p>Time</p>
+        </div>
+      ) : null}
+      <div>
+        <p>Help</p>
+      </div>
     </header>
   );
 };
