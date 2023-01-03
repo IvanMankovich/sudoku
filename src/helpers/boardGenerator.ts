@@ -4,12 +4,12 @@ import {
   gridIndexes,
   difficultyParams,
 } from "../constants/boardGeneratorConstants";
-import { DifficulityLevel, RotationLevel, ICell } from "../types/types";
+import { DifficulityLevel, RotationLevel } from "../types/types";
 
 export class BoardGenerator {
-  board: ICell[] = [];
+  board: string[] = [];
   #boardSecret: string[] = [];
-  boardAnswer: ICell[] = [];
+  boardAnswer: string[] = [];
   boardCheckAttempts: number = 0;
   #boardPreset: string = "";
   #secret: string = "";
@@ -256,7 +256,7 @@ export class BoardGenerator {
   //   return splittedBoard;
   // }
 
-  generateBoard(board: string, difficulityLevel: DifficulityLevel): ICell[] {
+  generateBoard(board: string, difficulityLevel: DifficulityLevel): string[] {
     const result: string[] = getGrid();
     const visibleCells: number = getRandomInt(
       ...difficultyParams[difficulityLevel]
@@ -278,20 +278,7 @@ export class BoardGenerator {
       );
     }
 
-    return result.map((num: string, ind: number) => {
-      const content: number = +num;
-      if (!content) {
-        return {
-          id: ind,
-        };
-      } else {
-        return {
-          id: ind,
-          content: content,
-          disabled: true,
-        };
-      }
-    });
+    return result;
   }
 
   // getBoardSecret(board: string): string[][] {
@@ -320,23 +307,23 @@ export class BoardGenerator {
     this.boardAnswer = this.board.slice();
   }
 
-  clearBoard(): ICell[] {
+  clearBoard(): string[] {
     this.boardAnswer = this.board.slice();
     return this.board.slice();
   }
 
   acceptAttempt(ind: number, value: number): void {
     if (value) {
-      this.boardAnswer[ind] = {
-        ...this.boardAnswer[ind],
-        content: value,
-      };
-      console.log(this.boardAnswer);
+      this.boardAnswer[ind] = value.toString();
     }
   }
 
-  getCurrentState(): ICell[] {
+  getCurrentState(): string[] {
     return this.boardAnswer;
+  }
+
+  getBoard(): string[] {
+    return this.board.slice();
   }
 }
 

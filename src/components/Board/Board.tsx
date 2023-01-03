@@ -1,33 +1,24 @@
 import React, { useState } from "react";
+import { BoardGenerator } from "../../helpers/boardGenerator";
 import {
   getColIndexes,
   getRowIndexes,
   getSquareIndexes,
   isOddSquare,
 } from "../../helpers/utils";
-import { ICell } from "../../types/types";
 import { Button } from "../Button/Button";
 import { Cell } from "../Cell/Cell";
 import "./Board.scss";
 
 export interface IBoard {
-  board: ICell[];
-  checkBoard(id: number, value: number): void;
-  clearBoard(): void;
-  acceptAttempt(id: number, value: number): void;
-  getCurrentBoardState(): void;
+  board: BoardGenerator;
 }
-export const Board = ({
-  board,
-  checkBoard,
-  clearBoard,
-  acceptAttempt,
-  getCurrentBoardState,
-}: IBoard) => {
+
+export const Board = ({ board }: IBoard) => {
   const [selectedSquareInd, setSelectedSquareInd] = useState<number[]>([]);
   const [selectedRowInd, setSelectedRowInd] = useState<number[]>([]);
   const [selectedColInd, setSelectedColInd] = useState<number[]>([]);
-  // const [boardState, setBoardState] = useState<string[]>([...board]);
+  const [boardState, setBoardState] = useState<string[]>(board.boardAnswer);
 
   const onCellClick = (ind: number): void => {
     const squareIndexes: number[] = getSquareIndexes(ind);
@@ -39,41 +30,48 @@ export const Board = ({
   };
 
   const onBlur = (id: number, value: string): void => {
-    acceptAttempt?.(id, +value);
-    // if (checkBoard?.(id, value)) {
-    //   const newBoard: string[] = [...boardState];
-    //   newBoard[id] = value;
-    //   // setBoardState(newBoard);
-    // }
+    board.acceptAttempt?.(id, +value);
 
     setSelectedSquareInd([]);
     setSelectedRowInd([]);
     setSelectedColInd([]);
   };
 
+  const onChange = (id: number, value: string): void => {
+    const newBoard: string[] = [...boardState];
+    newBoard[id] = value;
+    setBoardState(newBoard);
+    board.acceptAttempt?.(id, +value);
+  };
+
+  const onClearClick = () => {
+    setBoardState(board.board);
+  };
+
   return (
     <React.Fragment>
       <div className="board-wrapper">
         <div className="board">
-          {board.map(({ id, content, disabled }: ICell) => (
+          {boardState.map((num: string, id: number) => (
             <Cell
               key={id}
-              content={content}
+              content={+num}
               activeAxis={[...selectedRowInd, ...selectedColInd].includes(id)}
               activeSquare={selectedSquareInd?.includes?.(id)}
               onCellClick={onCellClick}
               onBlur={onBlur}
               id={id}
               oddSquare={isOddSquare(id)}
-              disabled={disabled}
+              disabled={board.board[id] !== "0"}
+              onChange={onChange}
             />
           ))}
         </div>
       </div>
       <div>
-        <Button content={"Clear board"} onClickHandler={clearBoard} />
+        <Button content={"Clear board"} onClickHandler={onClearClick} />
         <Button content={"Hint"} />
-        <Button content={"Surrender"} onClickHandler={getCurrentBoardState} />
+        <Button content={"Surrender"} />
         <Button content={"Check"} />
         <Button content={"New game"} />
       </div>

@@ -28,9 +28,3 @@ export enum GameState {
   inProgress = "inProgress",
   ended = "ended",
 }
-
-export interface ICell {
-  id: number;
-  content?: number;
-  disabled?: boolean;
-}
