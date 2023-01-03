@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Cell.scss";
 
 export interface ICell {
@@ -10,6 +10,7 @@ export interface ICell {
   onBlur(id: number, value: string): void;
   oddSquare: boolean;
   disabled?: boolean;
+  onChange(id: number, value: string): void;
 }
 
 export const Cell = ({
@@ -21,9 +22,14 @@ export const Cell = ({
   onBlur,
   oddSquare,
   disabled,
+  onChange,
 }: ICell) => {
-  const [value, setValue] = useState<string>(content?.toString?.() ?? "");
+  const [value, setValue] = useState<string>(content ? content.toString() : "");
   const className: string = "cell";
+
+  useEffect(() => {
+    setValue(content ? content.toString() : "");
+  }, [content]);
 
   return (
     <input
@@ -47,10 +53,13 @@ export const Cell = ({
         onCellClick(id);
       }}
       onChange={(event: React.ChangeEvent<HTMLInputElement>): void => {
-        setValue(event.currentTarget.value);
+        const length: number = event.currentTarget.value.length;
+        const value = event.currentTarget.value[length - 1];
+        setValue(length ? value : "");
+        onChange(id, length ? value : "0");
       }}
-      onBlur={(): void => {
-        onBlur(id, value ?? "");
+      onBlur={(event: React.FocusEvent<HTMLInputElement, Element>): void => {
+        onBlur(id, content ? content.toString() : "0");
       }}
     />
   );
