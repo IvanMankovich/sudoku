@@ -8,6 +8,7 @@ import {
 } from "../../helpers/utils";
 import { Button } from "../Button/Button";
 import { Cell } from "../Cell/Cell";
+import { RestNumbersBoard } from "../RestNumbersBoard/RestNumbersBoard";
 import "./Board.scss";
 
 export interface IBoard {
@@ -44,7 +45,7 @@ export const Board = ({ board }: IBoard) => {
     board.acceptAttempt?.(id, +value);
   };
 
-  const onClearClick = () => {
+  const onClearClick = (): void => {
     setBoardState(board.board);
   };
 
@@ -76,7 +77,7 @@ export const Board = ({ board }: IBoard) => {
         <Button content={"New game"} />
       </div>
 
-      <div>Reast Nums</div>
+      <RestNumbersBoard restNumbers={board.restNumbers} />
     </React.Fragment>
   );
 };

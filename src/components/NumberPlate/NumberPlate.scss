@@ -1,0 +1,27 @@
+.number-plate {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 2em;
+  height: 4em;
+  background-color: #cecece;
+  border: 0.2em solid #477465;
+  border-radius: 0.2em;
+
+  > * {
+    margin: 0;
+    height: 50%;
+    width: 100%;
+    text-align: center;
+  }
+
+  :first-child {
+    background-color: #7ac1aa;
+    border-bottom: 0.2em solid #477465;
+  }
+
+  :last-child {
+    background-color: #dddddd;
+  }
+}
