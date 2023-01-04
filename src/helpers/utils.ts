@@ -1,4 +1,5 @@
-import { gridIndexes } from "../constants/boardGeneratorConstants";
+import { gridIndexes, numbers } from "../constants/boardGeneratorConstants";
+import { NumbersDictionary } from "../types/types";
 
 export function getRandomElem<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -210,4 +211,31 @@ export const isOddSquare = (cellIndex: number): boolean => {
   const areaRowInd: number = getAreaRowInd(cellIndex);
   const squareIndex: number = getSquareIndex(cellIndex, areaRowInd);
   return (areaRowInd * 3 + squareIndex) % 2 === 0;
+};
+
+export const getRandomCellInd = (
+  availableIndexes: number[],
+  unusedNumber: number,
+  board: string
+): number => {
+  let tempAvailableIndexes: number[] = availableIndexes.slice();
+  let guessInd: number = getRandomElem(tempAvailableIndexes);
+  while (+board[guessInd] !== unusedNumber) {
+    tempAvailableIndexes = tempAvailableIndexes.filter(
+      (num: number): boolean => num !== guessInd
+    );
+    guessInd = getRandomElem(tempAvailableIndexes);
+  }
+
+  return guessInd;
+};
+
+export const getNumbersDictionary = (): NumbersDictionary => {
+  const numberValues = numbers.values();
+  const result: NumbersDictionary = {};
+  for (const value of numberValues) {
+    result[value] = 9;
+  }
+
+  return result;
 };

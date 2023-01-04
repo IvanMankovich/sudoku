@@ -1,4 +1,11 @@
-import { getRandomElem, getRandomInt, getRange, getGrid } from "./utils";
+import {
+  getRandomElem,
+  getRandomInt,
+  getRange,
+  getGrid,
+  getRandomCellInd,
+  getNumbersDictionary,
+} from "./utils";
 import {
   numbers,
   gridIndexes,
@@ -14,6 +21,7 @@ export class BoardGenerator {
   #boardPreset: string = "";
   #secret: string = "";
   difficultyLevel = DifficulityLevel.insane;
+  restNumbers: { [x: string]: number } = {};
 
   constructor(difficultyLevel: DifficulityLevel) {
     this.difficultyLevel = difficultyLevel;
@@ -261,22 +269,25 @@ export class BoardGenerator {
     const visibleCells: number = getRandomInt(
       ...difficultyParams[difficulityLevel]
     );
-    // console.log("visibleCells", visibleCells);
-    // const visibleCells: number = 20;
 
     let availableIndexes: number[] = getRange(0, 80);
     const unusedNumbers: number[] = numbers.slice();
 
+    const numbersDictionary: { [x: string]: number } = getNumbersDictionary();
     for (let i = 0; i < visibleCells; i++) {
       const randomCellInd: number =
         i < 9
           ? getRandomCellInd(availableIndexes, unusedNumbers[i], board)
           : getRandomElem(availableIndexes);
-      result[randomCellInd] = board[randomCellInd];
+      const currentNumber: string = board[randomCellInd];
+      result[randomCellInd] = currentNumber;
+      numbersDictionary[currentNumber] = numbersDictionary[currentNumber] - 1;
       availableIndexes = availableIndexes.filter(
         (num: number): boolean => num !== randomCellInd
       );
     }
+
+    this.restNumbers = numbersDictionary;
 
     return result;
   }
@@ -326,20 +337,3 @@ export class BoardGenerator {
     return this.board.slice();
   }
 }
-
-export const getRandomCellInd = (
-  availableIndexes: number[],
-  unusedNumber: number,
-  board: string
-): number => {
-  let tempAvailableIndexes: number[] = availableIndexes.slice();
-  let guessInd: number = getRandomElem(tempAvailableIndexes);
-  while (+board[guessInd] !== unusedNumber) {
-    tempAvailableIndexes = tempAvailableIndexes.filter(
-      (num: number): boolean => num !== guessInd
-    );
-    guessInd = getRandomElem(tempAvailableIndexes);
-  }
-
-  return guessInd;
-};

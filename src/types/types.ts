@@ -28,3 +28,7 @@ export enum GameState {
   inProgress = "inProgress",
   ended = "ended",
 }
+
+export interface NumbersDictionary {
+  [x: string]: number;
+}

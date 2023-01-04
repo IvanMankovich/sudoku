@@ -1,0 +1,10 @@
+.rest-numbers-board {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  height: 100%;
+  width: 100%;
+  gap: 0.2em;
+  padding: 0.2em;
+  background-color: #ededed;
+  border-radius: 0.2em;
+}
