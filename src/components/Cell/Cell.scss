@@ -1,4 +1,4 @@
-.cell {
+input.cell {
   width: 100%;
   height: 100%;
   border: none;
@@ -10,14 +10,12 @@
   background-color: #dddddd;
   border: 0.2em solid;
   border-color: #dddddd;
+  font-size: 1.2em;
+  -moz-appearance: textfield;
 
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-  }
-
-  &[type="number"] {
-    -moz-appearance: textfield;
   }
 
   &__odd-square {

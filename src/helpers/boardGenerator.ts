@@ -21,7 +21,7 @@ export class BoardGenerator {
   #boardPreset: string = "";
   #secret: string = "";
   difficultyLevel = DifficulityLevel.insane;
-  restNumbers: { [x: string]: number } = {};
+  remainingNumbers: { [x: string]: number } = {};
 
   constructor(difficultyLevel: DifficulityLevel) {
     this.difficultyLevel = difficultyLevel;
@@ -287,7 +287,7 @@ export class BoardGenerator {
       );
     }
 
-    this.restNumbers = numbersDictionary;
+    this.remainingNumbers = numbersDictionary;
 
     return result;
   }
