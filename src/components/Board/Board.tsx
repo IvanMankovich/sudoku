@@ -8,7 +8,7 @@ import {
 } from "../../helpers/utils";
 import { Button } from "../Button/Button";
 import { Cell } from "../Cell/Cell";
-import { RestNumbersBoard } from "../RestNumbersBoard/RestNumbersBoard";
+import { RemainingNumbersBoard } from "../RemainingNumbersBoard/RemainingNumbersBoard";
 import "./Board.scss";
 
 export interface IBoard {
@@ -20,6 +20,9 @@ export const Board = ({ board }: IBoard) => {
   const [selectedRowInd, setSelectedRowInd] = useState<number[]>([]);
   const [selectedColInd, setSelectedColInd] = useState<number[]>([]);
   const [boardState, setBoardState] = useState<string[]>(board.boardAnswer);
+  const [remainingNumbers, setRemainingNumbers] = useState(
+    board.remainingNumbers
+  );
 
   const onCellClick = (ind: number): void => {
     const squareIndexes: number[] = getSquareIndexes(ind);
@@ -43,6 +46,17 @@ export const Board = ({ board }: IBoard) => {
     newBoard[id] = value;
     setBoardState(newBoard);
     board.acceptAttempt?.(id, +value);
+    if (+value) {
+      setRemainingNumbers({
+        ...remainingNumbers,
+        [value]: remainingNumbers[value] - 1,
+      });
+    } else {
+      setRemainingNumbers({
+        ...remainingNumbers,
+        [boardState[id]]: remainingNumbers[boardState[id]] + 1,
+      });
+    }
   };
 
   const onClearClick = (): void => {
@@ -77,7 +91,7 @@ export const Board = ({ board }: IBoard) => {
         <Button content={"New game"} />
       </div>
 
-      <RestNumbersBoard restNumbers={board.restNumbers} />
+      <RemainingNumbersBoard remainingNumbers={remainingNumbers} />
     </React.Fragment>
   );
 };
