@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { BoardGenerator } from "../../helpers/boardGenerator";
+import { BoardGenerator } from "../../helpers/BoardGenerator";
 import {
   getColIndexes,
   getRowIndexes,
   getSquareIndexes,
   isOddSquare,
 } from "../../helpers/utils";
+import { NumbersDictionary } from "../../types/types";
 import { Button } from "../Button/Button";
 import { Cell } from "../Cell/Cell";
 import { RemainingNumbersBoard } from "../RemainingNumbersBoard/RemainingNumbersBoard";
@@ -43,24 +44,28 @@ export const Board = ({ board }: IBoard) => {
 
   const onChange = (id: number, value: string): void => {
     const newBoard: string[] = [...boardState];
+    const prevCellValue: string = boardState[id];
     newBoard[id] = value;
     setBoardState(newBoard);
-    board.acceptAttempt?.(id, +value);
-    if (+value) {
-      setRemainingNumbers({
-        ...remainingNumbers,
-        [value]: remainingNumbers[value] - 1,
-      });
-    } else {
-      setRemainingNumbers({
-        ...remainingNumbers,
-        [boardState[id]]: remainingNumbers[boardState[id]] + 1,
-      });
+    const isNewValueValid: boolean = Boolean(+value);
+    const changableNum: string = isNewValueValid ? value : prevCellValue;
+    const newRemainingNumbers: NumbersDictionary = {
+      ...remainingNumbers,
+      [changableNum]:
+        remainingNumbers[changableNum] + (isNewValueValid ? -1 : 1),
+    };
+    if (isNewValueValid && +prevCellValue) {
+      newRemainingNumbers[prevCellValue] =
+        newRemainingNumbers[prevCellValue] + 1;
     }
+    setRemainingNumbers(newRemainingNumbers);
+    board.setRemainingNumbers(id, +value);
+    board.acceptAttempt?.(id, +value);
   };
 
   const onClearClick = (): void => {
     setBoardState(board.board);
+    setRemainingNumbers(board.remainingNumbers);
   };
 
   return (

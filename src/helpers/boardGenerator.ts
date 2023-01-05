@@ -336,4 +336,19 @@ export class BoardGenerator {
   getBoard(): string[] {
     return this.board.slice();
   }
+
+  setRemainingNumbers(ind: number, value: number): void {
+    const prevCellValue: string = this.boardAnswer[ind];
+    const isNewValueValid: boolean = Boolean(value);
+    const changableNum: string = isNewValueValid
+      ? value.toString()
+      : prevCellValue;
+
+    this.remainingNumbers[changableNum] =
+      this.remainingNumbers[changableNum] + (isNewValueValid ? -1 : 1);
+    if (isNewValueValid && +prevCellValue) {
+      this.remainingNumbers[prevCellValue] =
+        this.remainingNumbers[prevCellValue] + 1;
+    }
+  }
 }

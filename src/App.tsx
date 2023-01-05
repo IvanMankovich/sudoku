@@ -1,5 +1,5 @@
 import { Board } from "./components/Board/Board";
-import { BoardGenerator } from "./helpers/boardGenerator";
+import { BoardGenerator } from "./helpers/BoardGenerator";
 import { Layout } from "./components/Layout/Layout";
 import { Button } from "./components/Button/Button";
 import { Select } from "./components/Select/Select";
