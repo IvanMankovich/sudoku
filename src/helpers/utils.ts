@@ -230,11 +230,13 @@ export const getRandomCellInd = (
   return guessInd;
 };
 
-export const getNumbersDictionary = (): NumbersDictionary => {
+export const getNumbersDictionary = (
+  initialValue: number = 9
+): NumbersDictionary => {
   const numberValues = numbers.values();
   const result: NumbersDictionary = {};
   for (const value of numberValues) {
-    result[value] = 9;
+    result[value] = initialValue;
   }
 
   return result;

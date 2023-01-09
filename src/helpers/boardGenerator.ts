@@ -33,7 +33,7 @@ export class BoardGenerator {
     this.#secret = this.generateSecret();
     this.#boardPreset = this.generateBoardPreset(this.#secret);
     this.#boardPreset = this.randomizeBoardPreset(this.#boardPreset);
-    this.#boardSecret = this.getBoardSecret(this.#boardPreset);
+    this.#boardSecret = this.getSolvedBoardSecret(this.#boardPreset);
     this.board = this.generateBoard(this.#boardPreset, difficultyLevel);
     this.boardAnswer = this.board.slice();
     this.boardCheckAttempts = 0;
@@ -305,7 +305,7 @@ export class BoardGenerator {
   //   return splittedBoard;
   // }
 
-  getBoardSecret(board: string): string[] {
+  getSolvedBoardSecret(board: string): string[] {
     return board.split("");
   }
 
@@ -318,7 +318,7 @@ export class BoardGenerator {
     this.#secret = this.generateSecret();
     this.#boardPreset = this.generateBoardPreset(this.#secret);
     this.#boardPreset = this.randomizeBoardPreset(this.#boardPreset);
-    this.#boardSecret = this.getBoardSecret(this.#boardPreset);
+    this.#boardSecret = this.getSolvedBoardSecret(this.#boardPreset);
     this.board = this.generateBoard(this.#boardPreset, difficultyLevel);
     this.boardAnswer = this.board.slice();
   }
@@ -351,5 +351,10 @@ export class BoardGenerator {
 
   getCellValueByInd(ind: number): string {
     return this.#boardSecret[ind];
+  }
+
+  showBoardSecret(): void {
+    this.boardAnswer = this.#boardPreset.split("");
+    this.remainingNumbers = getNumbersDictionary(0);
   }
 }

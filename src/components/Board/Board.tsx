@@ -80,6 +80,12 @@ export const Board = ({ board }: IBoard) => {
     onChange(randomCellInd, value);
   };
 
+  const onShowBoardClick = (): void => {
+    board.showBoardSecret();
+    setBoardState(board.boardAnswer);
+    setRemainingNumbers(board.remainingNumbers);
+  };
+
   return (
     <React.Fragment>
       <div className="board-wrapper">
@@ -103,7 +109,7 @@ export const Board = ({ board }: IBoard) => {
       <div>
         <Button content={"Clear board"} onClickHandler={onClearClick} />
         <Button content={"Hint"} onClickHandler={onHintClick} />
-        <Button content={"Surrender"} />
+        <Button content={"Show board"} onClickHandler={onShowBoardClick} />
         <Button content={"Check"} />
         <Button content={"New game"} />
       </div>
