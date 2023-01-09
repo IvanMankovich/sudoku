@@ -65,7 +65,8 @@ export const Board = ({ board }: IBoard) => {
 
   const onClearClick = (): void => {
     setBoardState(board.board);
-    setRemainingNumbers(board.remainingNumbers);
+    setRemainingNumbers(board.remainingNumbersStored);
+    board.clearBoard();
   };
 
   return (

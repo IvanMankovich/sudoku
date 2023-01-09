@@ -11,7 +11,11 @@ import {
   gridIndexes,
   difficultyParams,
 } from "../constants/boardGeneratorConstants";
-import { DifficulityLevel, RotationLevel } from "../types/types";
+import {
+  DifficulityLevel,
+  NumbersDictionary,
+  RotationLevel,
+} from "../types/types";
 
 export class BoardGenerator {
   board: string[] = [];
@@ -21,7 +25,8 @@ export class BoardGenerator {
   #boardPreset: string = "";
   #secret: string = "";
   difficultyLevel = DifficulityLevel.insane;
-  remainingNumbers: { [x: string]: number } = {};
+  remainingNumbers: NumbersDictionary = {};
+  remainingNumbersStored: NumbersDictionary = {};
 
   constructor(difficultyLevel: DifficulityLevel) {
     this.difficultyLevel = difficultyLevel;
@@ -273,7 +278,7 @@ export class BoardGenerator {
     let availableIndexes: number[] = getRange(0, 80);
     const unusedNumbers: number[] = numbers.slice();
 
-    const numbersDictionary: { [x: string]: number } = getNumbersDictionary();
+    const numbersDictionary: NumbersDictionary = getNumbersDictionary();
     for (let i = 0; i < visibleCells; i++) {
       const randomCellInd: number =
         i < 9
@@ -288,7 +293,7 @@ export class BoardGenerator {
     }
 
     this.remainingNumbers = numbersDictionary;
-
+    this.remainingNumbersStored = { ...numbersDictionary };
     return result;
   }
 
@@ -318,23 +323,15 @@ export class BoardGenerator {
     this.boardAnswer = this.board.slice();
   }
 
-  clearBoard(): string[] {
+  clearBoard() {
     this.boardAnswer = this.board.slice();
-    return this.board.slice();
+    this.remainingNumbers = { ...this.remainingNumbersStored };
   }
 
   acceptAttempt(ind: number, value: number): void {
     if (value) {
       this.boardAnswer[ind] = value.toString();
     }
-  }
-
-  getCurrentState(): string[] {
-    return this.boardAnswer;
-  }
-
-  getBoard(): string[] {
-    return this.board.slice();
   }
 
   setRemainingNumbers(ind: number, value: number): void {
