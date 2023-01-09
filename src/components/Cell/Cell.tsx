@@ -11,6 +11,7 @@ export interface ICell {
   oddSquare: boolean;
   disabled?: boolean;
   onChange(id: number, value: string): void;
+  isInvalid?: boolean;
 }
 
 export const Cell = ({
@@ -23,6 +24,7 @@ export const Cell = ({
   oddSquare,
   disabled,
   onChange,
+  isInvalid,
 }: ICell) => {
   const className: string = "cell";
   const [value, setValue] = useState<string>(content ? content.toString() : "");
@@ -40,9 +42,10 @@ export const Cell = ({
       maxLength={1}
       className={[
         className,
-        activeAxis ? "cell__active-axis" : "",
-        activeSquare ? "cell__active-square" : "",
-        oddSquare ? "cell__odd-square" : "",
+        activeAxis ? `${className}__active-axis` : "",
+        activeSquare ? `${className}__active-square` : "",
+        oddSquare ? `${className}__odd-square` : "",
+        isInvalid ? `${className}__invalid` : "",
       ].join(" ")}
       value={value}
       disabled={disabled}
