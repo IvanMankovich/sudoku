@@ -24,8 +24,8 @@ export const Cell = ({
   disabled,
   onChange,
 }: ICell) => {
-  const [value, setValue] = useState<string>(content ? content.toString() : "");
   const className: string = "cell";
+  const [value, setValue] = useState<string>(content ? content.toString() : "");
 
   useEffect(() => {
     setValue(content ? content.toString() : "");
@@ -58,7 +58,7 @@ export const Cell = ({
         setValue(length ? value : "");
         onChange(id, length ? value : "0");
       }}
-      onBlur={(event: React.FocusEvent<HTMLInputElement, Element>): void => {
+      onBlur={(_event: React.FocusEvent<HTMLInputElement, Element>): void => {
         onBlur(id, content ? content.toString() : "0");
       }}
     />
