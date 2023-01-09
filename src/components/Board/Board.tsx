@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BoardGenerator } from "../../helpers/BoardGenerator";
 import {
   getColIndexes,
+  getRandomElem,
   getRowIndexes,
   getSquareIndexes,
   isOddSquare,
@@ -69,6 +70,16 @@ export const Board = ({ board }: IBoard) => {
     board.clearBoard();
   };
 
+  const onHintClick = (): void => {
+    const freeCellIndexes: number[] = [];
+    boardState.forEach((cellValue: string, ind: number): void => {
+      cellValue === "0" && freeCellIndexes.push(ind);
+    });
+    const randomCellInd: number = getRandomElem(freeCellIndexes);
+    const value: string = board.getCellValueByInd(randomCellInd);
+    onChange(randomCellInd, value);
+  };
+
   return (
     <React.Fragment>
       <div className="board-wrapper">
@@ -91,7 +102,7 @@ export const Board = ({ board }: IBoard) => {
       </div>
       <div>
         <Button content={"Clear board"} onClickHandler={onClearClick} />
-        <Button content={"Hint"} />
+        <Button content={"Hint"} onClickHandler={onHintClick} />
         <Button content={"Surrender"} />
         <Button content={"Check"} />
         <Button content={"New game"} />

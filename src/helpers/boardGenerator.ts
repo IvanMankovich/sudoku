@@ -348,4 +348,8 @@ export class BoardGenerator {
         this.remainingNumbers[prevCellValue] + 1;
     }
   }
+
+  getCellValueByInd(ind: number): string {
+    return this.#boardSecret[ind];
+  }
 }
