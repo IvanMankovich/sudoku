@@ -241,3 +241,28 @@ export const getNumbersDictionary = (
 
   return result;
 };
+
+export function isCellValid(
+  board: string[][],
+  row: number,
+  col: number,
+  k: string,
+  cellInd: number
+): boolean {
+  for (let i = 0; i < 9; i++) {
+    const rowInd: number = 3 * Math.floor(row / 3) + Math.floor(i / 3);
+    const colInd: number = 3 * Math.floor(col / 3) + (i % 3);
+    const isRowValid: boolean =
+      board[row][i] === k && rowColToIndex(row, i) !== cellInd;
+    const isColValid: boolean =
+      board[i][col] === k && rowColToIndex(i, col) !== cellInd;
+    const isSquareValid: boolean =
+      board[rowInd][colInd] === k && cellInd !== rowInd * 9 + colInd;
+
+    if (isRowValid || isColValid || isSquareValid) {
+      return false;
+    }
+  }
+
+  return true;
+}

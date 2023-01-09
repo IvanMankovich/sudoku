@@ -5,6 +5,8 @@ import {
   getGrid,
   getRandomCellInd,
   getNumbersDictionary,
+  indexToRowCol,
+  isCellValid,
 } from "./utils";
 import {
   numbers,
@@ -27,6 +29,7 @@ export class BoardGenerator {
   difficultyLevel = DifficulityLevel.insane;
   remainingNumbers: NumbersDictionary = {};
   remainingNumbersStored: NumbersDictionary = {};
+  invalidCells: number[] = [];
 
   constructor(difficultyLevel: DifficulityLevel) {
     this.difficultyLevel = difficultyLevel;
@@ -309,7 +312,7 @@ export class BoardGenerator {
     return board.split("");
   }
 
-  checkBoard(ind: number, value: string): boolean {
+  checkCell(ind: number, value: string): boolean {
     return this.#boardSecret[ind] === value;
   }
 
@@ -329,9 +332,7 @@ export class BoardGenerator {
   }
 
   acceptAttempt(ind: number, value: number): void {
-    if (value) {
-      this.boardAnswer[ind] = value.toString();
-    }
+    this.boardAnswer[ind] = value.toString();
   }
 
   setRemainingNumbers(ind: number, value: number): void {
@@ -356,5 +357,29 @@ export class BoardGenerator {
   showBoardSecret(): void {
     this.boardAnswer = this.#boardPreset.split("");
     this.remainingNumbers = getNumbersDictionary(0);
+  }
+
+  checkBoard(): void {
+    let splittedBoard: string[][] = [];
+    for (let row = 0; row < 9; row++) {
+      splittedBoard[row] = [...this.boardAnswer.slice(9 * row, 9 * (row + 1))];
+    }
+    let invalidCells: number[] = [];
+
+    this.boardAnswer.forEach((cellValue: string, cellInd: number): void => {
+      const { row, col } = indexToRowCol(cellInd);
+      if (
+        +cellValue &&
+        !+this.board[cellInd] &&
+        !isCellValid(splittedBoard, row, col, cellValue, cellInd)
+      ) {
+        invalidCells.push(cellInd);
+      }
+    });
+    this.invalidCells = [...invalidCells];
+  }
+
+  getInvalidCells(): number[] {
+    return this.invalidCells;
   }
 }

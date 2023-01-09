@@ -25,6 +25,9 @@ export const Board = ({ board }: IBoard) => {
   const [remainingNumbers, setRemainingNumbers] = useState(
     board.remainingNumbers
   );
+  const [invalidCells, setInvalidCells] = useState<number[]>(
+    board.invalidCells
+  );
 
   const onCellClick = (ind: number): void => {
     const squareIndexes: number[] = getSquareIndexes(ind);
@@ -86,6 +89,11 @@ export const Board = ({ board }: IBoard) => {
     setRemainingNumbers(board.remainingNumbers);
   };
 
+  const checkValidity = (): void => {
+    board.checkBoard();
+    setInvalidCells(board.getInvalidCells());
+  };
+
   return (
     <React.Fragment>
       <div className="board-wrapper">
@@ -102,6 +110,7 @@ export const Board = ({ board }: IBoard) => {
               oddSquare={isOddSquare(id)}
               disabled={board.board[id] !== "0"}
               onChange={onChange}
+              isInvalid={invalidCells.includes(id)}
             />
           ))}
         </div>
@@ -110,7 +119,7 @@ export const Board = ({ board }: IBoard) => {
         <Button content={"Clear board"} onClickHandler={onClearClick} />
         <Button content={"Hint"} onClickHandler={onHintClick} />
         <Button content={"Show board"} onClickHandler={onShowBoardClick} />
-        <Button content={"Check"} />
+        <Button content={"Check"} onClickHandler={checkValidity} />
         <Button content={"New game"} />
       </div>
 

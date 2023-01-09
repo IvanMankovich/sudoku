@@ -47,6 +47,11 @@ input.cell {
     }
   }
 
+  &__invalid {
+    background-color: #ffd0bb;
+    border-color: #744747;
+  }
+
   &:disabled {
     background-color: #c2c2c2;
     border-color: #c2c2c2;
