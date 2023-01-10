@@ -12,6 +12,8 @@ input.cell {
   border-color: #dddddd;
   font-size: 1.2em;
   -moz-appearance: textfield;
+  transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
+    border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;

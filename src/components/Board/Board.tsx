@@ -36,6 +36,7 @@ export const Board = ({ board }: IBoard) => {
     setSelectedSquareInd(squareIndexes);
     setSelectedRowInd(rowIndexes);
     setSelectedColInd(colIndexes);
+    setInvalidCells([]);
   };
 
   const onBlur = (id: number, value: string): void => {
@@ -44,6 +45,7 @@ export const Board = ({ board }: IBoard) => {
     setSelectedSquareInd([]);
     setSelectedRowInd([]);
     setSelectedColInd([]);
+    setInvalidCells([]);
   };
 
   const onChange = (id: number, value: string): void => {
@@ -65,12 +67,14 @@ export const Board = ({ board }: IBoard) => {
     setRemainingNumbers(newRemainingNumbers);
     board.setRemainingNumbers(id, +value);
     board.acceptAttempt?.(id, +value);
+    setInvalidCells([]);
   };
 
   const onClearClick = (): void => {
     setBoardState(board.board);
     setRemainingNumbers(board.remainingNumbersStored);
     board.clearBoard();
+    setInvalidCells([]);
   };
 
   const onHintClick = (): void => {
@@ -87,6 +91,7 @@ export const Board = ({ board }: IBoard) => {
     board.showBoardSecret();
     setBoardState(board.boardAnswer);
     setRemainingNumbers(board.remainingNumbers);
+    setInvalidCells([]);
   };
 
   const checkValidity = (): void => {
@@ -110,7 +115,7 @@ export const Board = ({ board }: IBoard) => {
               oddSquare={isOddSquare(id)}
               disabled={board.board[id] !== "0"}
               onChange={onChange}
-              isInvalid={invalidCells.includes(id)}
+              isInvalid={Boolean(invalidCells.includes(id) && +num)}
             />
           ))}
         </div>
