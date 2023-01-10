@@ -42,11 +42,11 @@ export const Cell = ({
       maxLength={1}
       className={[
         className,
-        activeAxis ? `${className}__active-axis` : "",
-        activeSquare ? `${className}__active-square` : "",
-        oddSquare ? `${className}__odd-square` : "",
-        isInvalid ? `${className}__invalid` : "",
-      ].join(" ")}
+        activeAxis ? ` ${className}__active-axis` : "",
+        activeSquare ? ` ${className}__active-square` : "",
+        oddSquare ? ` ${className}__odd-square` : "",
+        isInvalid ? ` ${className}__invalid` : "",
+      ].join("")}
       value={value}
       disabled={disabled}
       onClick={(): void => {
