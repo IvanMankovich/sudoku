@@ -6,10 +6,18 @@
 
   & > select {
     padding: 0.5rem 0;
-    background-color: #8ccdb2;
     border-radius: 0.5rem;
+    border-color: #9dd6c3;
+    background-color: #9dd6c3;
+    transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
+      border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
     text-align: center;
     border: none;
     cursor: pointer;
+
+    &:hover {
+      background-color: #7ac1aa;
+      border-color: #7ac1aa;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { BoardGenerator } from "../../helpers/BoardGenerator";
 import {
   getColIndexes,
@@ -10,14 +10,17 @@ import {
 import { NumbersDictionary } from "../../types/types";
 import { Button } from "../Button/Button";
 import { Cell } from "../Cell/Cell";
+import { IMenuItem } from "../Menu/MenuItem/MenuItem";
+import { Modal } from "../Modal/Modal";
 import { RemainingNumbersBoard } from "../RemainingNumbersBoard/RemainingNumbersBoard";
 import "./Board.scss";
 
 export interface IBoard {
   board: BoardGenerator;
+  setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
 }
 
-export const Board = ({ board }: IBoard) => {
+export const Board = ({ board, setShowModal }: IBoard) => {
   const [selectedSquareInd, setSelectedSquareInd] = useState<number[]>([]);
   const [selectedRowInd, setSelectedRowInd] = useState<number[]>([]);
   const [selectedColInd, setSelectedColInd] = useState<number[]>([]);
@@ -99,6 +102,34 @@ export const Board = ({ board }: IBoard) => {
     setInvalidCells(board.getInvalidCells());
   };
 
+  const actionBarContent: IMenuItem[] = [
+    {
+      content: "Yes",
+      onClick: () => {
+        setShowModal(null);
+      },
+    },
+    {
+      content: "No",
+      onClick: () => {
+        setShowModal(null);
+      },
+    },
+  ];
+
+  const actionBar: ReactNode[] = actionBarContent.map(
+    (item: IMenuItem): ReactNode => (
+      <Button content={item.content} onClickHandler={item.onClick} />
+    )
+  );
+  const mainMenu: ReactNode = (
+    <Modal title="Title" text="Text" actionBar={actionBar} />
+  );
+
+  const onNewGameClick = (): void => {
+    setShowModal(mainMenu);
+  };
+
   return (
     <React.Fragment>
       <div className="board-wrapper">
@@ -125,7 +156,7 @@ export const Board = ({ board }: IBoard) => {
         <Button content={"Hint"} onClickHandler={onHintClick} />
         <Button content={"Show board"} onClickHandler={onShowBoardClick} />
         <Button content={"Check"} onClickHandler={checkValidity} />
-        <Button content={"New game"} />
+        <Button content={"New game"} onClickHandler={onNewGameClick} />
       </div>
 
       <RemainingNumbersBoard remainingNumbers={remainingNumbers} />
