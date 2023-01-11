@@ -3,7 +3,7 @@ import { BoardGenerator } from "./helpers/BoardGenerator";
 import { Layout } from "./components/Layout/Layout";
 import { Button } from "./components/Button/Button";
 import { Select } from "./components/Select/Select";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { difficulttOptions } from "./constants/difficulties";
 import { DifficulityLevel, GameState } from "./types/types";
 
@@ -13,6 +13,7 @@ function App() {
     DifficulityLevel.easy
   );
   const [showBoard, setShowBoard] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<ReactNode | null>(null);
 
   const handleDifficultyChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -25,7 +26,11 @@ function App() {
   };
 
   return (
-    <Layout gameState={gameState}>
+    <Layout
+      gameState={gameState}
+      setShowModal={setShowModal}
+      showModal={showModal}
+    >
       {difficulty}
       {!showBoard ? (
         <div>
@@ -50,7 +55,12 @@ function App() {
           />
         </div>
       ) : null}
-      {showBoard ? <Board board={new BoardGenerator(difficulty)} /> : null}
+      {showBoard ? (
+        <Board
+          board={new BoardGenerator(difficulty)}
+          setShowModal={setShowModal}
+        />
+      ) : null}
     </Layout>
   );
 }
