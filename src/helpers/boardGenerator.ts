@@ -31,24 +31,6 @@ export class BoardGenerator {
   remainingNumbersStored: NumbersDictionary = {};
   invalidCells: number[] = [];
 
-  constructor(difficultyLevel: DifficulityLevel) {
-    this.difficultyLevel = difficultyLevel;
-    this.#secret = this.generateSecret();
-    this.#boardPreset = this.generateBoardPreset(this.#secret);
-    this.#boardPreset = this.randomizeBoardPreset(this.#boardPreset);
-    this.#boardSecret = this.getSolvedBoardSecret(this.#boardPreset);
-    this.board = this.generateBoard(this.#boardPreset, difficultyLevel);
-    this.boardAnswer = this.board.slice();
-    this.boardCheckAttempts = 0;
-    // let aaa: string[][] = [];
-
-    // for (let bbb = 9; bbb > 0; bbb--) {
-    //   aaa[bbb - 1] = this.board.slice(9 * (bbb - 1), 9 * bbb);
-    // }
-    // console.log("after", aaa);
-    // console.log(sodokoSolver(aaa));
-  }
-
   generateSecret(): string {
     let result: string = "";
     let tempNumbers: number[] = numbers.slice();
@@ -324,6 +306,7 @@ export class BoardGenerator {
     this.#boardSecret = this.getSolvedBoardSecret(this.#boardPreset);
     this.board = this.generateBoard(this.#boardPreset, difficultyLevel);
     this.boardAnswer = this.board.slice();
+    this.boardCheckAttempts = 0;
   }
 
   clearBoard() {

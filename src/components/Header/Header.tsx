@@ -1,9 +1,8 @@
 import { ReactNode } from "react";
+import { HelpMenu } from "../../modules/Menus/HelpMenu/HelpMenu";
+import { MainMenu } from "../../modules/Menus/MainMenu/MainMenu";
 import { GameState } from "../../types/types";
 import { Button } from "../Button/Button";
-import { Menu } from "../Menu/Menu";
-import { IMenuItem } from "../Menu/MenuItem/MenuItem";
-import { MenuPosition } from "../Menu/types";
 
 import "./Header.scss";
 
@@ -13,32 +12,13 @@ export interface IHeader {
 }
 
 export const Header = ({ gameState, setShowModal }: IHeader) => {
-  const mainMenuItems: IMenuItem[] = [
-    {
-      content: "Close",
-    },
-    { content: "New game" },
-  ];
-  const mainMenu: ReactNode = (
-    <Menu position={MenuPosition.left} menuItems={mainMenuItems} />
-  );
-
-  const helpMenuItems: IMenuItem[] = [
-    {
-      content: "Rules",
-    },
-    { content: "About" },
-  ];
-  const helpMenu: ReactNode = (
-    <Menu position={MenuPosition.right} menuItems={helpMenuItems} />
-  );
   return (
     <header className="header">
       <div>
         <Button
           content="Menu"
           onClickHandler={() => {
-            setShowModal(mainMenu);
+            setShowModal(<MainMenu setShowModal={setShowModal} />);
           }}
         />
       </div>
@@ -51,7 +31,7 @@ export const Header = ({ gameState, setShowModal }: IHeader) => {
         <Button
           content="Help"
           onClickHandler={() => {
-            setShowModal(helpMenu);
+            setShowModal(<HelpMenu setShowModal={setShowModal} />);
           }}
         />
       </div>
