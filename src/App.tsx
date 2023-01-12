@@ -1,26 +1,30 @@
+import { useState } from "react";
+import { useModal } from "./hooks/useModal";
 import { Board } from "./components/Board/Board";
 import { BoardGenerator } from "./helpers/BoardGenerator";
 import { Layout } from "./components/Layout/Layout";
 import { Button } from "./components/Button/Button";
 import { Select } from "./components/Select/Select";
-import { ReactNode, useState } from "react";
 import { difficulttOptions } from "./constants/difficulties";
 import { DifficulityLevel, GameState } from "./types/types";
 
 function App() {
+  const { showModal, setShowModal } = useModal();
   const [gameState, setGameState] = useState<GameState>(GameState.initial);
   const [difficulty, setDifficulty] = useState<DifficulityLevel>(
     DifficulityLevel.easy
   );
   const [showBoard, setShowBoard] = useState<boolean>(false);
-  const [showModal, setShowModal] = useState<ReactNode | null>(null);
+  const [board] = useState<BoardGenerator>(new BoardGenerator());
 
   const handleDifficultyChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
     setDifficulty(event.target.value as DifficulityLevel);
   };
+
   const handleStartGameClick = (): void => {
+    board.generateNewBoard(difficulty);
     setGameState(GameState.inProgress);
     setShowBoard(true);
   };
@@ -55,12 +59,7 @@ function App() {
           />
         </div>
       ) : null}
-      {showBoard ? (
-        <Board
-          board={new BoardGenerator(difficulty)}
-          setShowModal={setShowModal}
-        />
-      ) : null}
+      {showBoard ? <Board board={board} setShowModal={setShowModal} /> : null}
     </Layout>
   );
 }

@@ -7,12 +7,12 @@ import {
   getSquareIndexes,
   isOddSquare,
 } from "../../helpers/utils";
+import { NewGame } from "../../modules/Modals/NewGame/NewGame";
 import { NumbersDictionary } from "../../types/types";
 import { Button } from "../Button/Button";
 import { Cell } from "../Cell/Cell";
-import { IMenuItem } from "../Menu/MenuItem/MenuItem";
-import { Modal } from "../Modal/Modal";
 import { RemainingNumbersBoard } from "../RemainingNumbersBoard/RemainingNumbersBoard";
+
 import "./Board.scss";
 
 export interface IBoard {
@@ -102,32 +102,8 @@ export const Board = ({ board, setShowModal }: IBoard) => {
     setInvalidCells(board.getInvalidCells());
   };
 
-  const actionBarContent: IMenuItem[] = [
-    {
-      content: "Yes",
-      onClick: () => {
-        setShowModal(null);
-      },
-    },
-    {
-      content: "No",
-      onClick: () => {
-        setShowModal(null);
-      },
-    },
-  ];
-
-  const actionBar: ReactNode[] = actionBarContent.map(
-    (item: IMenuItem): ReactNode => (
-      <Button content={item.content} onClickHandler={item.onClick} />
-    )
-  );
-  const mainMenu: ReactNode = (
-    <Modal title="Title" text="Text" actionBar={actionBar} />
-  );
-
   const onNewGameClick = (): void => {
-    setShowModal(mainMenu);
+    setShowModal(<NewGame setShowModal={setShowModal} />);
   };
 
   return (

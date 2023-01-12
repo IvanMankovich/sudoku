@@ -16,7 +16,11 @@ export const Menu = ({
     <ul className={`menu menu__${position}`}>
       {items.map(
         (item: IMenuItem): ReactNode => (
-          <MenuItem content={item.content} onClick={item.onClick} />
+          <MenuItem
+            key={item.content}
+            content={item.content}
+            onClick={item.onClick}
+          />
         )
       )}
     </ul>
