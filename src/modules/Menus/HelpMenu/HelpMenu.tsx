@@ -4,15 +4,12 @@ import { IMenuItem } from "../../../components/Menu/MenuItem/MenuItem";
 import { MenuPosition } from "../../../components/Menu/types";
 import { About } from "../../Modals/About/About";
 import { Rules } from "../../Modals/Rules/Rules";
-// import { useModal } from "../../../hooks/useModal";
 
 export interface IHelpMenu {
   setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
 }
 
 export const HelpMenu = ({ setShowModal }: IHelpMenu): JSX.Element => {
-  // const { setShowModal } = useModal();
-
   const helpMenuItems: IMenuItem[] = [
     {
       content: "Rules",

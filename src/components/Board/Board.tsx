@@ -103,7 +103,18 @@ export const Board = ({ board, setShowModal }: IBoard) => {
   };
 
   const onNewGameClick = (): void => {
-    setShowModal(<NewGame setShowModal={setShowModal} />);
+    setShowModal(
+      <NewGame
+        setShowModal={setShowModal}
+        onNewGameConfirm={() => {
+          board.generateNewBoard(board.difficultyLevel);
+          setBoardState(board.board);
+          setRemainingNumbers(board.remainingNumbersStored);
+          board.clearBoard();
+          setInvalidCells([]);
+        }}
+      />
+    );
   };
 
   return (

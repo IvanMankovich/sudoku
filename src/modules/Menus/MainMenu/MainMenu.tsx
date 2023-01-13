@@ -8,8 +8,6 @@ export interface IHelpMenu {
 }
 
 export const MainMenu = ({ setShowModal }: IHelpMenu): JSX.Element => {
-  // const { setShowModal } = useModal();
-
   const mainMenuItems: IMenuItem[] = [
     {
       content: "Close",
