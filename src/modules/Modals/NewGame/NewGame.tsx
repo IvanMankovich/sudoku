@@ -5,13 +5,18 @@ import { Modal } from "../../../components/Modal/Modal";
 
 export interface INewGameModal {
   setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
+  onNewGameConfirm(): void;
 }
 
-export const NewGame = ({ setShowModal }: INewGameModal): JSX.Element => {
+export const NewGame = ({
+  setShowModal,
+  onNewGameConfirm,
+}: INewGameModal): JSX.Element => {
   const actionBarContent: IMenuItem[] = [
     {
       content: "Yes",
       onClick: () => {
+        onNewGameConfirm();
         setShowModal(null);
       },
     },
@@ -33,5 +38,11 @@ export const NewGame = ({ setShowModal }: INewGameModal): JSX.Element => {
     )
   );
 
-  return <Modal title="Title" text="Text" actionBar={actionBar} />;
+  return (
+    <Modal
+      title="New game"
+      text="Are you really want to start new game with equal difficulty? Current game progress will be lost."
+      actionBar={actionBar}
+    />
+  );
 };
