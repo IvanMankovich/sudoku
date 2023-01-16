@@ -35,7 +35,6 @@ function App() {
       setShowModal={setShowModal}
       showModal={showModal}
     >
-      {difficulty}
       {!showBoard ? (
         <div>
           <section>

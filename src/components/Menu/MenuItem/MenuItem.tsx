@@ -1,14 +1,16 @@
+import { ReactNode } from "react";
 import "./MenuItem.scss";
 
 export interface IMenuItem {
-  content: string;
+  id: string;
+  content: ReactNode | ReactNode[];
   onClick?(...args: any[]): void;
 }
 
 export const MenuItem = ({ content, onClick }: IMenuItem) => {
   return (
-    <ul className="menu-item" onClick={onClick}>
-      <p>{content}</p>
-    </ul>
+    <li className="menu-item" onClick={onClick}>
+      {content}
+    </li>
   );
 };

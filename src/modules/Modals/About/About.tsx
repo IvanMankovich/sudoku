@@ -10,7 +10,8 @@ export interface IRulesModal {
 export const About = ({ setShowModal }: IRulesModal): JSX.Element => {
   const actionBarContent: IMenuItem[] = [
     {
-      content: "Close",
+      id: "close",
+      content: <p>Close</p>,
       onClick: () => {
         setShowModal(null);
       },
@@ -20,7 +21,7 @@ export const About = ({ setShowModal }: IRulesModal): JSX.Element => {
   const actionBar: ReactNode[] = actionBarContent.map(
     (item: IMenuItem): ReactNode => (
       <Button
-        key={item.content}
+        key={item.id}
         content={item.content}
         onClickHandler={item.onClick}
       />
@@ -30,7 +31,14 @@ export const About = ({ setShowModal }: IRulesModal): JSX.Element => {
   return (
     <Modal
       title="About"
-      text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi perferendis tempore voluptate aperiam dolorum! Hic modi repellendus explicabo harum libero! Quidem officia adipisci sapiente itaque placeat consectetur dolor ut rerum."
+      content={
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi
+          perferendis tempore voluptate aperiam dolorum! Hic modi repellendus
+          explicabo harum libero! Quidem officia adipisci sapiente itaque
+          placeat consectetur dolor ut rerum.
+        </p>
+      }
       actionBar={actionBar}
     />
   );

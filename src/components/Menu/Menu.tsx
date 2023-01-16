@@ -17,7 +17,8 @@ export const Menu = ({
       {items.map(
         (item: IMenuItem): ReactNode => (
           <MenuItem
-            key={item.content}
+            key={item.id}
+            id={item.id}
             content={item.content}
             onClick={item.onClick}
           />

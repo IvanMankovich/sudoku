@@ -3,11 +3,11 @@ import "./Modal.scss";
 
 export interface IModal {
   title?: string;
-  text?: string;
+  content?: ReactNode | ReactNode[];
   actionBar?: ReactNode[];
 }
 
-export const Modal = ({ title, text, actionBar }: IModal) => {
+export const Modal = ({ title, content, actionBar }: IModal) => {
   return (
     <div className="modal">
       {title ? (
@@ -15,11 +15,7 @@ export const Modal = ({ title, text, actionBar }: IModal) => {
           <p>{title}</p>
         </header>
       ) : null}
-      {text ? (
-        <div className="modal-content">
-          <p>{text}</p>
-        </div>
-      ) : null}
+      {content ? <div className="modal-content">{content}</div> : null}
       {actionBar ? <footer className="modal-bar">{actionBar}</footer> : null}
     </div>
   );
