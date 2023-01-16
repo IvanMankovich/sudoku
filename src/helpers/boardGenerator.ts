@@ -7,6 +7,9 @@ import {
   getNumbersDictionary,
   indexToRowCol,
   isCellValid,
+  getSquareIndexes,
+  getRowIndexes,
+  getColIndexes,
 } from "./utils";
 import {
   numbers,
@@ -18,18 +21,26 @@ import {
   NumbersDictionary,
   RotationLevel,
 } from "../types/types";
+import { makeAutoObservable } from "mobx";
 
 export class BoardGenerator {
   board: string[] = [];
-  #boardSecret: string[] = [];
+  boardSecret: string[] = [];
   boardAnswer: string[] = [];
   boardCheckAttempts: number = 0;
-  #boardPreset: string = "";
-  #secret: string = "";
+  boardPreset: string = "";
+  secret: string = "";
   difficultyLevel = DifficulityLevel.insane;
   remainingNumbers: NumbersDictionary = {};
   remainingNumbersStored: NumbersDictionary = {};
   invalidCells: number[] = [];
+  selectedSquareInd: number[] = [];
+  selectedRowInd: number[] = [];
+  selectedColInd: number[] = [];
+
+  constructor() {
+    makeAutoObservable(this);
+  }
 
   generateSecret(): string {
     let result: string = "";
@@ -234,26 +245,6 @@ export class BoardGenerator {
     return result;
   }
 
-  // generateBoard(board: string): string[][] {
-  //   const result: string[] = getGrid();
-  //   const visibleCells: number = getRandomInt(20, 35);
-  //   let availableIndexes: number[] = getRange(0, 80);
-
-  //   for (let i = 0; i < visibleCells; i++) {
-  //     const randomCellInd: number = getRandomElem(availableIndexes);
-  //     result[randomCellInd] = board[randomCellInd];
-  //     availableIndexes = availableIndexes.filter(
-  //       (num: number): boolean => num !== randomCellInd
-  //     );
-  //   }
-
-  //   let splittedBoard: string[][] = [];
-  //   for (let row = 0; row < 9; row++) {
-  //     splittedBoard[row] = result.slice(9 * row, 9 * (row + 1));
-  //   }
-  //   return splittedBoard;
-  // }
-
   generateBoard(board: string, difficulityLevel: DifficulityLevel): string[] {
     const result: string[] = getGrid();
     const visibleCells: number = getRandomInt(
@@ -282,29 +273,21 @@ export class BoardGenerator {
     return result;
   }
 
-  // getBoardSecret(board: string): string[][] {
-  //   let splittedBoard: string[][] = [];
-  //   for (let row = 0; row < 9; row++) {
-  //     splittedBoard[row] = [...board.slice(9 * row, 9 * (row + 1)).split("")];
-  //   }
-  //   return splittedBoard;
-  // }
-
   getSolvedBoardSecret(board: string): string[] {
     return board.split("");
   }
 
   checkCell(ind: number, value: string): boolean {
-    return this.#boardSecret[ind] === value;
+    return this.boardSecret[ind] === value;
   }
 
   generateNewBoard(difficultyLevel: DifficulityLevel): void {
     this.difficultyLevel = difficultyLevel;
-    this.#secret = this.generateSecret();
-    this.#boardPreset = this.generateBoardPreset(this.#secret);
-    this.#boardPreset = this.randomizeBoardPreset(this.#boardPreset);
-    this.#boardSecret = this.getSolvedBoardSecret(this.#boardPreset);
-    this.board = this.generateBoard(this.#boardPreset, difficultyLevel);
+    this.secret = this.generateSecret();
+    this.boardPreset = this.generateBoardPreset(this.secret);
+    this.boardPreset = this.randomizeBoardPreset(this.boardPreset);
+    this.boardSecret = this.getSolvedBoardSecret(this.boardPreset);
+    this.board = this.generateBoard(this.boardPreset, difficultyLevel);
     this.boardAnswer = this.board.slice();
     this.boardCheckAttempts = 0;
   }
@@ -334,11 +317,11 @@ export class BoardGenerator {
   }
 
   getCellValueByInd(ind: number): string {
-    return this.#boardSecret[ind];
+    return this.boardSecret[ind];
   }
 
   showBoardSecret(): void {
-    this.boardAnswer = this.#boardPreset.split("");
+    this.boardAnswer = this.boardPreset.split("");
     this.remainingNumbers = getNumbersDictionary(0);
   }
 
@@ -362,7 +345,32 @@ export class BoardGenerator {
     this.invalidCells = [...invalidCells];
   }
 
-  getInvalidCells(): number[] {
-    return this.invalidCells;
+  onSelectCell(ind: number): void {
+    this.selectedSquareInd = getSquareIndexes(ind);
+    this.selectedRowInd = getRowIndexes(ind);
+    this.selectedColInd = getColIndexes(ind);
+    this.invalidCells = [];
+  }
+
+  onBlurCell(): void {
+    this.selectedSquareInd = [];
+    this.selectedRowInd = [];
+    this.selectedColInd = [];
+    this.invalidCells = [];
+  }
+
+  getSelectedSquareInd(): number[] {
+    return this.selectedSquareInd;
+  }
+
+  getHint(): void {
+    const freeCellIndexes: number[] = [];
+    this.boardAnswer.forEach((cellValue: string, ind: number): void => {
+      cellValue === "0" && freeCellIndexes.push(ind);
+    });
+    const randomCellInd: number = getRandomElem(freeCellIndexes);
+    const value: string = this.getCellValueByInd(randomCellInd);
+    this.setRemainingNumbers(randomCellInd, +value);
+    this.acceptAttempt?.(randomCellInd, +value);
   }
 }
