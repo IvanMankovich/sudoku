@@ -1,21 +1,21 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import { Button } from "../../../components/Button/Button";
 import { IMenuItem } from "../../../components/Menu/MenuItem/MenuItem";
 import { Modal } from "../../../components/Modal/Modal";
 import { Select } from "../../../components/Select/Select";
 import { difficulttOptions } from "../../../constants/difficulties";
-import { BoardGenerator } from "../../../helpers/BoardGenerator";
-import { DifficulityLevel } from "../../../types/types";
+import { BoardStore } from "../../../store/BoardStore";
+import { RootContext } from "../../../store/RootStore";
+import { DifficulityLevel, GameState } from "../../../types/types";
 
 export interface INewGameModal {
-  setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
-  board: BoardGenerator;
+  board: BoardStore;
+  gameState: GameState;
 }
 
-export const NewGame = ({
-  setShowModal,
-  board,
-}: INewGameModal): JSX.Element => {
+export const NewGame = ({ board, gameState }: INewGameModal): JSX.Element => {
+  const { modalsStore } = useContext(RootContext);
+
   const [difficulty, setDifficulty] = useState<DifficulityLevel>(
     DifficulityLevel.easy
   );
@@ -31,15 +31,17 @@ export const NewGame = ({
       id: "yes",
       content: "Yes",
       onClick: () => {
+        // setGameState(GameState.inProgress);
+        // setShowBoard(true);
         board.generateNewBoard(difficulty);
-        setShowModal(null);
+        modalsStore.setModal(null);
       },
     },
     {
       id: "no",
       content: "No",
       onClick: () => {
-        setShowModal(null);
+        modalsStore.setModal(null);
       },
     },
   ];

@@ -1,31 +1,32 @@
-import { ReactNode } from "react";
+import { ReactNode, useContext } from "react";
 import { Button } from "../../../components/Button/Button";
 import { IMenuItem } from "../../../components/Menu/MenuItem/MenuItem";
 import { Modal } from "../../../components/Modal/Modal";
+import { RootContext } from "../../../store/RootStore";
 
 export interface IResetBoardModal {
-  setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
   onResetBoardConfirm(): void;
 }
 
 export const ResetBoard = ({
-  setShowModal,
   onResetBoardConfirm: onNewGameConfirm,
 }: IResetBoardModal): JSX.Element => {
+  const { modalsStore } = useContext(RootContext);
+
   const actionBarContent: IMenuItem[] = [
     {
       id: "yes",
       content: "Yes",
       onClick: () => {
         onNewGameConfirm();
-        setShowModal(null);
+        modalsStore.setModal(null);
       },
     },
     {
       id: "no",
       content: "No",
       onClick: () => {
-        setShowModal(null);
+        modalsStore.setModal(null);
       },
     },
   ];

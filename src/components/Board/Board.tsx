@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { BoardGenerator } from "../../helpers/BoardGenerator";
+import React, { ReactNode, useContext } from "react";
+import { BoardStore } from "../../store/BoardStore";
 import { isOddSquare } from "../../helpers/utils";
 import { ResetBoard } from "../../modules/Modals/ResetBoard/ResetBoard";
 import { Button } from "../Button/Button";
@@ -8,13 +8,15 @@ import { RemainingNumbersBoard } from "../RemainingNumbersBoard/RemainingNumbers
 import { observer } from "mobx-react-lite";
 
 import "./Board.scss";
+import { RootContext } from "../../store/RootStore";
 
 export interface IBoard {
-  board: BoardGenerator;
-  setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
+  board: BoardStore;
 }
 
-export const Board = observer(({ board, setShowModal }: IBoard) => {
+export const Board = observer(({ board }: IBoard) => {
+  const { modalsStore } = useContext(RootContext);
+
   const onCellClick = (ind: number): void => {
     board.onSelectCell(ind);
     board.getSelectedSquareInd();
@@ -47,9 +49,8 @@ export const Board = observer(({ board, setShowModal }: IBoard) => {
   };
 
   const onResetBoardClick = (): void => {
-    setShowModal(
+    modalsStore.setModal(
       <ResetBoard
-        setShowModal={setShowModal}
         onResetBoardConfirm={() => {
           board.generateNewBoard(board.difficultyLevel);
           board.clearBoard();
