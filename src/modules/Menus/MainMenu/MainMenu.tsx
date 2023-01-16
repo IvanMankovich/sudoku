@@ -1,29 +1,33 @@
-import { ReactNode } from "react";
+import { ReactNode, useContext } from "react";
 import { Menu } from "../../../components/Menu/Menu";
 import { IMenuItem } from "../../../components/Menu/MenuItem/MenuItem";
 import { MenuPosition } from "../../../components/Menu/types";
-import { BoardGenerator } from "../../../helpers/BoardGenerator";
+import { BoardStore } from "../../../store/BoardStore";
+import { RootContext } from "../../../store/RootStore";
+import { GameState } from "../../../types/types";
 import { NewGame } from "../../Modals/NewGame/NewGame";
 
 export interface IMainMenu {
-  setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
-  board: BoardGenerator;
+  board: BoardStore;
+  gameState: GameState;
 }
 
-export const MainMenu = ({ setShowModal, board }: IMainMenu): JSX.Element => {
+export const MainMenu = ({ board, gameState }: IMainMenu): JSX.Element => {
+  const { modalsStore } = useContext(RootContext);
+
   const mainMenuItems: IMenuItem[] = [
     {
       id: "close",
       content: <p>Close</p>,
       onClick: () => {
-        setShowModal(null);
+        modalsStore.setModal(null);
       },
     },
     {
       id: "newGame",
       content: <p>New game</p>,
       onClick: () => {
-        setShowModal(<NewGame setShowModal={setShowModal} board={board} />);
+        modalsStore.setModal(<NewGame board={board} gameState={gameState} />);
       },
     },
   ];

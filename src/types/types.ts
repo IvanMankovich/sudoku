@@ -26,6 +26,7 @@ export interface DifficultyParameters {
 export enum GameState {
   initial = "initial",
   inProgress = "inProgress",
+  paused = "paused",
   ended = "ended",
 }
 

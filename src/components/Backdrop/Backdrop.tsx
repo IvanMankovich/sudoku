@@ -1,13 +1,15 @@
-import { ReactNode, useRef } from "react";
+import { ReactNode, useContext, useRef } from "react";
+import { RootContext } from "../../store/RootStore";
 
 import "./Backdrop.scss";
 
 export interface IBackdrop {
-  setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
   content: ReactNode;
 }
 
-export const Backdrop = ({ setShowModal, content }: IBackdrop) => {
+export const Backdrop = ({ content }: IBackdrop) => {
+  const { modalsStore } = useContext(RootContext);
+
   const backdropRef = useRef<HTMLDivElement | null>(null);
 
   return (
@@ -16,7 +18,7 @@ export const Backdrop = ({ setShowModal, content }: IBackdrop) => {
       ref={backdropRef}
       onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (event.target === backdropRef.current) {
-          setShowModal(null);
+          modalsStore.setModal(null);
         }
       }}
     >

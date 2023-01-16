@@ -1,21 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useModal } from "./hooks/useModal";
 import { Board } from "./components/Board/Board";
-import { BoardGenerator } from "./helpers/BoardGenerator";
 import { Layout } from "./components/Layout/Layout";
 import { Button } from "./components/Button/Button";
 import { Select } from "./components/Select/Select";
 import { difficulttOptions } from "./constants/difficulties";
 import { DifficulityLevel, GameState } from "./types/types";
+import { RootContext } from "./store/RootStore";
+import { observer } from "mobx-react-lite";
 
-function App() {
-  const { showModal, setShowModal } = useModal();
-  const [gameState, setGameState] = useState<GameState>(GameState.initial);
+const App = observer((): JSX.Element => {
+  const { boardStore, generalStore, modalsStore } = useContext(RootContext);
   const [difficulty, setDifficulty] = useState<DifficulityLevel>(
     DifficulityLevel.easy
   );
-  const [showBoard, setShowBoard] = useState<boolean>(false);
-  const [board] = useState<BoardGenerator>(new BoardGenerator());
 
   const handleDifficultyChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -24,19 +22,17 @@ function App() {
   };
 
   const handleStartGameClick = (): void => {
-    board.generateNewBoard(difficulty);
-    setGameState(GameState.inProgress);
-    setShowBoard(true);
+    boardStore.generateNewBoard(difficulty);
+    generalStore.setGameState(GameState.inProgress);
   };
 
   return (
     <Layout
-      gameState={gameState}
-      setShowModal={setShowModal}
-      showModal={showModal}
-      board={board}
+      gameState={generalStore.gameState}
+      showModal={modalsStore.modal}
+      board={boardStore}
     >
-      {!showBoard ? (
+      {generalStore.gameState === GameState.initial ? (
         <div>
           <section>
             <h2>Welcome sudoku</h2>
@@ -59,9 +55,12 @@ function App() {
           />
         </div>
       ) : null}
-      {showBoard ? <Board board={board} setShowModal={setShowModal} /> : null}
+      {generalStore.gameState === GameState.inProgress ||
+      generalStore.gameState === GameState.paused ? (
+        <Board board={boardStore} />
+      ) : null}
     </Layout>
   );
-}
+});
 
 export default App;

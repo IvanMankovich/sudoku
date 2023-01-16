@@ -1,3 +1,5 @@
+import { makeAutoObservable } from "mobx";
+import { RootStore } from "./RootStore";
 import {
   getRandomElem,
   getRandomInt,
@@ -10,7 +12,7 @@ import {
   getSquareIndexes,
   getRowIndexes,
   getColIndexes,
-} from "./utils";
+} from "../helpers/utils";
 import {
   numbers,
   gridIndexes,
@@ -21,9 +23,10 @@ import {
   NumbersDictionary,
   RotationLevel,
 } from "../types/types";
-import { makeAutoObservable } from "mobx";
 
-export class BoardGenerator {
+export class BoardStore {
+  root: RootStore;
+
   board: string[] = [];
   boardSecret: string[] = [];
   boardAnswer: string[] = [];
@@ -38,7 +41,8 @@ export class BoardGenerator {
   selectedRowInd: number[] = [];
   selectedColInd: number[] = [];
 
-  constructor() {
+  constructor(root: RootStore) {
+    this.root = root;
     makeAutoObservable(this);
   }
 

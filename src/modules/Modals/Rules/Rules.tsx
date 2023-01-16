@@ -1,19 +1,18 @@
-import { ReactNode } from "react";
+import { ReactNode, useContext } from "react";
 import { Button } from "../../../components/Button/Button";
 import { IMenuItem } from "../../../components/Menu/MenuItem/MenuItem";
 import { Modal } from "../../../components/Modal/Modal";
+import { RootContext } from "../../../store/RootStore";
 
-export interface IRulesModal {
-  setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
-}
+export const Rules = (): JSX.Element => {
+  const { modalsStore } = useContext(RootContext);
 
-export const Rules = ({ setShowModal }: IRulesModal): JSX.Element => {
   const actionBarContent: IMenuItem[] = [
     {
       id: "understand",
       content: "I understand",
       onClick: () => {
-        setShowModal(null);
+        modalsStore.setModal(null);
       },
     },
   ];
