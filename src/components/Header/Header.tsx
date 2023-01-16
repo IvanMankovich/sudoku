@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { BoardGenerator } from "../../helpers/BoardGenerator";
 import { HelpMenu } from "../../modules/Menus/HelpMenu/HelpMenu";
 import { MainMenu } from "../../modules/Menus/MainMenu/MainMenu";
 import { GameState } from "../../types/types";
@@ -9,16 +10,19 @@ import "./Header.scss";
 export interface IHeader {
   gameState: GameState;
   setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
+  board: BoardGenerator;
 }
 
-export const Header = ({ gameState, setShowModal }: IHeader) => {
+export const Header = ({ gameState, setShowModal, board }: IHeader) => {
   return (
     <header className="header">
       <div>
         <Button
           content="Menu"
           onClickHandler={() => {
-            setShowModal(<MainMenu setShowModal={setShowModal} />);
+            setShowModal(
+              <MainMenu setShowModal={setShowModal} board={board} />
+            );
           }}
         />
       </div>

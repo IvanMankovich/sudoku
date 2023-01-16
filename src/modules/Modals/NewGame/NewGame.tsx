@@ -4,16 +4,17 @@ import { IMenuItem } from "../../../components/Menu/MenuItem/MenuItem";
 import { Modal } from "../../../components/Modal/Modal";
 import { Select } from "../../../components/Select/Select";
 import { difficulttOptions } from "../../../constants/difficulties";
+import { BoardGenerator } from "../../../helpers/BoardGenerator";
 import { DifficulityLevel } from "../../../types/types";
 
 export interface INewGameModal {
   setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
-  onNewGameConfirm(): void;
+  board: BoardGenerator;
 }
 
 export const NewGame = ({
   setShowModal,
-  onNewGameConfirm,
+  board,
 }: INewGameModal): JSX.Element => {
   const [difficulty, setDifficulty] = useState<DifficulityLevel>(
     DifficulityLevel.easy
@@ -30,7 +31,7 @@ export const NewGame = ({
       id: "yes",
       content: "Yes",
       onClick: () => {
-        onNewGameConfirm();
+        board.generateNewBoard(difficulty);
         setShowModal(null);
       },
     },

@@ -34,6 +34,7 @@ function App() {
       gameState={gameState}
       setShowModal={setShowModal}
       showModal={showModal}
+      board={board}
     >
       {!showBoard ? (
         <div>
