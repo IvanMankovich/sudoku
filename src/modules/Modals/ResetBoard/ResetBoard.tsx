@@ -3,15 +3,27 @@ import { Button } from "../../../components/Button/Button";
 import { IMenuItem } from "../../../components/Menu/MenuItem/MenuItem";
 import { Modal } from "../../../components/Modal/Modal";
 
-export interface IRulesModal {
+export interface IResetBoardModal {
   setShowModal: React.Dispatch<React.SetStateAction<ReactNode>>;
+  onResetBoardConfirm(): void;
 }
 
-export const Rules = ({ setShowModal }: IRulesModal): JSX.Element => {
+export const ResetBoard = ({
+  setShowModal,
+  onResetBoardConfirm: onNewGameConfirm,
+}: IResetBoardModal): JSX.Element => {
   const actionBarContent: IMenuItem[] = [
     {
-      id: "understand",
-      content: "I understand",
+      id: "yes",
+      content: "Yes",
+      onClick: () => {
+        onNewGameConfirm();
+        setShowModal(null);
+      },
+    },
+    {
+      id: "no",
+      content: "No",
       onClick: () => {
         setShowModal(null);
       },
@@ -30,13 +42,10 @@ export const Rules = ({ setShowModal }: IRulesModal): JSX.Element => {
 
   return (
     <Modal
-      title="Rules"
+      title="Reset board game"
       content={
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi
-          perferendis tempore voluptate aperiam dolorum! Hic modi repellendus
-          explicabo harum libero! Quidem officia adipisci sapiente itaque
-          placeat consectetur dolor ut rerum.
+          Do you really want to reset board? Current game progress will be lost.
         </p>
       }
       actionBar={actionBar}

@@ -7,7 +7,7 @@ import {
   getSquareIndexes,
   isOddSquare,
 } from "../../helpers/utils";
-import { NewGame } from "../../modules/Modals/NewGame/NewGame";
+import { ResetBoard } from "../../modules/Modals/ResetBoard/ResetBoard";
 import { NumbersDictionary } from "../../types/types";
 import { Button } from "../Button/Button";
 import { Cell } from "../Cell/Cell";
@@ -102,11 +102,11 @@ export const Board = ({ board, setShowModal }: IBoard) => {
     setInvalidCells(board.getInvalidCells());
   };
 
-  const onNewGameClick = (): void => {
+  const onResetBoardClick = (): void => {
     setShowModal(
-      <NewGame
+      <ResetBoard
         setShowModal={setShowModal}
-        onNewGameConfirm={() => {
+        onResetBoardConfirm={() => {
           board.generateNewBoard(board.difficultyLevel);
           setBoardState(board.board);
           setRemainingNumbers(board.remainingNumbersStored);
@@ -143,7 +143,7 @@ export const Board = ({ board, setShowModal }: IBoard) => {
         <Button content={"Hint"} onClickHandler={onHintClick} />
         <Button content={"Show board"} onClickHandler={onShowBoardClick} />
         <Button content={"Check"} onClickHandler={checkValidity} />
-        <Button content={"New game"} onClickHandler={onNewGameClick} />
+        <Button content={"Reset board"} onClickHandler={onResetBoardClick} />
       </div>
 
       <RemainingNumbersBoard remainingNumbers={remainingNumbers} />

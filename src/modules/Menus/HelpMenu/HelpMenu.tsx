@@ -12,13 +12,15 @@ export interface IHelpMenu {
 export const HelpMenu = ({ setShowModal }: IHelpMenu): JSX.Element => {
   const helpMenuItems: IMenuItem[] = [
     {
-      content: "Rules",
+      id: "rules",
+      content: <p>Rules</p>,
       onClick: () => {
         setShowModal(<Rules setShowModal={setShowModal} />);
       },
     },
     {
-      content: "About",
+      id: "about",
+      content: <p>About</p>,
       onClick: () => {
         setShowModal(<About setShowModal={setShowModal} />);
       },
