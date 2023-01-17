@@ -1,14 +1,14 @@
-import React, { ReactNode, useContext } from "react";
+import React, { useContext } from "react";
+import { observer } from "mobx-react-lite";
+import { RootContext } from "../../store/RootStore";
 import { BoardStore } from "../../store/BoardStore";
 import { isOddSquare } from "../../helpers/utils";
 import { ResetBoard } from "../../modules/Modals/ResetBoard/ResetBoard";
 import { Button } from "../Button/Button";
 import { Cell } from "../Cell/Cell";
 import { RemainingNumbersBoard } from "../RemainingNumbersBoard/RemainingNumbersBoard";
-import { observer } from "mobx-react-lite";
 
 import "./Board.scss";
-import { RootContext } from "../../store/RootStore";
 
 export interface IBoard {
   board: BoardStore;
