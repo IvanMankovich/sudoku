@@ -23,6 +23,7 @@ import {
   NumbersDictionary,
   RotationLevel,
 } from "../types/types";
+import { Timer } from "../helpers/Timer";
 
 export class BoardStore {
   root: RootStore;
@@ -40,6 +41,7 @@ export class BoardStore {
   selectedSquareInd: number[] = [];
   selectedRowInd: number[] = [];
   selectedColInd: number[] = [];
+  timer: Timer = new Timer();
 
   constructor(root: RootStore) {
     this.root = root;
@@ -294,6 +296,8 @@ export class BoardStore {
     this.board = this.generateBoard(this.boardPreset, difficultyLevel);
     this.boardAnswer = this.board.slice();
     this.boardCheckAttempts = 0;
+    this.timer.reset();
+    this.timer.run();
   }
 
   clearBoard() {

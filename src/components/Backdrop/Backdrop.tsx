@@ -8,7 +8,7 @@ export interface IBackdrop {
 }
 
 export const Backdrop = ({ content }: IBackdrop) => {
-  const { modalsStore } = useContext(RootContext);
+  const { modalsStore, boardStore } = useContext(RootContext);
 
   const backdropRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,6 +19,7 @@ export const Backdrop = ({ content }: IBackdrop) => {
       onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (event.target === backdropRef.current) {
           modalsStore.setModal(null);
+          boardStore.timer.run();
         }
       }}
     >
