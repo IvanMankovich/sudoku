@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { useModal } from "./hooks/useModal";
 import { Board } from "./components/Board/Board";
 import { Layout } from "./components/Layout/Layout";
 import { Button } from "./components/Button/Button";
@@ -27,11 +26,7 @@ const App = observer((): JSX.Element => {
   };
 
   return (
-    <Layout
-      gameState={generalStore.gameState}
-      showModal={modalsStore.modal}
-      board={boardStore}
-    >
+    <Layout showModal={modalsStore.modal}>
       {generalStore.gameState === GameState.initial ? (
         <div>
           <section>

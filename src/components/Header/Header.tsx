@@ -4,11 +4,17 @@ import { HelpMenu } from "../../modules/Menus/HelpMenu/HelpMenu";
 import { MainMenu } from "../../modules/Menus/MainMenu/MainMenu";
 import { GameState } from "../../types/types";
 import { Button } from "../Button/Button";
+// import { TimerView } from "../TimerView/TimerView";
+import { TimerRefresh } from "../TimerRefresh/TimerRefresh";
 
 import "./Header.scss";
 
 export const Header = () => {
-  const { modalsStore, generalStore } = useContext(RootContext);
+  const {
+    modalsStore,
+    generalStore,
+    boardStore: { timer },
+  } = useContext(RootContext);
 
   return (
     <header className="header">
@@ -16,19 +22,25 @@ export const Header = () => {
         <Button
           content="Menu"
           onClickHandler={() => {
+            timer.stop();
             modalsStore.setModal(<MainMenu />);
           }}
         />
       </div>
       {generalStore.gameState !== GameState.initial ? (
         <div>
-          <p>Time</p>
+          {/* <TimerView /> */}
+          <TimerRefresh
+            getTime={timer.getTime.bind(timer)}
+            timerState={timer.state}
+          />
         </div>
       ) : null}
       <div>
         <Button
           content="Help"
           onClickHandler={() => {
+            timer.stop();
             modalsStore.setModal(<HelpMenu />);
           }}
         />
