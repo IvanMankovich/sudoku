@@ -4,17 +4,11 @@ import { IMenuItem } from "../../../components/Menu/MenuItem/MenuItem";
 import { Modal } from "../../../components/Modal/Modal";
 import { Select } from "../../../components/Select/Select";
 import { difficulttOptions } from "../../../constants/difficulties";
-import { BoardStore } from "../../../store/BoardStore";
 import { RootContext } from "../../../store/RootStore";
 import { DifficulityLevel, GameState } from "../../../types/types";
 
-export interface INewGameModal {
-  board: BoardStore;
-  gameState: GameState;
-}
-
-export const NewGame = ({ board, gameState }: INewGameModal): JSX.Element => {
-  const { modalsStore } = useContext(RootContext);
+export const NewGame = (): JSX.Element => {
+  const { modalsStore, boardStore, generalStore } = useContext(RootContext);
 
   const [difficulty, setDifficulty] = useState<DifficulityLevel>(
     DifficulityLevel.easy
@@ -31,9 +25,8 @@ export const NewGame = ({ board, gameState }: INewGameModal): JSX.Element => {
       id: "yes",
       content: "Yes",
       onClick: () => {
-        // setGameState(GameState.inProgress);
-        // setShowBoard(true);
-        board.generateNewBoard(difficulty);
+        generalStore.setGameState(GameState.inProgress);
+        boardStore.generateNewBoard(difficulty);
         modalsStore.setModal(null);
       },
     },

@@ -26,11 +26,7 @@ export const Layout = ({
   return (
     <React.Fragment>
       <div className={`layout${showModal ? " blur" : ""}`}>
-        <Header
-          gameState={gameState}
-          // setShowModal={setShowModal}
-          board={board}
-        />
+        <Header />
         <MainContent>{children}</MainContent>
         <Footer />
       </div>

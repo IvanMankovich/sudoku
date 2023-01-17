@@ -9,7 +9,7 @@ export interface IResetBoardModal {
 }
 
 export const ResetBoard = ({
-  onResetBoardConfirm: onNewGameConfirm,
+  onResetBoardConfirm,
 }: IResetBoardModal): JSX.Element => {
   const { modalsStore } = useContext(RootContext);
 
@@ -18,7 +18,7 @@ export const ResetBoard = ({
       id: "yes",
       content: "Yes",
       onClick: () => {
-        onNewGameConfirm();
+        onResetBoardConfirm();
         modalsStore.setModal(null);
       },
     },

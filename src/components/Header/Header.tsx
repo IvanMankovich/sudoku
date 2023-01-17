@@ -1,20 +1,14 @@
-import { ReactNode, useContext } from "react";
-import { BoardStore } from "../../store/BoardStore";
+import { useContext } from "react";
+import { RootContext } from "../../store/RootStore";
 import { HelpMenu } from "../../modules/Menus/HelpMenu/HelpMenu";
 import { MainMenu } from "../../modules/Menus/MainMenu/MainMenu";
 import { GameState } from "../../types/types";
 import { Button } from "../Button/Button";
 
 import "./Header.scss";
-import { RootContext } from "../../store/RootStore";
 
-export interface IHeader {
-  gameState: GameState;
-  board: BoardStore;
-}
-
-export const Header = ({ gameState, board }: IHeader) => {
-  const { modalsStore } = useContext(RootContext);
+export const Header = () => {
+  const { modalsStore, generalStore } = useContext(RootContext);
 
   return (
     <header className="header">
@@ -22,13 +16,11 @@ export const Header = ({ gameState, board }: IHeader) => {
         <Button
           content="Menu"
           onClickHandler={() => {
-            modalsStore.setModal(
-              <MainMenu board={board} gameState={gameState} />
-            );
+            modalsStore.setModal(<MainMenu />);
           }}
         />
       </div>
-      {gameState !== GameState.initial ? (
+      {generalStore.gameState !== GameState.initial ? (
         <div>
           <p>Time</p>
         </div>
