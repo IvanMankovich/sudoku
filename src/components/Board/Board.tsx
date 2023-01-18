@@ -6,7 +6,11 @@ import { isOddSquare } from "../../helpers/utils";
 import { ResetBoard } from "../../modules/Modals/ResetBoard/ResetBoard";
 import { Button } from "../Button/Button";
 import { Cell } from "../Cell/Cell";
-import { RemainingNumbersBoard } from "../RemainingNumbersBoard/RemainingNumbersBoard";
+import { RemainingNumbersBoard } from "./RemainingNumbersBoard/RemainingNumbersBoard";
+import {
+  IBoardControlBlock,
+  BoardControls,
+} from "./BoardControls/BoardControls";
 
 import "./Board.scss";
 
@@ -45,6 +49,8 @@ export const Board = observer(({ board }: IBoard) => {
     board.checkBoard();
   };
 
+  const acceptAnswer = (): void => {};
+
   const onResetBoardClick = (): void => {
     modalsStore.setModal(
       <ResetBoard
@@ -55,6 +61,46 @@ export const Board = observer(({ board }: IBoard) => {
       />
     );
   };
+
+  const controlBlocks: IBoardControlBlock[] = [
+    {
+      id: "1",
+      content: [
+        <Button
+          key="submit"
+          content={"Submit answer"}
+          onClickHandler={acceptAnswer}
+        />,
+        <Button key="hint" content={"Hint"} onClickHandler={onHintClick} />,
+      ],
+    },
+    {
+      id: "2",
+      content: [
+        <Button key="check" content={"Check"} onClickHandler={checkValidity} />,
+        <Button
+          key="clear"
+          content={"Clear board"}
+          onClickHandler={onClearClick}
+        />,
+      ],
+    },
+    {
+      id: "3",
+      content: [
+        <Button
+          key="show"
+          content={"Show board"}
+          onClickHandler={onShowBoardClick}
+        />,
+        <Button
+          key="reset"
+          content={"Reset board"}
+          onClickHandler={onResetBoardClick}
+        />,
+      ],
+    },
+  ];
 
   return (
     <React.Fragment>
@@ -80,13 +126,7 @@ export const Board = observer(({ board }: IBoard) => {
           ))}
         </div>
       </div>
-      <div>
-        <Button content={"Clear board"} onClickHandler={onClearClick} />
-        <Button content={"Hint"} onClickHandler={onHintClick} />
-        <Button content={"Show board"} onClickHandler={onShowBoardClick} />
-        <Button content={"Check"} onClickHandler={checkValidity} />
-        <Button content={"Reset board"} onClickHandler={onResetBoardClick} />
-      </div>
+      <BoardControls blocks={controlBlocks} />
 
       <RemainingNumbersBoard remainingNumbers={board.remainingNumbers} />
     </React.Fragment>
