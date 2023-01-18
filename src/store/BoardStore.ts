@@ -385,7 +385,6 @@ export class BoardStore {
     });
     const randomCellInd: number = getRandomElem(freeCellIndexes);
     const value: string = this.getCellValueByInd(randomCellInd);
-    this.setRemainingNumbers(randomCellInd, +value);
     this.acceptAttempt?.(randomCellInd, +value);
   }
 }

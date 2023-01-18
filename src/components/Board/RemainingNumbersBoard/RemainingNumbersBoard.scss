@@ -1,3 +1,11 @@
+.remaining-numbers-block {
+  margin: 0 auto;
+
+  > p {
+    margin: 0 0 0.2em;
+  }
+}
+
 .remaining-numbers-board {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
