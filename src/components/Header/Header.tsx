@@ -4,7 +4,6 @@ import { HelpMenu } from "../../modules/Menus/HelpMenu/HelpMenu";
 import { MainMenu } from "../../modules/Menus/MainMenu/MainMenu";
 import { GameState } from "../../types/types";
 import { Button } from "../Button/Button";
-// import { TimerView } from "../TimerView/TimerView";
 import { TimerRefresh } from "../TimerRefresh/TimerRefresh";
 
 import "./Header.scss";
@@ -29,7 +28,6 @@ export const Header = () => {
       </div>
       {generalStore.gameState !== GameState.initial ? (
         <div>
-          {/* <TimerView /> */}
           <TimerRefresh
             getTime={timer.getTime.bind(timer)}
             timerState={timer.state}

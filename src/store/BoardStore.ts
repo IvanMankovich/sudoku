@@ -28,14 +28,21 @@ import { Timer } from "../helpers/Timer";
 export class BoardStore {
   root: RootStore;
 
-  board: string[] = [];
-  boardSecret: string[] = [];
+  /** generated board with empty cells */
+  private board: string[] = [];
+  /** board with filled cells */
+  private boardSecret: string[] = [];
+  /** current board state with user answer */
   boardAnswer: string[] = [];
   boardCheckAttempts: number = 0;
-  boardPreset: string = "";
-  secret: string = "";
+  /** current board state with user answer as string */
+  private boardPreset: string = "";
+  /** 9 char length string for board generation */
+  private secret: string = "";
   difficultyLevel = DifficulityLevel.insane;
+  /** current state with remaining numbers */
   remainingNumbers: NumbersDictionary = {};
+  /** initial state with remaining numbers */
   remainingNumbersStored: NumbersDictionary = {};
   invalidCells: number[] = [];
   selectedSquareInd: number[] = [];
@@ -48,7 +55,7 @@ export class BoardStore {
     makeAutoObservable(this);
   }
 
-  generateSecret(): string {
+  private generateSecret(): string {
     let result: string = "";
     let tempNumbers: number[] = numbers.slice();
     for (let j = 0; j < 9; j++) {
@@ -60,7 +67,7 @@ export class BoardStore {
     return result;
   }
 
-  generateBoardPreset(secret: string): string {
+  private generateBoardPreset(secret: string): string {
     let result: string = "";
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
@@ -75,7 +82,7 @@ export class BoardStore {
     return result.slice();
   }
 
-  rotateBoard(board: string): string {
+  private rotateBoard(board: string): string {
     let result: string[] = [];
     const roationAngle: number = getRandomElem([
       RotationLevel.quarter,
@@ -122,7 +129,7 @@ export class BoardStore {
     return result.join("");
   }
 
-  swapSmallColumns(board: string): string {
+  private swapSmallColumns(board: string): string {
     let result: string[] = board.slice().split("");
     let indexes: number[] = gridIndexes.slice();
     const selectedAreaIndex: number = getRandomElem(indexes);
@@ -143,7 +150,7 @@ export class BoardStore {
     return result.join("");
   }
 
-  swapSmallRows(board: string): string {
+  private swapSmallRows(board: string): string {
     let indexes: number[] = gridIndexes.slice();
     const base: number = 27 * getRandomElem(indexes);
     const selectedPrimaryRow: number = getRandomElem(indexes);
@@ -167,7 +174,7 @@ export class BoardStore {
         )}${secondPart}${board.slice(prevInd + 9)}`;
   }
 
-  swapAreaColumns(board: string): string {
+  private swapAreaColumns(board: string): string {
     let result: string[] = [];
     let indexes: number[] = gridIndexes.slice();
     const selectedPrimaryCol: number = getRandomElem(indexes);
@@ -200,7 +207,7 @@ export class BoardStore {
     return result.join("");
   }
 
-  swapAreaRows(board: string): string {
+  private swapAreaRows(board: string): string {
     let indexes: number[] = gridIndexes.slice();
     const firstReplacableArea: number = getRandomElem(indexes);
     indexes = indexes.filter(
@@ -232,7 +239,7 @@ export class BoardStore {
     }
   }
 
-  randomizeBoardPreset(board: string): string {
+  private randomizeBoardPreset(board: string): string {
     let result: string = board.slice();
 
     const randomizeFunctions: ((board: string) => string)[] = [
@@ -251,7 +258,10 @@ export class BoardStore {
     return result;
   }
 
-  generateBoard(board: string, difficulityLevel: DifficulityLevel): string[] {
+  private generateBoard(
+    board: string,
+    difficulityLevel: DifficulityLevel
+  ): string[] {
     const result: string[] = getGrid();
     const visibleCells: number = getRandomInt(
       ...difficultyParams[difficulityLevel]
@@ -279,12 +289,8 @@ export class BoardStore {
     return result;
   }
 
-  getSolvedBoardSecret(board: string): string[] {
+  private getSolvedBoardSecret(board: string): string[] {
     return board.split("");
-  }
-
-  checkCell(ind: number, value: string): boolean {
-    return this.boardSecret[ind] === value;
   }
 
   generateNewBoard(difficultyLevel: DifficulityLevel): void {
@@ -306,10 +312,11 @@ export class BoardStore {
   }
 
   acceptAttempt(ind: number, value: number): void {
+    this.setRemainingNumbers(ind, value);
     this.boardAnswer[ind] = value.toString();
   }
 
-  setRemainingNumbers(ind: number, value: number): void {
+  private setRemainingNumbers(ind: number, value: number): void {
     const prevCellValue: string = this.boardAnswer[ind];
     const isNewValueValid: boolean = Boolean(value);
     const changableNum: string = isNewValueValid
@@ -326,6 +333,10 @@ export class BoardStore {
 
   getCellValueByInd(ind: number): string {
     return this.boardSecret[ind];
+  }
+
+  getBoardCellValueByInd(ind: number): string {
+    return this.board[ind];
   }
 
   showBoardSecret(): void {
@@ -365,10 +376,6 @@ export class BoardStore {
     this.selectedRowInd = [];
     this.selectedColInd = [];
     this.invalidCells = [];
-  }
-
-  getSelectedSquareInd(): number[] {
-    return this.selectedSquareInd;
   }
 
   getHint(): void {
