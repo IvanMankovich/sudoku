@@ -19,17 +19,14 @@ export const Board = observer(({ board }: IBoard) => {
 
   const onCellClick = (ind: number): void => {
     board.onSelectCell(ind);
-    board.getSelectedSquareInd();
   };
 
-  const onBlur = (id: number, value: string): void => {
-    board.acceptAttempt?.(id, +value);
+  const onBlur = (): void => {
     board.onBlurCell();
   };
 
   const onChange = (id: number, value: string): void => {
-    board.setRemainingNumbers(id, +value);
-    board.acceptAttempt?.(id, +value);
+    board.acceptAttempt(id, +value);
   };
 
   const onClearClick = (): void => {
@@ -76,7 +73,7 @@ export const Board = observer(({ board }: IBoard) => {
               onBlur={onBlur}
               id={id}
               oddSquare={isOddSquare(id)}
-              disabled={board.board[id] !== "0"}
+              disabled={board.getBoardCellValueByInd(id) !== "0"}
               onChange={onChange}
               isInvalid={Boolean(board.invalidCells.includes(id) && +num)}
             />
