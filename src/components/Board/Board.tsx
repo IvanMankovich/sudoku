@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { RootContext } from "../../store/RootStore";
 import { BoardStore } from "../../store/BoardStore";
@@ -11,6 +11,8 @@ import {
   IBoardControlBlock,
   BoardControls,
 } from "./BoardControls/BoardControls";
+import { Congrats } from "../../modules/Modals/Congrats/Congrats";
+import { empty } from "../../constants/boardGeneratorConstants";
 
 import "./Board.scss";
 
@@ -19,7 +21,14 @@ export interface IBoard {
 }
 
 export const Board = observer(({ board }: IBoard) => {
-  const { modalsStore } = useContext(RootContext);
+  const { modalsStore, boardStore } = useContext(RootContext);
+
+  useEffect(() => {
+    if (boardStore.isSolved) {
+      boardStore.timer.stop();
+      modalsStore.setModal(<Congrats />);
+    }
+  }, [boardStore.isSolved, modalsStore, board, boardStore.timer]);
 
   const onCellClick = (ind: number): void => {
     board.onSelectCell(ind);
@@ -41,17 +50,12 @@ export const Board = observer(({ board }: IBoard) => {
     board.getHint();
   };
 
-  const onShowBoardClick = (): void => {
-    board.showBoardSecret();
-  };
-
-  const checkValidity = (): void => {
+  const onCheckClick = (): void => {
     board.checkBoard();
   };
 
-  const acceptAnswer = (): void => {};
-
   const onResetBoardClick = (): void => {
+    boardStore.timer.stop();
     modalsStore.setModal(
       <ResetBoard
         onResetBoardConfirm={() => {
@@ -66,32 +70,17 @@ export const Board = observer(({ board }: IBoard) => {
     {
       id: "1",
       content: [
-        <Button
-          key="submit"
-          content={"Submit answer"}
-          onClickHandler={acceptAnswer}
-        />,
         <Button key="hint" content={"Hint"} onClickHandler={onHintClick} />,
+        <Button key="check" content={"Check"} onClickHandler={onCheckClick} />,
       ],
     },
     {
       id: "2",
       content: [
-        <Button key="check" content={"Check"} onClickHandler={checkValidity} />,
         <Button
           key="clear"
           content={"Clear board"}
           onClickHandler={onClearClick}
-        />,
-      ],
-    },
-    {
-      id: "3",
-      content: [
-        <Button
-          key="show"
-          content={"Show board"}
-          onClickHandler={onShowBoardClick}
         />,
         <Button
           key="reset"
@@ -119,7 +108,7 @@ export const Board = observer(({ board }: IBoard) => {
               onBlur={onBlur}
               id={id}
               oddSquare={isOddSquare(id)}
-              disabled={board.getBoardCellValueByInd(id) !== "0"}
+              disabled={board.getBoardCellValueByInd(id) !== empty}
               onChange={onChange}
               isInvalid={Boolean(board.invalidCells.includes(id) && +num)}
             />

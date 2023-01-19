@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { TimerState } from "../../helpers/Timer";
+import { getTime as parseTime } from "../../helpers/utils";
 
 export interface ITimerRefresh {
   getTime(): number;
@@ -24,5 +25,5 @@ export const TimerRefresh = ({
     }
   }, [timerState, getTime]);
 
-  return <p>{new Date(time).toISOString().slice(11, 19)}</p>;
+  return <p>{parseTime(time)}</p>;
 };

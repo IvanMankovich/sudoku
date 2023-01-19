@@ -17,6 +17,7 @@ import {
   numbers,
   gridIndexes,
   difficultyParams,
+  empty,
 } from "../constants/boardGeneratorConstants";
 import {
   DifficulityLevel,
@@ -30,6 +31,8 @@ export class BoardStore {
 
   /** generated board with empty cells */
   private board: string[] = [];
+  /** generated initial board with empty cells */
+  private initialBoard: string[] = [];
   /** board with filled cells */
   private boardSecret: string[] = [];
   /** current board state with user answer */
@@ -49,6 +52,8 @@ export class BoardStore {
   selectedRowInd: number[] = [];
   selectedColInd: number[] = [];
   timer: Timer = new Timer();
+  isSolved: boolean = false;
+  isFilled: boolean = false;
 
   constructor(root: RootStore) {
     this.root = root;
@@ -301,19 +306,31 @@ export class BoardStore {
     this.boardSecret = this.getSolvedBoardSecret(this.boardPreset);
     this.board = this.generateBoard(this.boardPreset, difficultyLevel);
     this.boardAnswer = this.board.slice();
-    this.boardCheckAttempts = 0;
+    this.initialBoard = this.board.slice();
+    this.isFilled = false;
+    this.setSolvedState(false);
     this.timer.reset();
     this.timer.run();
   }
 
   clearBoard() {
-    this.boardAnswer = this.board.slice();
+    this.board = this.initialBoard.slice();
+    this.boardAnswer = this.initialBoard.slice();
     this.remainingNumbers = { ...this.remainingNumbersStored };
   }
 
   acceptAttempt(ind: number, value: number): void {
     this.setRemainingNumbers(ind, value);
     this.boardAnswer[ind] = value.toString();
+    this.updateFilledState();
+
+    if (this.isFilled) {
+      this.checkBoard();
+
+      if (!this.invalidCells.length) {
+        this.setSolvedState(true);
+      }
+    }
   }
 
   private setRemainingNumbers(ind: number, value: number): void {
@@ -339,7 +356,8 @@ export class BoardStore {
     return this.board[ind];
   }
 
-  showBoardSecret(): void {
+  private _showBoardSecret(): void {
+    this.board = this.boardPreset.split("");
     this.boardAnswer = this.boardPreset.split("");
     this.remainingNumbers = getNumbersDictionary(0);
   }
@@ -364,6 +382,8 @@ export class BoardStore {
     this.invalidCells = [...invalidCells];
   }
 
+  getInvalidCells(): void {}
+
   onSelectCell(ind: number): void {
     this.selectedSquareInd = getSquareIndexes(ind);
     this.selectedRowInd = getRowIndexes(ind);
@@ -376,15 +396,30 @@ export class BoardStore {
     this.selectedRowInd = [];
     this.selectedColInd = [];
     this.invalidCells = [];
+
+    if (this.isFilled) {
+      this.checkBoard();
+    }
   }
 
   getHint(): void {
-    const freeCellIndexes: number[] = [];
-    this.boardAnswer.forEach((cellValue: string, ind: number): void => {
-      cellValue === "0" && freeCellIndexes.push(ind);
-    });
-    const randomCellInd: number = getRandomElem(freeCellIndexes);
-    const value: string = this.getCellValueByInd(randomCellInd);
-    this.acceptAttempt?.(randomCellInd, +value);
+    if (!this.isFilled) {
+      const freeCellIndexes: number[] = [];
+      this.boardAnswer.forEach((cellValue: string, ind: number): void => {
+        cellValue === empty && freeCellIndexes.push(ind);
+      });
+      const randomCellInd: number = getRandomElem(freeCellIndexes);
+      const value: string = this.getCellValueByInd(randomCellInd);
+      this.acceptAttempt?.(randomCellInd, +value);
+      this.board[randomCellInd] = value.toString();
+    }
+  }
+
+  private updateFilledState(): void {
+    this.isFilled = !this.boardAnswer.includes(empty);
+  }
+
+  private setSolvedState(state: boolean): void {
+    this.isSolved = state;
   }
 }

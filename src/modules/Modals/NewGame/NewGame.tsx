@@ -5,13 +5,13 @@ import { Modal } from "../../../components/Modal/Modal";
 import { Select } from "../../../components/Select/Select";
 import { difficulttOptions } from "../../../constants/difficulties";
 import { RootContext } from "../../../store/RootStore";
-import { DifficulityLevel, GameState } from "../../../types/types";
+import { DifficulityLevel } from "../../../types/types";
 
 export const NewGame = (): JSX.Element => {
   const { modalsStore, boardStore, generalStore } = useContext(RootContext);
 
   const [difficulty, setDifficulty] = useState<DifficulityLevel>(
-    DifficulityLevel.easy
+    boardStore.difficultyLevel
   );
 
   const handleDifficultyChange = (
@@ -25,7 +25,7 @@ export const NewGame = (): JSX.Element => {
       id: "yes",
       content: "Yes",
       onClick: () => {
-        generalStore.setGameState(GameState.inProgress);
+        generalStore.setInProgressState();
         boardStore.generateNewBoard(difficulty);
         modalsStore.setModal(null);
       },

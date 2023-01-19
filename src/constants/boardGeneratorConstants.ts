@@ -10,3 +10,5 @@ export const difficultyParams: DifficultyParameters = {
   [DifficulityLevel.extraHard]: [26, 31],
   [DifficulityLevel.insane]: [20, 25],
 };
+
+export const empty: string = "0";

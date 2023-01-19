@@ -33,7 +33,7 @@
     flex-direction: row;
     margin: 0.5em;
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
     align-items: stretch;
   }
 }
@@ -68,6 +68,14 @@
 
     &:not(:last-child) {
       margin-bottom: 0;
+    }
+
+    &:first-child {
+      margin-right: 0.5em;
+    }
+
+    &:last-child {
+      margin-left: 0.5em;
     }
   }
 }

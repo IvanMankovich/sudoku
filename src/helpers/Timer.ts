@@ -75,4 +75,8 @@ export class Timer {
   getTime(): number {
     return +new Date() - this.startTimeStamp;
   }
+
+  getResult(): number {
+    return this.time;
+  }
 }

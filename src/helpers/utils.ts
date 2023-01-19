@@ -1,16 +1,23 @@
-import { gridIndexes, numbers } from "../constants/boardGeneratorConstants";
+import {
+  empty,
+  gridIndexes,
+  numbers,
+} from "../constants/boardGeneratorConstants";
 import { NumbersDictionary } from "../types/types";
 
 export function getRandomElem<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-export const getRowRestricted = (row: number, secret: string): number[] => {
-  const result: number[] = secret
-    .slice(row * 9, row * 9 + 9)
+export const getNonEmptyCells = (str: string): number[] => {
+  return str
     .split("")
-    .filter((n: string) => n !== "0")
+    .filter((n: string) => n !== empty)
     .map((n: string) => +n);
+};
+
+export const getRowRestricted = (row: number, secret: string): number[] => {
+  const result: number[] = getNonEmptyCells(secret.slice(row * 9, row * 9 + 9));
 
   return result;
 };
@@ -19,7 +26,7 @@ export const getColRestricted = (col: number, secret: string): number[] => {
   const result: number[] = [];
   for (let i = 0; i < 9; i++) {
     const temp = secret[i * 9 + col];
-    if (temp !== "0") {
+    if (temp !== empty) {
       result.push(+temp);
     }
   }
@@ -38,14 +45,12 @@ export const getSquareRestricted = (
 
   for (let i = 0; i < 3; i++) {
     result.push(
-      ...secret
-        .slice(
+      ...getNonEmptyCells(
+        secret.slice(
           startRowCell * 9 + startColCell + i * 9,
           startRowCell * 9 + startColCell + 3 + i * 9
         )
-        .split("")
-        .filter((n: string) => n !== "0")
-        .map((n: string) => +n)
+      )
     );
   }
 
@@ -84,7 +89,7 @@ export function getRange(min: number, max: number): number[] {
 export function getGrid(): string[] {
   let result: string[] = [];
   for (let i = 0; i < 81; i++) {
-    result.push("0");
+    result.push(empty);
   }
   return result;
 }
@@ -266,3 +271,7 @@ export function isCellValid(
 
   return true;
 }
+
+export const getTime = (ms: number): string => {
+  return new Date(ms).toISOString().slice(11, 19);
+};
