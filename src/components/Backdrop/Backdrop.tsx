@@ -1,5 +1,6 @@
 import { ReactNode, useContext, useRef } from "react";
 import { RootContext } from "../../store/RootStore";
+import { GameState } from "../../types/types";
 
 import "./Backdrop.scss";
 
@@ -8,7 +9,7 @@ export interface IBackdrop {
 }
 
 export const Backdrop = ({ content }: IBackdrop) => {
-  const { modalsStore, boardStore } = useContext(RootContext);
+  const { modalsStore, boardStore, generalStore } = useContext(RootContext);
 
   const backdropRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,7 +20,9 @@ export const Backdrop = ({ content }: IBackdrop) => {
       onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (event.target === backdropRef.current) {
           modalsStore.setModal(null);
-          boardStore.timer.run();
+          if (generalStore.gameState === GameState.inProgress) {
+            boardStore.timer.run();
+          }
         }
       }}
     >

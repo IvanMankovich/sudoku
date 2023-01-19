@@ -12,7 +12,23 @@ export class GeneralStore {
     makeAutoObservable(this);
   }
 
-  setGameState(state: GameState): void {
+  private setGameState(state: GameState): void {
     this.gameState = state;
+  }
+
+  setInitialState(): void {
+    this.setGameState(GameState.initial);
+  }
+
+  setInProgressState(): void {
+    this.setGameState(GameState.inProgress);
+  }
+
+  setPausedState(): void {
+    this.setGameState(GameState.paused);
+  }
+
+  setEndedState(): void {
+    this.setGameState(GameState.ended);
   }
 }

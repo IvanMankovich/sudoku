@@ -2,32 +2,27 @@ import { ReactNode, useContext } from "react";
 import { Button } from "../../../components/Button/Button";
 import { IMenuItem } from "../../../components/Menu/MenuItem/MenuItem";
 import { Modal } from "../../../components/Modal/Modal";
+import { getTime } from "../../../helpers/utils";
 import { RootContext } from "../../../store/RootStore";
+import { NewGame } from "../NewGame/NewGame";
 
-export interface IResetBoardModal {
-  onResetBoardConfirm(): void;
-}
-
-export const ResetBoard = ({
-  onResetBoardConfirm,
-}: IResetBoardModal): JSX.Element => {
-  const { modalsStore, boardStore } = useContext(RootContext);
+export const Congrats = (): JSX.Element => {
+  const { modalsStore, generalStore, boardStore } = useContext(RootContext);
 
   const actionBarContent: IMenuItem[] = [
     {
       id: "yes",
-      content: "Yes",
+      content: "Sure!",
       onClick: () => {
-        onResetBoardConfirm();
-        modalsStore.setModal(null);
+        modalsStore.setModal(<NewGame />);
       },
     },
     {
       id: "no",
-      content: "No",
+      content: "Not now",
       onClick: () => {
-        boardStore.timer.run();
         modalsStore.setModal(null);
+        generalStore.setInitialState();
       },
     },
   ];
@@ -44,11 +39,11 @@ export const ResetBoard = ({
 
   return (
     <Modal
-      title="Reset board game"
+      title="You win"
       content={
-        <p>
-          Do you really want to reset board? Current game progress will be lost.
-        </p>
+        <p>{`Board solved in ${getTime(
+          boardStore.timer.getTime()
+        )}. Do you want to play more?`}</p>
       }
       actionBar={actionBar}
     />

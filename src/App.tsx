@@ -22,7 +22,7 @@ const App = observer((): JSX.Element => {
 
   const handleStartGameClick = (): void => {
     boardStore.generateNewBoard(difficulty);
-    generalStore.setGameState(GameState.inProgress);
+    generalStore.setInProgressState();
   };
 
   return (
