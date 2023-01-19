@@ -1,8 +1,10 @@
+@import "./../../style/colors.scss";
+
 .header {
   height: 2.5rem;
   width: 100%;
   text-align: center;
-  background-color: #9dd6c3;
+  background-color: $base-green;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

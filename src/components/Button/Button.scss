@@ -1,3 +1,5 @@
+@import "./../../style/colors.scss";
+
 .btn {
   box-sizing: border-box;
   padding: 0.5rem 1.5rem;
@@ -5,13 +7,13 @@
   text-align: center;
   border: 0.2em solid;
   cursor: pointer;
-  border-color: #9dd6c3;
-  background-color: #9dd6c3;
+  border-color: $base-green;
+  background-color: $base-green;
   transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
     border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   &:hover {
-    background-color: #7ac1aa;
-    border-color: #7ac1aa;
+    background-color: $base-green-hover;
+    border-color: $base-green-hover;
   }
 }

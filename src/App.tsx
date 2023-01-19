@@ -1,12 +1,13 @@
 import { useContext, useState } from "react";
+import { observer } from "mobx-react-lite";
+import { RootContext } from "./store/RootStore";
+
 import { Board } from "./components/Board/Board";
 import { Layout } from "./components/Layout/Layout";
 import { Button } from "./components/Button/Button";
 import { Select } from "./components/Select/Select";
 import { difficulttOptions } from "./constants/difficulties";
 import { DifficulityLevel, GameState } from "./types/types";
-import { RootContext } from "./store/RootStore";
-import { observer } from "mobx-react-lite";
 
 const App = observer((): JSX.Element => {
   const { boardStore, generalStore, modalsStore } = useContext(RootContext);

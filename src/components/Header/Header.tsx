@@ -7,6 +7,7 @@ import { Button } from "../Button/Button";
 import { TimerRefresh } from "../TimerRefresh/TimerRefresh";
 
 import "./Header.scss";
+import { Switch } from "../Switch/Switch";
 
 export const Header = () => {
   const {
@@ -34,6 +35,9 @@ export const Header = () => {
           />
         </div>
       ) : null}
+      <div>
+        <Switch />
+      </div>
       <div>
         <Button
           content="Help"

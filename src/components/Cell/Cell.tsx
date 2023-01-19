@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { empty } from "../../constants/boardGeneratorConstants";
+
 import "./Cell.scss";
 
 export interface ICell {
@@ -59,10 +61,10 @@ export const Cell = ({
         const length: number = event.currentTarget.value.length;
         const value = event.currentTarget.value[length - 1];
         setValue(length ? value : "");
-        onChange(id, length ? value : "0");
+        onChange(id, length ? value : empty);
       }}
       onBlur={(_event: React.FocusEvent<HTMLInputElement, Element>): void => {
-        onBlur(id, content ? content.toString() : "0");
+        onBlur(id, content ? content.toString() : empty);
       }}
     />
   );

@@ -33,3 +33,8 @@ export enum GameState {
 export interface NumbersDictionary {
   [x: string]: number;
 }
+
+export enum Theme {
+  bright = "bright",
+  dark = "dark",
+}
