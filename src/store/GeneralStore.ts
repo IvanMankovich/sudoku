@@ -1,14 +1,16 @@
 import { makeAutoObservable } from "mobx";
-import { GameState } from "../types/types";
+import { GameState, Theme } from "../types/types";
 import { RootStore } from "./RootStore";
 
 export class GeneralStore {
   root: RootStore;
   gameState: GameState;
+  theme: Theme;
 
   constructor(root: RootStore) {
     this.root = root;
     this.gameState = GameState.initial;
+    this.theme = Theme.bright;
     makeAutoObservable(this);
   }
 

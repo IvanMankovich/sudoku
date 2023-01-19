@@ -1,3 +1,5 @@
+@import "./../../style/colors.scss";
+
 .number-plate {
   display: flex;
   flex-direction: column;
@@ -5,8 +7,8 @@
   align-items: center;
   width: 2em;
   height: 4em;
-  background-color: #cecece;
-  border: 0.2em solid #477465;
+  background-color: $base-dark;
+  border: 0.2em solid $base-green-border;
   border-radius: 0.2em;
   box-sizing: border-box;
 
@@ -18,11 +20,11 @@
   }
 
   :first-child {
-    background-color: #7ac1aa;
-    border-bottom: 0.2em solid #477465;
+    background-color: $base-green-hover;
+    border-bottom: 0.2em solid $base-green-border;
   }
 
   :last-child {
-    background-color: #dddddd;
+    background-color: $base-chalk;
   }
 }

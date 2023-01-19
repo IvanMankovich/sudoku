@@ -1,3 +1,5 @@
+@import "./../../../style/colors.scss";
+
 .menu-item {
   height: 2.5em;
   padding-inline-start: 0;
@@ -5,16 +7,16 @@
     border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
   box-sizing: border-box;
   border: 0.4em solid;
-  border-color: #9dd6c3;
-  background-color: #9dd6c3;
+  border-color: $base-green;
+  background-color: $base-green;
   font: 1em Arial, Helvetica, sans-serif;
   line-height: 1.5em;
   cursor: pointer;
   list-style: none;
 
   &:hover {
-    background-color: #7ac1aa;
-    border-color: #7ac1aa;
+    background-color: $base-green-hover;
+    border-color: $base-green-hover;
   }
 
   > p {

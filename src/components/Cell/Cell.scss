@@ -1,3 +1,5 @@
+@import "./../../style/colors.scss";
+
 input.cell {
   width: 100%;
   height: 100%;
@@ -7,9 +9,9 @@ input.cell {
   box-sizing: border-box;
   border-radius: 0.2em;
   font-weight: bold;
-  background-color: #dddddd;
+  background-color: $base-chalk;
   border: 0.2em solid;
-  border-color: #dddddd;
+  border-color: $base-chalk;
   font-size: 1.2em;
   -moz-appearance: textfield;
   transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
@@ -21,47 +23,47 @@ input.cell {
   }
 
   &__odd-square {
-    background-color: #9dd6c3;
-    border-color: #9dd6c3;
+    background-color: $base-green;
+    border-color: $base-green;
 
     &:disabled.cell {
-      background-color: #7ac1aa;
-      border-color: #7ac1aa;
+      background-color: $base-green-hover;
+      border-color: $base-green-hover;
     }
   }
 
   &__active-axis {
-    background-color: #bbffe8;
-    border-color: #477465;
+    background-color: $base-green-light;
+    border-color: $base-green-border;
 
     &:disabled.cell {
-      background-color: #9ed7c4;
-      border-color: #477465;
+      background-color: $base-green-darker;
+      border-color: $base-green-border;
     }
   }
 
   &__active-square {
-    background-color: #bbffe8;
-    border-color: #477465;
+    background-color: $base-green-light;
+    border-color: $base-green-border;
 
     &:disabled.cell {
-      border-color: #477465;
+      border-color: $base-green-border;
     }
   }
 
   &__invalid {
-    background-color: #ffd0bb;
-    border-color: #744747;
+    background-color: $base-red;
+    border-color: $base-red-dark;
   }
 
   &:disabled {
-    background-color: #c2c2c2;
-    border-color: #c2c2c2;
+    background-color: $base-dark;
+    border-color: $base-dark;
   }
 
   &:focus {
-    background-color: #7fffd4;
+    background-color: $base-green-focus;
     outline: none;
-    border-color: #24f210;
+    border-color: $base-green-focus-border;
   }
 }
