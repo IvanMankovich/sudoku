@@ -5,7 +5,7 @@ import { Modal } from "../../../components/Modal/Modal";
 import { RootContext } from "../../../store/RootStore";
 
 export const About = (): JSX.Element => {
-  const { modalsStore } = useContext(RootContext);
+  const { modalsStore, boardStore } = useContext(RootContext);
 
   const actionBarContent: IMenuItem[] = [
     {
@@ -13,6 +13,7 @@ export const About = (): JSX.Element => {
       content: <p>Close</p>,
       onClick: () => {
         modalsStore.setModal(null);
+        boardStore.timer.run();
       },
     },
   ];

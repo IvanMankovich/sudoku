@@ -37,12 +37,12 @@ input.cell {
 
   &.cell__active-axis {
     @include themify($themes) {
-      border-color: themed("cellActiveBg");
+      border-color: themed("cellActiveBorder");
     }
 
     &:disabled {
       @include themify($themes) {
-        border-color: themed("cellActiveBg");
+        border-color: themed("cellActiveBorder");
         color: themed("textDisabledColor");
       }
     }
@@ -50,12 +50,12 @@ input.cell {
 
   &.cell__active-square {
     @include themify($themes) {
-      border-color: themed("cellActiveBg");
+      border-color: themed("cellActiveBorder");
     }
 
     &:disabled {
       @include themify($themes) {
-        border-color: themed("cellActiveBg");
+        border-color: themed("cellActiveBorder");
         color: themed("textDisabledColor");
       }
     }

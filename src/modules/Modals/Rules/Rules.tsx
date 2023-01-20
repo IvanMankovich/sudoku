@@ -5,7 +5,7 @@ import { Modal } from "../../../components/Modal/Modal";
 import { RootContext } from "../../../store/RootStore";
 
 export const Rules = (): JSX.Element => {
-  const { modalsStore } = useContext(RootContext);
+  const { modalsStore, boardStore } = useContext(RootContext);
 
   const actionBarContent: IMenuItem[] = [
     {
@@ -13,6 +13,7 @@ export const Rules = (): JSX.Element => {
       content: "I understand",
       onClick: () => {
         modalsStore.setModal(null);
+        boardStore.timer.run();
       },
     },
   ];

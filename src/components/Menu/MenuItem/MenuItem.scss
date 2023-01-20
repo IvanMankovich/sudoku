@@ -4,6 +4,7 @@
   @include themify($themes) {
     background-color: themed("menuItemBg");
     border-color: themed("menuItemBorder");
+    color: themed("textDefaultColor");
   }
   height: 2.5em;
   padding-inline-start: 0;
@@ -20,6 +21,7 @@
     @include themify($themes) {
       background-color: themed("menuItemBgHov");
       border-color: themed("menuItemBorderHov");
+      color: themed("textDisabledColor");
     }
   }
 

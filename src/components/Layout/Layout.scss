@@ -1,4 +1,12 @@
+@import "./../../style/theme-variables.scss";
+
 .layout {
+  @include themify($themes) {
+    background-color: themed("layoutBg");
+    color: themed("textDefaultColor");
+  }
+  transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
+    border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
   min-width: 100%;
   min-height: 100vh;
   display: flex;

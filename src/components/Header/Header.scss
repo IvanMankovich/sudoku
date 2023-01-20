@@ -1,6 +1,6 @@
 @import "./../../style/theme-variables.scss";
 
-.header {
+.header-wrapper {
   @include themify($themes) {
     background-color: themed("coloredModule");
   }
@@ -12,7 +12,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0;
   box-sizing: border-box;
   transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) background-color;
 
@@ -21,6 +21,55 @@
   }
 }
 
+.header {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+  justify-content: space-between;
+  align-items: stretch;
+  height: auto;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 0 0.5rem;
+
+  @media screen and (min-width: 320px) {
+    width: 100%;
+  }
+
+  @media screen and (min-width: 960px) {
+    max-width: 920px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    max-width: 1240px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    max-width: 1880px;
+  }
+}
+
+.header-center {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+
+  & > p {
+    margin: auto 0;
+  }
+}
+
+.header-right {
+  display: flex;
+
+  > .switch {
+    margin: auto 0.5em;
+  }
+}
 // .header {
 //   height: 2.5rem;
 //   width: 100%;

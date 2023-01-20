@@ -1,4 +1,4 @@
-@import "./../../style/theme-variables.scss";
+@import "./../../../../style/theme-variables.scss";
 
 .number-plate {
   display: flex;
@@ -8,14 +8,12 @@
   width: 2em;
   height: 4em;
   @include themify($themes) {
-    background-color: themed("cellDefaultDisabledBg");
-    border-color: themed("cellActiveBg");
+    border-color: themed("numbersBoardBorder");
   }
   border: 0.2em solid;
   border-radius: 0.2em;
   box-sizing: border-box;
-  transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
-    border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   > * {
     margin: 0;
@@ -26,15 +24,15 @@
 
   :first-child {
     @include themify($themes) {
-      background-color: themed("cellDefaultDisabledBg");
-      border-color: themed("cellActiveBg");
+      background-color: themed("numbersBoardNumBg");
+      border-color: themed("numbersBoardBorder");
     }
     border-bottom: 0.2em solid;
   }
 
   :last-child {
     @include themify($themes) {
-      background-color: themed("cellOddBg");
+      background-color: themed("numbersBoardAmountBg");
     }
   }
 }

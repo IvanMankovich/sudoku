@@ -4,12 +4,16 @@
   @include themify($themes) {
     background-color: themed("coloredModule");
   }
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   height: 2.5rem;
   width: 100%;
   text-align: center;
   transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) background-color;
 
-  & p {
-    margin: 0;
+  & > p {
+    margin: auto 0;
   }
 }
