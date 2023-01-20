@@ -1,22 +1,26 @@
-@import "./../../../style/colors.scss";
+@import "./../../../style/theme-variables.scss";
 
 .menu-item {
+  @include themify($themes) {
+    background-color: themed("menuItemBg");
+    border-color: themed("menuItemBorder");
+  }
   height: 2.5em;
   padding-inline-start: 0;
   transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
     border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
   box-sizing: border-box;
   border: 0.4em solid;
-  border-color: $base-green;
-  background-color: $base-green;
   font: 1em Arial, Helvetica, sans-serif;
   line-height: 1.5em;
   cursor: pointer;
   list-style: none;
 
   &:hover {
-    background-color: $base-green-hover;
-    border-color: $base-green-hover;
+    @include themify($themes) {
+      background-color: themed("menuItemBgHov");
+      border-color: themed("menuItemBorderHov");
+    }
   }
 
   > p {

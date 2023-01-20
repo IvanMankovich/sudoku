@@ -1,0 +1,93 @@
+@import "./colors.scss";
+
+$themes: (
+  light: (
+    textDefaultColor: $black,
+    textDisabledColor: $coal-400,
+    cellDefaultBg: $chalk-200,
+    cellDefaultDisabledBg: $chalk-300,
+    cellOddBg: $sea-100,
+    cellOddDisabledBg: $sea-300,
+    cellActiveBg: $sea-500,
+    cellInvalidBg: $brick-200,
+    cellInvalidBorder: $wine-700,
+    cellFocusBg: $sea-100,
+    cellFocusBorder: $grass-700,
+    backdrop: $white-05,
+    commonBg: $chalk-100,
+    contentBg: $chalk-200,
+    boardBg: $chalk-100,
+    buttonDefaultBg: $sea-300,
+    buttonDefaultBorder: $sea-300,
+    buttonDefaultBgHov: $sea-400,
+    buttonDefaultBorderHov: $sea-400,
+    coloredModule: $sea-100,
+    coloredModuleVar: $sea-300,
+    menuBg: $sea-200,
+    menuItemBg: $sea-200,
+    menuItemBorder: $sea-200,
+    menuItemBgHov: $sea-400,
+    menuItemBorderHov: $sea-400,
+    modalBg: $chalk-100,
+    modalBorder: $chalk-300,
+    switchBg: $chalk-300,
+    switchSlider: $sea-400,
+    switchSliderChecked: $sea-700,
+  ),
+  dark: (
+    textDefaultColor: $white,
+    textDisabledColor: $chalk-400,
+    cellDefaultBg: $coal-200,
+    cellDefaultDisabledBg: $coal-300,
+    cellOddBg: $night-100,
+    cellOddDisabledBg: $night-300,
+    cellActiveBg: $night-500,
+    cellInvalidBg: $brick-200,
+    cellInvalidBorder: $wine-700,
+    backdrop: $black-05,
+    cellFocusBg: $coal-100,
+    cellFocusBorder: $firefly-700,
+    commonBg: $coal-100,
+    contentBg: $coal-200,
+    boardBg: $coal-100,
+    buttonDefaultBg: $night-300,
+    buttonDefaultBorder: $night-300,
+    buttonDefaultBgHov: $night-400,
+    buttonDefaultBorderHov: $night-400,
+    coloredModule: $night-100,
+    coloredModuleVar: $night-300,
+    menuBg: $night-200,
+    menuItemBg: $night-200,
+    menuItemBorder: $night-200,
+    menuItemBgHov: $night-400,
+    menuItemBorderHov: $night-400,
+    modalBg: $coal-100,
+    modalBorder: $coal-300,
+    switchBg: $coal-300,
+    switchSlider: $night-400,
+    switchSliderChecked: $night-700,
+  ),
+);
+
+@mixin themify($themes) {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), "#{$key}");
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value,
+          )
+        ) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}

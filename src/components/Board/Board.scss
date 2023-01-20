@@ -1,4 +1,4 @@
-@import "./../../style/colors.scss";
+@import "./../../style/theme-variables.scss";
 
 .board-wrapper {
   display: flex;
@@ -11,15 +11,18 @@
 }
 
 .board {
+  @include themify($themes) {
+    background-color: themed("boardBg");
+  }
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   height: 100%;
   width: 100%;
   gap: 0.2em;
   padding: 0.2em;
-  background-color: $base-grey;
   border-radius: 0.2em;
   box-sizing: border-box;
+  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) background-color;
 }
 
 .board-controls {

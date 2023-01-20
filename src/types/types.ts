@@ -35,6 +35,6 @@ export interface NumbersDictionary {
 }
 
 export enum Theme {
-  bright = "bright",
+  light = "light",
   dark = "dark",
 }

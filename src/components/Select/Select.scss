@@ -1,4 +1,4 @@
-@import "./../../style/colors.scss";
+@import "./../../style/theme-variables.scss";
 
 .select-wrapper {
   box-sizing: border-box;
@@ -9,8 +9,10 @@
   & > select {
     padding: 0.5rem 0;
     border-radius: 0.5rem;
-    border-color: $base-green;
-    background-color: $base-green;
+    @include themify($themes) {
+      background-color: themed("buttonDefaultBg");
+      border-color: themed("buttonDefaultBorder");
+    }
     transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
       border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
     text-align: center;
@@ -18,8 +20,10 @@
     cursor: pointer;
 
     &:hover {
-      background-color: $base-green-hover;
-      border-color: $base-green-hover;
+      @include themify($themes) {
+        background-color: themed("buttonDefaultBgHov");
+        border-color: themed("buttonDefaultBorderHov");
+      }
     }
   }
 }

@@ -27,7 +27,7 @@ const App = observer((): JSX.Element => {
   };
 
   return (
-    <Layout showModal={modalsStore.modal}>
+    <Layout showModal={modalsStore.modal} theme={generalStore.theme}>
       {generalStore.gameState === GameState.initial ? (
         <div>
           <section>

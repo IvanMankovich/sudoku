@@ -10,7 +10,9 @@ export class GeneralStore {
   constructor(root: RootStore) {
     this.root = root;
     this.gameState = GameState.initial;
-    this.theme = Theme.bright;
+    this.theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? Theme.dark
+      : Theme.light;
     makeAutoObservable(this);
   }
 
@@ -32,5 +34,17 @@ export class GeneralStore {
 
   setEndedState(): void {
     this.setGameState(GameState.ended);
+  }
+
+  changeTheme(): void {
+    if (this.theme === Theme.light) {
+      this.setTheme(Theme.dark);
+    } else {
+      this.setTheme(Theme.light);
+    }
+  }
+
+  private setTheme(theme: Theme) {
+    this.theme = theme;
   }
 }

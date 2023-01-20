@@ -1,7 +1,9 @@
-@import "./../../style/colors.scss";
+@import "./../../style/theme-variables.scss";
 
 .menu {
-  background-color: $base-green;
+  @include themify($themes) {
+    background-color: themed("menuBg");
+  }
   width: 100%;
   height: 100%;
   margin: 0;
