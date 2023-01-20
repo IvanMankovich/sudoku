@@ -115,9 +115,9 @@ export const Board = observer(({ board }: IBoard) => {
           ))}
         </div>
       </div>
-      <BoardControls blocks={controlBlocks} />
-
       <RemainingNumbersBoard remainingNumbers={board.remainingNumbers} />
+
+      <BoardControls blocks={controlBlocks} />
     </React.Fragment>
   );
 });

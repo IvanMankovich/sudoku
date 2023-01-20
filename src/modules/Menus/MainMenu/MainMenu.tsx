@@ -6,13 +6,14 @@ import { RootContext } from "../../../store/RootStore";
 import { NewGame } from "../../Modals/NewGame/NewGame";
 
 export const MainMenu = (): JSX.Element => {
-  const { modalsStore } = useContext(RootContext);
+  const { modalsStore, boardStore } = useContext(RootContext);
 
   const mainMenuItems: IMenuItem[] = [
     {
       id: "close",
       content: <p>Close</p>,
       onClick: () => {
+        boardStore.timer.run();
         modalsStore.setModal(null);
       },
     },

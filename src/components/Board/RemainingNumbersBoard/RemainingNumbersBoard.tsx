@@ -1,5 +1,5 @@
 import { NumbersDictionary } from "../../../types/types";
-import { NumberPlate } from "../../NumberPlate/NumberPlate";
+import { NumberPlate } from "./NumberPlate/NumberPlate";
 
 import "./RemainingNumbersBoard.scss";
 
@@ -28,7 +28,6 @@ export const RemainingNumbersBoard = ({
 
   return (
     <div className="remaining-numbers-block">
-      <p>Remaining Numbers Board:</p>
       <div className="remaining-numbers-board">{numbers}</div>
     </div>
   );

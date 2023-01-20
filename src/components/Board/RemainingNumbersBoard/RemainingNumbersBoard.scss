@@ -1,7 +1,7 @@
 @import "./../../../style/theme-variables.scss";
 
 .remaining-numbers-block {
-  margin: 0 auto;
+  margin: 0.5em auto;
 
   > p {
     margin: 0 0 0.2em;
@@ -10,7 +10,7 @@
 
 .remaining-numbers-board {
   @include themify($themes) {
-    background-color: themed("cellDefaultBg");
+    background-color: themed("numbersBoardBg");
   }
   transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) background-color;
   display: grid;

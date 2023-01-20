@@ -35,6 +35,7 @@ export const NewGame = (): JSX.Element => {
       content: "No",
       onClick: () => {
         modalsStore.setModal(null);
+        boardStore.timer.run();
       },
     },
   ];

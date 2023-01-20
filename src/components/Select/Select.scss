@@ -12,6 +12,7 @@
     @include themify($themes) {
       background-color: themed("buttonDefaultBg");
       border-color: themed("buttonDefaultBorder");
+      color: themed("textDefaultColor");
     }
     transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
       border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);

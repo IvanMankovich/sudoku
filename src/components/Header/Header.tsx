@@ -18,39 +18,41 @@ export const Header = () => {
   } = useContext(RootContext);
 
   return (
-    <header className="header">
-      <div>
-        <Button
-          content="Menu"
-          onClickHandler={() => {
-            timer.stop();
-            modalsStore.setModal(<MainMenu />);
-          }}
-        />
-      </div>
-      {generalStore.gameState !== GameState.initial ? (
-        <div>
-          <TimerRefresh
-            getTime={timer.getTime.bind(timer)}
-            timerState={timer.state}
+    <header className="header-wrapper">
+      <div className="header">
+        <div className="header-left">
+          <div>
+            <Button
+              content="Menu"
+              onClickHandler={() => {
+                timer.stop();
+                modalsStore.setModal(<MainMenu />);
+              }}
+            />
+          </div>
+        </div>
+        {generalStore.gameState !== GameState.initial ? (
+          <div className="header-center">
+            <TimerRefresh
+              getTime={timer.getTime.bind(timer)}
+              timerState={timer.state}
+            />
+          </div>
+        ) : null}
+        <div className="header-right">
+          <Switch
+            theme={generalStore.theme}
+            checked={generalStore.theme === Theme.dark}
+            onChange={() => generalStore.changeTheme()}
+          />
+          <Button
+            content="Help"
+            onClickHandler={() => {
+              timer.stop();
+              modalsStore.setModal(<HelpMenu />);
+            }}
           />
         </div>
-      ) : null}
-      <div>
-        <Switch
-          theme={generalStore.theme}
-          checked={generalStore.theme === Theme.dark}
-          onChange={() => generalStore.changeTheme()}
-        />
-      </div>
-      <div>
-        <Button
-          content="Help"
-          onClickHandler={() => {
-            timer.stop();
-            modalsStore.setModal(<HelpMenu />);
-          }}
-        />
       </div>
     </header>
   );
