@@ -1,6 +1,9 @@
-@import "./../../style/colors.scss";
+@import "./../../style/theme-variables.scss";
 
 .modal {
+  @include themify($themes) {
+    background-color: themed("modalBg");
+  }
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,7 +11,6 @@
   width: 100%;
   margin: 0 auto;
   height: 100%;
-  background-color: $base-grey;
   font: 1em Arial, Helvetica, sans-serif;
 
   @media screen and (min-width: 320px) {
@@ -55,13 +57,19 @@
 }
 
 .modal-content {
+  @include themify($themes) {
+    border-color: themed("modalBorder");
+  }
   padding: 1em 2em;
   width: 100%;
   box-sizing: border-box;
-  border-top: 0.1em solid $base-dark;
+  border-top: 0.1em solid;
 }
 
 .modal-bar {
+  @include themify($themes) {
+    border-color: themed("modalBorder");
+  }
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -69,5 +77,5 @@
   padding: 0.5em;
   width: 100%;
   box-sizing: border-box;
-  border-top: 0.1em solid $base-dark;
+  border-top: 0.1em solid;
 }

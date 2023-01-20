@@ -1,19 +1,25 @@
-@import "./../../style/colors.scss";
+@import "./../../style/theme-variables.scss";
 
 .btn {
+  @include themify($themes) {
+    background-color: themed("buttonDefaultBg");
+    border-color: themed("buttonDefaultBorder");
+    color: themed("textDefaultColor");
+  }
   box-sizing: border-box;
   padding: 0.5rem 1.5rem;
   border-radius: 0.5rem;
   text-align: center;
   border: 0.2em solid;
   cursor: pointer;
-  border-color: $base-green;
-  background-color: $base-green;
   transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
-    border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+    border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
+    color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   &:hover {
-    background-color: $base-green-hover;
-    border-color: $base-green-hover;
+    @include themify($themes) {
+      background-color: themed("buttonDefaultBgHov");
+      border-color: themed("buttonDefaultBorderHov");
+    }
   }
 }

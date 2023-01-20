@@ -1,18 +1,39 @@
-@import "./../../style/colors.scss";
+@import "./../../style/theme-variables.scss";
 
 .header {
+  @include themify($themes) {
+    background-color: themed("coloredModule");
+  }
+
   height: 2.5rem;
   width: 100%;
   text-align: center;
-  background-color: $base-green;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 0 0.5rem;
   box-sizing: border-box;
+  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) background-color;
 
   & p {
     margin: 0;
   }
 }
+
+// .header {
+//   height: 2.5rem;
+//   width: 100%;
+//   text-align: center;
+//   background-color: $sea-200;
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 0 0.5rem;
+//   box-sizing: border-box;
+
+//   & p {
+//     margin: 0;
+//   }
+// }

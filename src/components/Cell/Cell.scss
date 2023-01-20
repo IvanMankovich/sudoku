@@ -1,6 +1,11 @@
-@import "./../../style/colors.scss";
+@import "./../../style/theme-variables.scss";
 
 input.cell {
+  @include themify($themes) {
+    background-color: themed("cellDefaultBg");
+    border-color: themed("cellDefaultBg");
+    color: themed("textDefaultColor");
+  }
   width: 100%;
   height: 100%;
   border: none;
@@ -9,61 +14,78 @@ input.cell {
   box-sizing: border-box;
   border-radius: 0.2em;
   font-weight: bold;
-  background-color: $base-chalk;
   border: 0.2em solid;
-  border-color: $base-chalk;
   font-size: 1.2em;
   -moz-appearance: textfield;
   transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
     border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+  &.cell__odd-square {
+    @include themify($themes) {
+      background-color: themed("cellOddBg");
+      border-color: themed("cellOddBg");
+    }
 
-  &__odd-square {
-    background-color: $base-green;
-    border-color: $base-green;
-
-    &:disabled.cell {
-      background-color: $base-green-hover;
-      border-color: $base-green-hover;
+    &:disabled {
+      @include themify($themes) {
+        background-color: themed("cellOddDisabledBg");
+        border-color: themed("cellOddDisabledBg");
+        color: themed("textDisabledColor");
+      }
     }
   }
 
-  &__active-axis {
-    background-color: $base-green-light;
-    border-color: $base-green-border;
+  &.cell__active-axis {
+    @include themify($themes) {
+      border-color: themed("cellActiveBg");
+    }
 
-    &:disabled.cell {
-      background-color: $base-green-darker;
-      border-color: $base-green-border;
+    &:disabled {
+      @include themify($themes) {
+        border-color: themed("cellActiveBg");
+        color: themed("textDisabledColor");
+      }
     }
   }
 
-  &__active-square {
-    background-color: $base-green-light;
-    border-color: $base-green-border;
+  &.cell__active-square {
+    @include themify($themes) {
+      border-color: themed("cellActiveBg");
+    }
 
-    &:disabled.cell {
-      border-color: $base-green-border;
+    &:disabled {
+      @include themify($themes) {
+        border-color: themed("cellActiveBg");
+        color: themed("textDisabledColor");
+      }
     }
   }
 
-  &__invalid {
-    background-color: $base-red;
-    border-color: $base-red-dark;
+  &.cell__invalid {
+    @include themify($themes) {
+      background-color: themed("cellInvalidBg");
+      border-color: themed("cellInvalidBorder");
+    }
   }
 
   &:disabled {
-    background-color: $base-dark;
-    border-color: $base-dark;
+    @include themify($themes) {
+      background-color: themed("cellDefaultDisabledBg");
+      border-color: themed("cellDefaultDisabledBg");
+      color: themed("textDisabledColor");
+    }
   }
 
   &:focus {
-    background-color: $base-green-focus;
+    @include themify($themes) {
+      background-color: themed("cellOddBg");
+      border-color: themed("cellFocusBorder");
+    }
     outline: none;
-    border-color: $base-green-focus-border;
+  }
+
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }

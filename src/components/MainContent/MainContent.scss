@@ -1,19 +1,23 @@
-@import "./../../style/colors.scss";
+@import "./../../style/theme-variables.scss";
 
 .main-content {
+  @include themify($themes) {
+    background-color: themed("contentBg");
+    color: themed("textDefaultColor");
+  }
   width: 100%;
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
   justify-content: flex-start;
   align-items: center;
-  background-color: $base-dark;
   min-height: calc(100vh - 2.5rem - 2.5rem);
   height: auto;
   margin: 0 auto;
   padding: 1rem;
   box-sizing: border-box;
-  color: #000;
+  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) background-color,
+    0.4s cubic-bezier(0.075, 0.82, 0.165, 1) color;
 
   @media screen and (min-width: 320px) {
     width: 100%;

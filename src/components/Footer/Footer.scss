@@ -1,10 +1,13 @@
-@import "./../../style/colors.scss";
+@import "./../../style/theme-variables.scss";
 
 .footer {
+  @include themify($themes) {
+    background-color: themed("coloredModule");
+  }
   height: 2.5rem;
   width: 100%;
   text-align: center;
-  background-color: $base-green;
+  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) background-color;
 
   & p {
     margin: 0;

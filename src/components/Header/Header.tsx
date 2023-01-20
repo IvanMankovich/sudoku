@@ -5,9 +5,10 @@ import { MainMenu } from "../../modules/Menus/MainMenu/MainMenu";
 import { GameState } from "../../types/types";
 import { Button } from "../Button/Button";
 import { TimerRefresh } from "../TimerRefresh/TimerRefresh";
+import { Switch } from "../Switch/Switch";
+import { Theme } from "../../types/types";
 
 import "./Header.scss";
-import { Switch } from "../Switch/Switch";
 
 export const Header = () => {
   const {
@@ -36,7 +37,11 @@ export const Header = () => {
         </div>
       ) : null}
       <div>
-        <Switch />
+        <Switch
+          theme={generalStore.theme}
+          checked={generalStore.theme === Theme.dark}
+          onChange={() => generalStore.changeTheme()}
+        />
       </div>
       <div>
         <Button
