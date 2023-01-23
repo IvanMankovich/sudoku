@@ -1,12 +1,13 @@
 @import "./../../style/theme-variables.scss";
 @import "./../../style/mixins.scss";
+@import "./../../style/common-variables.scss";
 
 input.cell {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  border: 0.2em solid;
-  border-radius: 0.2em;
+  border: $cell-border-thickness solid;
+  border-radius: $cell-border-radius;
   @include themify($themes) {
     background-color: themed("cellDefaultBg");
     border-color: themed("cellDefaultBg");
@@ -16,7 +17,7 @@ input.cell {
   text-align: center;
   vertical-align: middle;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: $cell-font-size;
   -moz-appearance: textfield;
 
   &.cell_odd-square {

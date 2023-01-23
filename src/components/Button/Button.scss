@@ -1,17 +1,19 @@
 @import "./../../style/theme-variables.scss";
 @import "./../../style/mixins.scss";
+@import "./../../style/common-variables.scss";
 
 .btn {
   box-sizing: border-box;
-  padding: 0.5rem 1.5rem;
-  border: 0.2em solid;
-  border-radius: 0.5rem;
+  padding: $button-padding;
+  border: $button-border-thickness solid;
+  border-radius: $button-border-radius;
   @include themify($themes) {
     background-color: themed("buttonDefaultBg");
     border-color: themed("buttonDefaultBorder");
     color: themed("textDefaultColor");
   }
   @include addTransitionForProp(background-color, border-color, color);
+  font-weight: $butoon-text-weight;
   text-align: center;
   cursor: pointer;
 

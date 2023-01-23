@@ -1,10 +1,11 @@
 @import "./../../../style/theme-variables.scss";
 @import "./../../../style/mixins.scss";
+@import "./../../../style/common-variables.scss";
 
 .menu-item {
   box-sizing: border-box;
-  height: 2.5em;
-  border: 0.4em solid;
+  height: $top-bottom-min-height;
+  border: $button-border-thickness solid;
   @include themify($themes) {
     background-color: themed("menuItemBg");
     border-color: themed("menuItemBorder");
@@ -25,7 +26,7 @@
   }
 
   > p {
-    height: 2.5em;
+    height: $top-bottom-min-height;
     margin: 0;
   }
 }

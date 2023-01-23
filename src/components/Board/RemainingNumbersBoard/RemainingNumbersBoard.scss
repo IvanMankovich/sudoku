@@ -1,20 +1,17 @@
 @import "./../../../style/theme-variables.scss";
 @import "./../../../style/mixins.scss";
+@import "./../../../style/common-variables.scss";
 
 .remaining-numbers-block {
-  margin: 0.5em auto;
-
-  > p {
-    margin: 0 0 0.2em;
-  }
+  margin: $board-controls-margin auto;
 }
 
 .remaining-numbers-board {
   box-sizing: border-box;
   @include nineColGrid();
-  width: 20em;
-  padding: 0.2em;
-  border-radius: 0.2em;
+  width: $board-size;
+  padding: $board-padding;
+  border-radius: $board-border-radius;
   @include themify($themes) {
     background-color: themed("numbersBoardBg");
   }

@@ -1,5 +1,6 @@
 @import "./../../style/theme-variables.scss";
 @import "./../../style/mixins.scss";
+@import "./../../style/common-variables.scss";
 
 .select-wrapper {
   box-sizing: border-box;
@@ -7,16 +8,15 @@
   width: fit-content;
 
   & > select {
-    padding: 0.5rem 0;
+    padding: $button-padding;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: $button-border-radius;
     @include themify($themes) {
       background-color: themed("buttonDefaultBg");
       border-color: themed("buttonDefaultBorder");
       color: themed("textDefaultColor");
     }
-    transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
-      border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+    font-weight: $butoon-text-weight;
     text-align: center;
     cursor: pointer;
 

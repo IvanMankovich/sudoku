@@ -1,11 +1,12 @@
 @import "./../../style/theme-variables.scss";
 @import "./../../style/mixins.scss";
+@import "./../../style/common-variables.scss";
 
 .header-wrapper {
   box-sizing: border-box;
   @include flex(row, space-between, center);
   width: 100%;
-  min-height: 2.5rem;
+  min-height: $top-bottom-min-height;
   padding: 0;
   @include themify($themes) {
     background-color: themed("coloredModule");
@@ -25,7 +26,7 @@
   flex: 1 0 auto;
   height: auto;
   margin: 0 auto;
-  padding: 0 0.5rem;
+  padding: 0 $board-controls-margin;
   @include contentQueryWidth();
 }
 
@@ -45,6 +46,6 @@
   display: flex;
 
   > .switch {
-    margin: auto 0.5em;
+    margin: auto $board-controls-margin;
   }
 }

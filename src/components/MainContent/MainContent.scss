@@ -1,14 +1,15 @@
 @import "./../../style/theme-variables.scss";
 @import "./../../style/mixins.scss";
+@import "./../../style/common-variables.scss";
 
 .main-content {
   box-sizing: border-box;
   @include flex(column, flex-start, center);
   flex: 1 0 auto;
   width: 100%;
-  min-height: calc(100vh - 2.5rem - 2.5rem);
+  min-height: calc(100vh - ($top-bottom-min-height * 2));
   margin: 0 auto;
-  padding: 1rem;
+  padding: $main-content-padding;
   @include themify($themes) {
     background-color: themed("contentBg");
     color: themed("textDefaultColor");

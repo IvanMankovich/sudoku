@@ -1,13 +1,14 @@
 @import "./../../../../style/theme-variables.scss";
 @import "./../../../../style/mixins.scss";
+@import "./../../../../style/common-variables.scss";
 
 .number-plate {
   box-sizing: border-box;
   @include flex(column, space-around, center);
-  width: 2em;
-  height: 4em;
-  border: 0.2em solid;
-  border-radius: 0.2em;
+  width: 100%;
+  height: 100%;
+  border: $cell-border-thickness solid;
+  border-radius: $cell-border-radius;
   @include themify($themes) {
     border-color: themed("numbersBoardBorder");
   }
@@ -25,7 +26,7 @@
       background-color: themed("numbersBoardNumBg");
       border-color: themed("numbersBoardBorder");
     }
-    border-bottom: 0.2em solid;
+    border-bottom: $cell-border-thickness solid;
   }
 
   :last-child {
