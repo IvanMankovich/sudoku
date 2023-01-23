@@ -1,20 +1,19 @@
 @import "./../../../style/theme-variables.scss";
+@import "./../../../style/mixins.scss";
 
 .menu-item {
+  box-sizing: border-box;
+  height: 2.5em;
+  border: 0.4em solid;
   @include themify($themes) {
     background-color: themed("menuItemBg");
     border-color: themed("menuItemBorder");
     color: themed("textDefaultColor");
   }
-  height: 2.5em;
-  padding-inline-start: 0;
-  transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
-    border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
-  box-sizing: border-box;
-  border: 0.4em solid;
-  font: 1em Arial, Helvetica, sans-serif;
-  line-height: 1.5em;
+  @include addTransitionForProp(background-color, border-color);
+  @include typography();
   cursor: pointer;
+  padding-inline-start: 0;
   list-style: none;
 
   &:hover {

@@ -1,19 +1,17 @@
 @import "./../../../../style/theme-variables.scss";
+@import "./../../../../style/mixins.scss";
 
 .number-plate {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  box-sizing: border-box;
+  @include flex(column, space-around, center);
   width: 2em;
   height: 4em;
+  border: 0.2em solid;
+  border-radius: 0.2em;
   @include themify($themes) {
     border-color: themed("numbersBoardBorder");
   }
-  border: 0.2em solid;
-  border-radius: 0.2em;
-  box-sizing: border-box;
-  transition: border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+  @include addTransitionForProp(border-color);
 
   > * {
     margin: 0;

@@ -1,20 +1,19 @@
 @import "./../../style/theme-variables.scss";
+@import "./../../style/mixins.scss";
 
 .btn {
+  box-sizing: border-box;
+  padding: 0.5rem 1.5rem;
+  border: 0.2em solid;
+  border-radius: 0.5rem;
   @include themify($themes) {
     background-color: themed("buttonDefaultBg");
     border-color: themed("buttonDefaultBorder");
     color: themed("textDefaultColor");
   }
-  box-sizing: border-box;
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.5rem;
+  @include addTransitionForProp(background-color, border-color, color);
   text-align: center;
-  border: 0.2em solid;
   cursor: pointer;
-  transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
-    border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
-    color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   &:hover {
     @include themify($themes) {

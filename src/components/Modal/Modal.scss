@@ -1,47 +1,31 @@
 @import "./../../style/theme-variables.scss";
+@import "./../../style/mixins.scss";
 
 .modal {
+  @include flex(column, center, center);
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
   @include themify($themes) {
     background-color: themed("modalBg");
   }
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin: 0 auto;
-  height: 100%;
-  font: 1em Arial, Helvetica, sans-serif;
+  @include typography();
 
   @media screen and (min-width: 320px) {
     position: absolute;
-    width: 50%;
-    height: auto;
     top: 50%;
     left: 50%;
+    height: auto;
     transform: translate(-50%, -50%);
     border-radius: 0.2em;
   }
 
-  @media screen and (min-width: 768px) {
-    width: 33%;
-  }
-
-  @media screen and (min-width: 1240px) {
-    width: 25%;
-  }
-
-  @media screen and (min-width: 1960px) {
-    width: 15%;
-  }
+  @include responsiveWidth(100%);
 }
 
 .modal-header,
 .modal-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include flex(column, center, center);
 
   > p {
     margin: 0;
@@ -53,25 +37,22 @@
 }
 
 .modal-content {
+  box-sizing: border-box;
+  padding: 1em 2em;
+  width: 100%;
+  border-top: 0.1em solid;
   @include themify($themes) {
     border-color: themed("modalBorder");
   }
-  padding: 1em 2em;
-  width: 100%;
-  box-sizing: border-box;
-  border-top: 0.1em solid;
 }
 
 .modal-bar {
+  box-sizing: border-box;
+  @include flex(row, space-around, center);
+  width: 100%;
+  padding: 0.5em;
+  border-top: 0.1em solid;
   @include themify($themes) {
     border-color: themed("modalBorder");
   }
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0.5em;
-  width: 100%;
-  box-sizing: border-box;
-  border-top: 0.1em solid;
 }
