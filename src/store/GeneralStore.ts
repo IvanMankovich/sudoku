@@ -28,14 +28,6 @@ export class GeneralStore {
     this.setGameState(GameState.inProgress);
   }
 
-  setPausedState(): void {
-    this.setGameState(GameState.paused);
-  }
-
-  setEndedState(): void {
-    this.setGameState(GameState.ended);
-  }
-
   changeTheme(): void {
     if (this.theme === Theme.light) {
       this.setTheme(Theme.dark);
