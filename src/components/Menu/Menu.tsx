@@ -13,7 +13,7 @@ export const Menu = ({
   menuItems: items,
 }: IMenu) => {
   return (
-    <ul className={`menu menu__${position}`}>
+    <ul className={`menu menu_${position}`}>
       {items.map(
         (item: IMenuItem): ReactNode => (
           <MenuItem

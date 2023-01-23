@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+
 import "./Modal.scss";
 
 export interface IModal {

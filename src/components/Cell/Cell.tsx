@@ -44,10 +44,10 @@ export const Cell = ({
       maxLength={1}
       className={[
         className,
-        activeAxis ? ` ${className}__active-axis` : "",
-        activeSquare ? ` ${className}__active-square` : "",
-        oddSquare ? ` ${className}__odd-square` : "",
-        isInvalid ? ` ${className}__invalid` : "",
+        activeAxis ? ` ${className}_active-axis` : "",
+        activeSquare ? ` ${className}_active-square` : "",
+        oddSquare ? ` ${className}_odd-square` : "",
+        isInvalid ? ` ${className}_invalid` : "",
       ].join("")}
       value={value}
       disabled={disabled}

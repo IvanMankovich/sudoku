@@ -20,7 +20,7 @@ input.cell {
   transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
     border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 
-  &.cell__odd-square {
+  &.cell_odd-square {
     @include themify($themes) {
       background-color: themed("cellOddBg");
       border-color: themed("cellOddBg");
@@ -35,7 +35,7 @@ input.cell {
     }
   }
 
-  &.cell__active-axis {
+  &.cell_active-axis {
     @include themify($themes) {
       border-color: themed("cellActiveBorder");
     }
@@ -48,7 +48,7 @@ input.cell {
     }
   }
 
-  &.cell__active-square {
+  &.cell_active-square {
     @include themify($themes) {
       border-color: themed("cellActiveBorder");
     }
@@ -61,7 +61,7 @@ input.cell {
     }
   }
 
-  &.cell__invalid {
+  &.cell_invalid {
     @include themify($themes) {
       background-color: themed("cellInvalidBg");
       border-color: themed("cellInvalidBorder");
