@@ -1,19 +1,18 @@
 @import "./../../../../style/theme-variables.scss";
+@import "./../../../../style/mixins.scss";
+@import "./../../../../style/common-variables.scss";
 
 .number-plate {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 2em;
-  height: 4em;
+  box-sizing: border-box;
+  @include flex(column, space-around, center);
+  width: 100%;
+  height: 100%;
+  border: $cell-border-thickness solid;
+  border-radius: $cell-border-radius;
   @include themify($themes) {
     border-color: themed("numbersBoardBorder");
   }
-  border: 0.2em solid;
-  border-radius: 0.2em;
-  box-sizing: border-box;
-  transition: border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+  @include addTransitionForProp(border-color);
 
   > * {
     margin: 0;
@@ -27,7 +26,7 @@
       background-color: themed("numbersBoardNumBg");
       border-color: themed("numbersBoardBorder");
     }
-    border-bottom: 0.2em solid;
+    border-bottom: $cell-border-thickness solid;
   }
 
   :last-child {

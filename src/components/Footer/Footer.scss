@@ -1,17 +1,16 @@
 @import "./../../style/theme-variables.scss";
+@import "./../../style/mixins.scss";
+@import "./../../style/common-variables.scss";
 
 .footer {
+  @include flex(row, center, center);
+  min-height: $top-bottom-min-height;
+  width: 100%;
   @include themify($themes) {
     background-color: themed("coloredModule");
   }
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 2.5rem;
-  width: 100%;
+  @include addTransitionForProp(background-color);
   text-align: center;
-  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) background-color;
 
   & > p {
     margin: auto 0;

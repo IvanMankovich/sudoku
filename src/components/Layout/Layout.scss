@@ -1,23 +1,19 @@
 @import "./../../style/theme-variables.scss";
+@import "./../../style/mixins.scss";
 
 .layout {
+  @include flex(column, flex-start, center);
+  flex: 1 0;
+  min-width: 100%;
+  min-height: 100vh;
   @include themify($themes) {
     background-color: themed("layoutBg");
     color: themed("textDefaultColor");
   }
-  transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
-    border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
-  min-width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex: 1 0;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  font: 1em Arial, Helvetica, sans-serif;
-  line-height: 1.5em;
+  @include addTransitionForProp(background-color, border-color);
+  @include typography();
 }
 
 .blur {
-  filter: blur(0.4em);
+  filter: blur(0.4rem);
 }

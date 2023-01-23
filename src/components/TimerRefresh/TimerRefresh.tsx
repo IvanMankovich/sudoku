@@ -15,9 +15,10 @@ export const TimerRefresh = ({
 
   useEffect(() => {
     if (timerState === TimerState.running) {
-      const tick = setInterval(() => {
+      /** interval set up to 500ms for smooth updating time on starting new game */
+      const tick: NodeJS.Timer = setInterval((): void => {
         setTime(getTime());
-      }, 1000);
+      }, 500);
 
       return () => {
         clearInterval(tick);

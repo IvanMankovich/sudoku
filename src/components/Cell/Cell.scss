@@ -1,26 +1,26 @@
 @import "./../../style/theme-variables.scss";
+@import "./../../style/mixins.scss";
+@import "./../../style/common-variables.scss";
 
 input.cell {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: $cell-border-thickness solid;
+  border-radius: $cell-border-radius;
   @include themify($themes) {
     background-color: themed("cellDefaultBg");
     border-color: themed("cellDefaultBg");
     color: themed("textDefaultColor");
   }
-  width: 100%;
-  height: 100%;
-  border: none;
+  @include addTransitionForProp(background-color, border-color, color);
   text-align: center;
   vertical-align: middle;
-  box-sizing: border-box;
-  border-radius: 0.2em;
   font-weight: bold;
-  border: 0.2em solid;
-  font-size: 1.2em;
+  font-size: $cell-font-size;
   -moz-appearance: textfield;
-  transition: background-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1),
-    border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 
-  &.cell__odd-square {
+  &.cell_odd-square {
     @include themify($themes) {
       background-color: themed("cellOddBg");
       border-color: themed("cellOddBg");
@@ -35,7 +35,7 @@ input.cell {
     }
   }
 
-  &.cell__active-axis {
+  &.cell_active-axis {
     @include themify($themes) {
       border-color: themed("cellActiveBorder");
     }
@@ -48,7 +48,7 @@ input.cell {
     }
   }
 
-  &.cell__active-square {
+  &.cell_active-square {
     @include themify($themes) {
       border-color: themed("cellActiveBorder");
     }
@@ -61,7 +61,7 @@ input.cell {
     }
   }
 
-  &.cell__invalid {
+  &.cell_invalid {
     @include themify($themes) {
       background-color: themed("cellInvalidBg");
       border-color: themed("cellInvalidBorder");

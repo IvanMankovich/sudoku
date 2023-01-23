@@ -20,7 +20,7 @@ export const Header = () => {
   return (
     <header className="header-wrapper">
       <div className="header">
-        <div className="header-left">
+        <div className="header__left-block">
           <div>
             <Button
               content="Menu"
@@ -32,14 +32,14 @@ export const Header = () => {
           </div>
         </div>
         {generalStore.gameState !== GameState.initial ? (
-          <div className="header-center">
+          <div className="header__center-block">
             <TimerRefresh
               getTime={timer.getTime.bind(timer)}
               timerState={timer.state}
             />
           </div>
         ) : null}
-        <div className="header-right">
+        <div className="header__right-block">
           <Switch
             theme={generalStore.theme}
             checked={generalStore.theme === Theme.dark}

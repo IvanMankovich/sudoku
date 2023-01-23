@@ -1,23 +1,19 @@
 @import "./../../../style/theme-variables.scss";
+@import "./../../../style/mixins.scss";
+@import "./../../../style/common-variables.scss";
 
 .remaining-numbers-block {
-  margin: 0.5em auto;
-
-  > p {
-    margin: 0 0 0.2em;
-  }
+  margin: $board-controls-margin auto;
 }
 
 .remaining-numbers-board {
+  box-sizing: border-box;
+  @include nineColGrid();
+  width: $board-size;
+  padding: $board-padding;
+  border-radius: $board-border-radius;
   @include themify($themes) {
     background-color: themed("numbersBoardBg");
   }
-  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) background-color;
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  width: 20em;
-  gap: 0.2em;
-  padding: 0.2em;
-  border-radius: 0.2em;
-  box-sizing: border-box;
+  @include addTransitionForProp(background-color);
 }

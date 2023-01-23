@@ -1,20 +1,18 @@
 @import "./../../style/theme-variables.scss";
+@import "./../../style/mixins.scss";
+@import "./../../style/common-variables.scss";
 
 .header-wrapper {
+  box-sizing: border-box;
+  @include flex(row, space-between, center);
+  width: 100%;
+  min-height: $top-bottom-min-height;
+  padding: 0;
   @include themify($themes) {
     background-color: themed("coloredModule");
   }
-
-  height: 2.5rem;
-  width: 100%;
+  @include addTransitionForProp(background-color);
   text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0;
-  box-sizing: border-box;
-  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) background-color;
 
   & p {
     margin: 0;
@@ -22,67 +20,32 @@
 }
 
 .header {
+  box-sizing: border-box;
   position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
+  @include flex(row, space-between, stretch);
   flex: 1 0 auto;
-  justify-content: space-between;
-  align-items: stretch;
   height: auto;
   margin: 0 auto;
-  box-sizing: border-box;
-  padding: 0 0.5rem;
-
-  @media screen and (min-width: 320px) {
-    width: 100%;
-  }
-
-  @media screen and (min-width: 960px) {
-    max-width: 920px;
-  }
-
-  @media screen and (min-width: 1280px) {
-    max-width: 1240px;
-  }
-
-  @media screen and (min-width: 1920px) {
-    max-width: 1880px;
-  }
+  padding: 0 $board-controls-margin;
+  @include contentQueryWidth();
 }
 
-.header-center {
-  display: flex;
+.header__center-block {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  @include flex(false, false, false);
   height: 100%;
+  transform: translateX(-50%);
 
   & > p {
     margin: auto 0;
   }
 }
 
-.header-right {
+.header__right-block {
   display: flex;
 
   > .switch {
-    margin: auto 0.5em;
+    margin: auto $board-controls-margin;
   }
 }
-// .header {
-//   height: 2.5rem;
-//   width: 100%;
-//   text-align: center;
-//   background-color: $sea-200;
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-between;
-//   align-items: center;
-//   padding: 0 0.5rem;
-//   box-sizing: border-box;
-
-//   & p {
-//     margin: 0;
-//   }
-// }
