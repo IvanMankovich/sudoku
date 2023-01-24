@@ -2,19 +2,19 @@
   width: $startWidth;
 
   @media screen and (min-width: 320px) {
-    width: 50%;
+    width: 75%;
   }
 
   @media screen and (min-width: 768px) {
-    width: 33%;
+    width: 50%;
   }
 
   @media screen and (min-width: 1240px) {
-    width: 25%;
+    width: 33%;
   }
 
   @media screen and (min-width: 1960px) {
-    width: 15%;
+    width: 25%;
   }
 }
 

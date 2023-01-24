@@ -8,14 +8,16 @@
   width: fit-content;
 
   & > select {
-    padding: $button-padding;
-    border: none;
+    box-sizing: border-box;
+    padding: $select-padding;
+    border: $button-border-thickness solid;
     border-radius: $button-border-radius;
     @include themify($themes) {
       background-color: themed("buttonDefaultBg");
       border-color: themed("buttonDefaultBorder");
       color: themed("textDefaultColor");
     }
+    @include addTransitionForProp(background-color, border-color, color);
     font-weight: $butoon-text-weight;
     text-align: center;
     cursor: pointer;

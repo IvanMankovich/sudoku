@@ -8,4 +8,5 @@
   @include themify($themes) {
     background-color: themed("backdrop");
   }
+  @include flex(column, center, center);
 }
