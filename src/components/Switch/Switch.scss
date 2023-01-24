@@ -26,20 +26,23 @@
 }
 
 .slider:before {
+  box-sizing: border-box;
   @include themify($themes) {
-    background-color: themed("switchSlider");
+    border-color: themed("switchSlider");
+    background: themed("switch");
   }
   position: absolute;
   content: "";
-  height: calc(($switch-height / 5) * 4);
-  width: calc(($switch-height / 5) * 4);
-  left: calc(($switch-height / 5));
+  height: calc(($switch-height / 10) * 9);
+  width: calc(($switch-height / 10) * 9);
+  left: calc(($switch-height / 10));
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   @include addTransitionForProp(all);
   border-radius: 50%;
+  border: calc($switch-height / 10) solid;
 }
 
 input:checked + .slider {
@@ -49,11 +52,14 @@ input:checked + .slider {
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 0.1rem $sea-100;
+  box-shadow: 0 0 calc($switch-height / 10) $sea-100;
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translate(calc(($switch-height / 5) * 4), -50%);
-  -ms-transform: translate(calc(($switch-height / 5) * 4), -50%);
-  transform: translate(calc(($switch-height / 5) * 4), -50%);
+  -webkit-transform: translate(calc(($switch-height / 10) * 9), -50%);
+  -ms-transform: translate(calc(($switch-height / 10) * 9), -50%);
+  transform: translate(calc(($switch-height / 10) * 9), -50%);
+  @include themify($themes) {
+    background: themed("switch");
+  }
 }
