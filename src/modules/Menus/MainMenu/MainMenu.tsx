@@ -3,17 +3,20 @@ import { Menu } from "../../../components/Menu/Menu";
 import { IMenuItem } from "../../../components/Menu/MenuItem/MenuItem";
 import { MenuPosition } from "../../../components/Menu/types";
 import { RootContext } from "../../../store/RootStore";
+import { GameState } from "../../../types/types";
 import { NewGame } from "../../Modals/NewGame/NewGame";
 
 export const MainMenu = (): JSX.Element => {
-  const { modalsStore, boardStore } = useContext(RootContext);
+  const { modalsStore, boardStore, generalStore } = useContext(RootContext);
 
   const mainMenuItems: IMenuItem[] = [
     {
       id: "close",
-      content: <p>Close</p>,
+      content: <p className="close">+</p>,
       onClick: () => {
-        boardStore.timer.run();
+        if (generalStore.gameState === GameState.inProgress) {
+          boardStore.timer.run();
+        }
         modalsStore.setModal(null);
       },
     },

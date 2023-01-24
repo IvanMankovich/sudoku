@@ -29,11 +29,7 @@ export const WelcomeContent = () => {
     <div className="welcome-content">
       <div>
         <h2>Welcome sudoku</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Id totam eum
-          ea amet fugit quod, sapiente tenetur quibusdam minima beatae possimus
-          eos, quia maxime nihil consequuntur. Dignissimos ab iste dolores!
-        </p>
+        <p>Select difficulty and press 'Start game'.</p>
       </div>
       <Button content={"Start game"} onClickHandler={handleStartGameClick} />
       <Select
