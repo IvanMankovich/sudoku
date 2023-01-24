@@ -38,6 +38,7 @@ $themes: (
     numbersBoardNumBg: $sea-300,
     numbersBoardAmountBg: $chalk-300,
     numbersBoardBorder: $sea-500,
+    switch: $switch-on-light,
   ),
   dark: (
     textDefaultColor: $white,
@@ -76,6 +77,7 @@ $themes: (
     numbersBoardNumBg: $night-800,
     numbersBoardAmountBg: $coal-300,
     numbersBoardBorder: $night-900,
+    switch: $switch-on-dark,
   ),
 );
 

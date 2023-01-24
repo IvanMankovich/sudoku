@@ -5,6 +5,7 @@ a {
   @include themify($themes) {
     color: themed("cellFocusBorder");
   }
+
   &:visited {
     @include themify($themes) {
       color: themed("cellInvalidBorder");
